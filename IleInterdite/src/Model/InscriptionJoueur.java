@@ -11,7 +11,7 @@ package Model;
  */
 public class InscriptionJoueur {
     InscriptionJoueur(){
-        String lol; 
+        String lol;
     }
     
 }
