@@ -10,5 +10,6 @@ package Model;
  * @author barrerat
  */
 public class Joueurs {
-    
+    private RôleAventurier rôle;
+    private Couleur couleur;
 }
