@@ -10,5 +10,8 @@ package Model;
  * @author Théo
  */
 public class InscriptionJoueur {
+    InscriptionJoueur(){
+        
+    }
     
 }
