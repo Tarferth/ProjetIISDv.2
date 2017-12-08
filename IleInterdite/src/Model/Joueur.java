@@ -9,7 +9,7 @@ package Model;
  *
  * @author barrerat
  */
-public class Joueurs {
+public abstract class Joueur {
     private RôleAventurier rôle;
     private Couleur couleur;
 }

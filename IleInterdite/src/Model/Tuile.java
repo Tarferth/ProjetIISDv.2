@@ -10,5 +10,7 @@ package Model;
  * @author barrerat
  */
 public class Tuile {
+    private int x;
+    private int y;
     
 }

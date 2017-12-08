@@ -10,5 +10,19 @@ package Model;
  * @author barrerat
  */
 public class Grille {
+    Tuile[][] tuiles;
     
+    public Grille() {
+        tuiles = new Tuile[6][6];
+    }
+    
+    
+    
+    
+    
+    
+    
+    public Tuile getTuile(int x, int y){
+        return tuiles[x][y];
+    }
 }
