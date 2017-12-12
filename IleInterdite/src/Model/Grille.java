@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.util.*;
+
 /**
  *
  * @author barrerat
@@ -15,6 +17,7 @@ public class Grille {
     public Grille() {
         tuiles = new Tuile[6][6];
     }
+    
     
     
     
