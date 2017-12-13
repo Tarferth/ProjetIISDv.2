@@ -36,7 +36,7 @@ public abstract class Aventurier {
     public void seDeplacer(Tuile t) {
         getPos().removeAventurier(this);
         t.addAventurier(this);
-        setPos(t):
+        setPos(t);
         setNbActions(getNbActions()+1);
 
     }
