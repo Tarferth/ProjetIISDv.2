@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class Tuile {
     
-    //private ArrayList<Aventurier> aventuriers = new ArrayList();
+    private ArrayList<Aventurier> aventuriers = new ArrayList();
     private int col;
     private int lig;
     private int etat;
@@ -45,7 +45,7 @@ public class Tuile {
             etat++;                                                             // Alors on passe l'état à "estInnondee"
         }
         else{                                                                   // Dans les autres cas on affiche un message d'erreur 
-            System.out.println("Impossible d'innonder cette case");
+            System.out.println("Impossible d'innonder cette case"); // Pour la mise au point seulement
         }
         
     }
@@ -54,41 +54,63 @@ public class Tuile {
         if (etat == 1){                                                         // Si la case est Innondée
             etat--;                                                             // Alors on passe l'état à "estSeche"
         }
-        else{                                                                   // Dans leq autres cas on affiche un message d'erreur
-            System.out.println("Impossible d'assécher cette case");
+        else{                                                                   // Dans les autres cas on affiche un message d'erreur
+            System.out.println("Impossible d'assécher cette case");// Pour la mise au point seulement
         }
+    }
+
+    // Retourner l'état de la tuile, en string
+
+    @Override
+    public String toString(){
+
     }
 
     
     //Getters
 
-    public int getCol() {
+    public int getCol(){
         return col;
     }
     
-    public int getLig() {
+    public int getLig(){
         return lig;
     }
 
-    public String getNom() {
+    public String getNom(){
         return nom;
     }
     
 
     //Setters
     
-    public void setCol(int col) {
+    public void setCol(int col){
         this.col = col;
     }
 
-    public void setLig(int lig) {
+    public void setLig(int lig){
         this.lig = lig;
     }
 
-    public void setNom(String nom) {
+    public void setNom(String nom){
         this.nom = nom;
     }
-    
+
+    // Ajout et suppression des aventuriers sur la tuile
+
+
+    public ArrayList<Aventurier> getAventuriers() {
+        return aventuriers;
+    }
+
+    public void addAventurier(Aventurier av){
+        getAventuriers().add(av);
+    }
+
+    public void removeAventurier(Aventurier av){
+        getAventuriers().remove(av);
+    }
+
     
     
 }

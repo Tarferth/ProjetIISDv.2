@@ -12,4 +12,6 @@ package Model;
 public abstract class Joueur {
     private RôleAventurier rôle;
     private Couleur couleur;
+
+
 }
