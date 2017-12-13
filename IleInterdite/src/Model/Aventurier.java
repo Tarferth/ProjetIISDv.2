@@ -37,7 +37,13 @@ public abstract class Aventurier {
         getPos().removeAventurier(this);
         t.addAventurier(this);
         setPos(t):
-        setNbActions(getNbActions(+1));
+        setNbActions(getNbActions()+1);
 
     }
+
+    public void assecher(ArrayList<Tuile> tu){
+        tu.
+    }
+
+
 }
