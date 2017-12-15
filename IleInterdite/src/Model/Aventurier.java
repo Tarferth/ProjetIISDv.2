@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 public abstract class Aventurier {
 
     private int nbActions = 0;
@@ -42,7 +44,7 @@ public abstract class Aventurier {
     }
 
     public void assecher(ArrayList<Tuile> tu){
-        tu.
+ 
     }
 
 
