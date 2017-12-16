@@ -26,15 +26,15 @@ public class Tuile {
     
     // Etats de la tuile
     
-    public boolean estSeche(int etat){
+    public boolean estSeche(){
         return etat == 0;
     }
     
-    public boolean estInnondee(int etat){
+    public boolean estInondee(){
         return etat == 1;
     }
     
-    public boolean aSombre(int etat){
+    public boolean aSombre(){
         return etat == 2;
     }
     
@@ -55,15 +55,22 @@ public class Tuile {
             etat--;                                                             // Alors on passe l'état à "estSeche"
         }
         else{                                                                   // Dans les autres cas on affiche un message d'erreur
-            System.out.println("Impossible d'assécher cette case");// Pour la mise au point seulement
+            System.out.println("Impossible d'assécher cette case");             // Pour la mise au point seulement
         }
     }
 
     // Retourner l'état de la tuile, en string
 
     @Override
-    public String toString(){
-
+    public String toString() {
+        boolean e = (getAventuriers().size() != 0);
+        if (estSeche())
+            return getNom() + " : Sèche   " + e;
+        if (estInondee())
+            return getNom() + " : Innondée " + e;
+        if (aSombre())
+            return getNom() + " : Coulée  " + e;
+        return "ERREUR";
     }
 
     
@@ -110,6 +117,8 @@ public class Tuile {
     public void removeAventurier(Aventurier av){
         getAventuriers().remove(av);
     }
+
+
 
     
     

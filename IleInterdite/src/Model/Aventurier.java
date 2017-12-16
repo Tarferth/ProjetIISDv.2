@@ -1,24 +1,32 @@
 package Model;
 
 import java.util.ArrayList;
+import Utils.Utils.Pion;
 
 public abstract class Aventurier {
 
     private int nbActions = 0;
-    Tuile pos;
-    Tuile posPrecedente;
+    private Tuile pos;
+    private Tuile posPrecedente;
+    private Tuile tuile;
+    private Pion pion;
+    private String pseudo;
+
+    public Aventurier(String pseudo, Tuile tuile){
+        this.pseudo = pseudo;
+        this.tuile = tuile;
+    }
 
 
+    /* GETTERS */
 
     public int getNbActions() {
         return nbActions;
     }
 
-    public void setNbActions(int nbActions) {
-        this.nbActions = nbActions;
+    public Pion getPion() {
+        return pion;
     }
-
-    //Gérer la position de l'aventurier
 
     public Tuile getPos() {
         return pos;
@@ -28,24 +36,27 @@ public abstract class Aventurier {
         return posPrecedente;
     }
 
+    /* SETTERS */
+
+    public void setNbActions(int nbActions) {
+        this.nbActions = nbActions;
+    }
+
+    public void setPion(Pion pion) {
+        this.pion = pion;
+    }
+
     public void setPos(Tuile t) {
         posPrecedente = getPos();
         pos = t;
     }
 
-    //Gestion des actions
+    /* POUR TOUTES LES SOUS-CLASSES */
 
-    public void seDeplacer(Tuile t) {
-        getPos().removeAventurier(this);
-        t.addAventurier(this);
-        setPos(t);
-        setNbActions(getNbActions()+1);
 
-    }
 
-    public void assecher(ArrayList<Tuile> tu){
- 
-    }
 
 
 }
+
+
