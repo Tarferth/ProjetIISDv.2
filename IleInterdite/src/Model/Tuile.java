@@ -59,20 +59,10 @@ public class Tuile {
         }
     }
 
-    // Retourner l'état de la tuile, en string
-
     @Override
-    public String toString() {
-        boolean e = (getAventuriers().size() != 0);
-        if (estSeche())
-            return getNom() + " : Sèche   " + e;
-        if (estInondee())
-            return getNom() + " : Innondée " + e;
-        if (aSombre())
-            return getNom() + " : Coulée  " + e;
-        return "ERREUR";
+    public String toString(){
+        return nom.toString();
     }
-
     
     //Getters
 

@@ -28,29 +28,24 @@ public class Grille {
          */
         int x = 0;
         for (int i = 0; i < 6; i++){       //Lignes
-            for (int j = 0; j < 6; i++){   //Colonnes
+            for (int j = 0; j < 6; j++){   //Colonnes
                 if ((i == 0 && j == 0) || (i == 1 && j == 0) || (i == 0 && j == 1) ||     //si la tuile est dans cette liste                            // Coin haut gauche
                         (i == 0 && j == 4) || (i == 0 && j == 5) || (i == 1 & j == 5) ||                                // Coin haut droit
                         (i == 4 && j == 0) || (i == 5 && j == 0) || (i == 5 & j == 1) ||                                // Coin bas gauche
                         (i == 4 && j == 5) || (i == 5 && j == 5) || (i == 5 && j == 4)){                                 //Coin bas droit
 
-                    this.tuiles[i][j] = null;                                              // Alors elle est vide
+                    tuiles[i][j] = null;                                              // Alors elle est vide
 
                 }
                 else{
-                    this.tuiles[i][j] = tu.get(x);          // Sinon
-                    tu.get(x).setCol(j);                    // On l'initialise avec i et j
-                    tu.get(x).setLig(i);
-                    x++;                                    // Puis on incrémente
+                    tuiles[i][j] = new Tuile(NomTuile.values()[x], 0);
+                    x++;
                 }
 
             }
         }
     }
 
-    public Tuile[][] getGrille(){
-        return tuiles;
-    }
 
     /* TUILES ADJACENTES */
 
@@ -156,26 +151,7 @@ public class Grille {
     }
 
 
-    
-    
-    
-    
-    
-    
-    public ArrayList<Tuile> getTuiles(){
-        ArrayList<Tuile> tu = new ArrayList();
-        for (int j = 0; j < 6; j++){
-            for (int i = 0; i < 6; i++){
-                if (this.tuiles[j][i] != null){
-                    tu.add(tuiles[j][i]);
-                }
-            }
-        }
-
-        return tu;
-    }
-
-    public Tuile[][] getTuile(){
+    public Tuile[][] getTuiles() {
         return tuiles;
     }
 }
