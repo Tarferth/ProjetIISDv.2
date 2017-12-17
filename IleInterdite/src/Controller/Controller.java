@@ -18,27 +18,5 @@ public class Controller implements Observer {
     public void update(Observable o, Object arg) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public void tourDeJeu (Joueur j) {
-        int nbaction = 4; 
-        boolean btnTerminer = false;
-        boolean btnAssecher = false;
-        boolean btnDeplacer = false;
-        while (nbaction != 0 && btnTerminer != true) {
-            if (btnDeplacer = true ){
-                nbaction = nbaction -1;
-                deplacer(j); //coder deplacer//
-            
-        }
-            else if(btnAssecher = true ){
-                nbaction = nbaction-1;
-                assecher(case); //coder assecher//
-            }
-            
-            else {
-                    break;
-            }
-            
-        } 
-    }
+
 }

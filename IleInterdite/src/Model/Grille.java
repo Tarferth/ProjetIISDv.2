@@ -17,28 +17,30 @@ public class Grille {
     private Tuile[][] tuiles = new Tuile[6][6];
 
     public Grille(ArrayList<Tuile> tu){
-        /* |0.0|0.1|0.2|0.3|0.4|0.5|
-           |1.0|1.1|1.2|1.3|1.4|1.5|
-           |2.0|2.1|2.2|2.3|2.4|2.5|
-           |3.0|3.1|3.2|3.3|3.4|3.5|
-           |4.0|4.1|4.2|4.3|4.4|4.5|
-           |5.0|5.1|5.2|5.3|5.4|5.5|
+        /*
+               j
+          i |0.0|0.1|0.2|0.3|0.4|0.5|    plateau de jeu :         |0.2|0.3|
+            |1.0|1.1|1.2|1.3|1.4|1.5|                         |1.1|1.2|1.3|1.4|
+            |2.0|2.1|2.2|2.3|2.4|2.5|                     |2.0|2.1|2.2|2.3|2.4|2.5|
+            |3.0|3.1|3.2|3.3|3.4|3.5|                     |3.0|3.1|3.2|3.3|3.4|3.5|
+            |4.0|4.1|4.2|4.3|4.4|4.5|                         |4.1|4.2|4.3|4.4|
+            |5.0|5.1|5.2|5.3|5.4|5.5|                             |5.2|5.3|
          */
         int x = 0;
-        for (int j = 0; j < 6; j++){
-            for (int i = 0; i < 6; i++){
+        for (int i = 0; i < 6; i++){       //Lignes
+            for (int j = 0; j < 6; i++){   //Colonnes
                 if ((i == 0 && j == 0) || (i == 1 && j == 0) || (i == 0 && j == 1) ||     //si la tuile est dans cette liste                            // Coin haut gauche
                         (i == 0 && j == 4) || (i == 0 && j == 5) || (i == 1 & j == 5) ||                                // Coin haut droit
                         (i == 4 && j == 0) || (i == 5 && j == 0) || (i == 5 & j == 1) ||                                // Coin bas gauche
                         (i == 4 && j == 5) || (i == 5 && j == 5) || (i == 5 && j == 4)){                                 //Coin bas droit
 
-                    this.tuiles[j][i] = null;                                              // Alors elle est vide
+                    this.tuiles[i][j] = null;                                              // Alors elle est vide
 
                 }
                 else{
-                    this.tuiles[j][i] = tu.get(x);          // Sinon
-                    tu.get(x).setCol(i);                    // On l'initialise avec i et j
-                    tu.get(x).setLig(j);
+                    this.tuiles[i][j] = tu.get(x);          // Sinon
+                    tu.get(x).setCol(j);                    // On l'initialise avec i et j
+                    tu.get(x).setLig(i);
                     x++;                                    // Puis on incrémente
                 }
 
@@ -72,41 +74,88 @@ public class Grille {
         int[] coordonnees = this.getCoordonneesTuile(tu);
 
         if (message == Messages.ASSECHER){
-            if (coordonnees[0] != 0 && !tuiles[coordonnees[0]-1][coordonnees[1]].estInondee()){
-                tuilesAdjacentes.add(tuiles[coordonnees[0]-1][coordonnees[1]]);
+            if (coordonnees[0] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1]] != null && tuiles[coordonnees[0]-1][coordonnees[1]].estInondee()){  // On vérifie que la tuile en haut est inondée
+                tuilesAdjacentes.add(tuiles[coordonnees[0]-1][coordonnees[1]]);                 // Si oui, on l'ajoute à la collection
             }
-            if (coordonnees[0] != 5 && !tuiles[coordonnees[0]+1][coordonnees[1]].estInondee()){
-                tuilesAdjacentes.add(tuiles[coordonnees[0]+1][coordonnees[1]]);
+            if (coordonnees[0] != 5 && tuiles[coordonnees[0] +1][coordonnees[1]] != null && tuiles[coordonnees[0]+1][coordonnees[1]].estInondee()){ // On vérifie que la tuile en bas est inondée
+                tuilesAdjacentes.add(tuiles[coordonnees[0]+1][coordonnees[1]]);                // Si oui, on l'ajoute à la collection
             }
-            if (coordonnees[1] != 0 && !tuiles[coordonnees[0]][coordonnees[1]-1].estInondee()){
-                tuilesAdjacentes.add(tuiles[coordonnees[0]][coordonnees[1]-1]);
+            if (coordonnees[1] != 0 && tuiles[coordonnees[0]][coordonnees[1] -1] != null && tuiles[coordonnees[0]][coordonnees[1]-1].estInondee()){ // On vérifie que la tuile à gauche est inondée
+                tuilesAdjacentes.add(tuiles[coordonnees[0]][coordonnees[1]-1]);                // Si oui, on l'ajoute à la collection
             }
-            if (coordonnees[1] != 5 && !tuiles[coordonnees[0]][coordonnees[1]+1].estInondee()){
-                tuilesAdjacentes.add(tuiles[coordonnees[0]][coordonnees[1]+1]);
+            if (coordonnees[1] != 5 && tuiles[coordonnees[0]][coordonnees[1] +1] != null && tuiles[coordonnees[0]][coordonnees[1]+1].estInondee()){ // On vérifie que la tuile à droite est inondée
+                tuilesAdjacentes.add(tuiles[coordonnees[0]][coordonnees[1]+1]);                // Si oui, on l'ajoute à la collection
+            }
+            if (tu.estInondee()) {                                                             // Si la tuile tu est inondée
+                tuilesAdjacentes.add(tu);                                                      // On l'ajoute également à la collection
             }
         }
 
-        if (message == Messages.DEPLACER) {
-            if (coordonnees[0] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1]].aSombre()) {
-                tuilesAdjacentes.add(tuiles[coordonnees[0] - 1][coordonnees[1]]);
+        if (message == Messages.DEPLACER){
+            if (coordonnees[0] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1]] != null && !tuiles[coordonnees[0]-1][coordonnees[1]].aSombre()){ // On vérifie que la tuile en haut n'a pas sombré
+                tuilesAdjacentes.add(tuiles[coordonnees[0] - 1][coordonnees[1]]);               // On l'ajoute à la collection
             }
-            if (coordonnees[0] != 5 && tuiles[coordonnees[0] + 1][coordonnees[1]].aSombre()) {
-                tuilesAdjacentes.add(tuiles[coordonnees[0] + 1][coordonnees[1]]);
+            if (coordonnees[0] != 5 && tuiles[coordonnees[0] +1][coordonnees[1]] != null && !tuiles[coordonnees[0]+1][coordonnees[1]].aSombre()){ // On vérifie que la tuile en bas n'a pas sombré
+                tuilesAdjacentes.add(tuiles[coordonnees[0] + 1][coordonnees[1]]);               // On l'ajoute à la collection
             }
-            if (coordonnees[1] != 0 && tuiles[coordonnees[0]][coordonnees[1] - 1].aSombre()) {
-                tuilesAdjacentes.add(tuiles[coordonnees[0]][coordonnees[1] - 1]);
+            if (coordonnees[1] != 5 && tuiles[coordonnees[0]][coordonnees[1] -1] != null && !tuiles[coordonnees[0]][coordonnees[1]+1].aSombre()){ // On vérifie que la tuile à gauche n'a pas sombré
+                tuilesAdjacentes.add(tuiles[coordonnees[0]][coordonnees[1] - 1]);               // On l'ajoute à la collection
             }
-            if (coordonnees[1] != 5 && tuiles[coordonnees[0]][coordonnees[1] + 1].aSombre()) {
-                tuilesAdjacentes.add(tuiles[coordonnees[0]][coordonnees[1] + 1]);
-            }
-            if (tu.estInondee()) {
-                tuilesAdjacentes.add(tu);
+            if (coordonnees[1] != 5 && tuiles[coordonnees[0]][coordonnees[1] +1] != null && !tuiles[coordonnees[0]][coordonnees[1]+1].aSombre()){ // On vérifie que la tuile à droite n'a pas sombré
+                tuilesAdjacentes.add(tuiles[coordonnees[0]][coordonnees[1] + 1]);               // On l'ajoute à la collection
             }
 
         }
 
         return tuilesAdjacentes;
     }
+
+    public ArrayList<Tuile> getTuilesDiagonales(Tuile tu, Messages message){
+        ArrayList<Tuile> tuilesDiagonales = new ArrayList<>();
+        int[] coordonnees = this.getCoordonneesTuile(tu);
+
+        if (message == Messages.ASSECHER){
+            if (coordonnees[0] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1]-1] != null && tuiles[coordonnees[0] - 1][coordonnees[1]-1].estInondee()){
+                tuilesDiagonales.add(tuiles[coordonnees[0] - 1][coordonnees[1]-1]);
+            }
+
+            if (coordonnees[0] != 5 && tuiles[coordonnees[0] + 1][coordonnees[1] +1] != null && tuiles[coordonnees[0] +1][coordonnees[1] +1].estInondee()){
+                tuilesDiagonales.add(tuiles[coordonnees[0] +1][coordonnees[1] +1]);
+            }
+
+            if (coordonnees[1] != 5 && tuiles[coordonnees[0] -1][coordonnees[1] +1] != null && tuiles[coordonnees[0] -1][coordonnees[1] +1].estInondee()){
+                tuilesDiagonales.add(tuiles[coordonnees[0] -1][coordonnees[1] +1]);
+            }
+
+            if (coordonnees[1] != 0 && tuiles[coordonnees[0] +1][coordonnees[1] -1] != null && tuiles[coordonnees[0] +1][coordonnees[1] -1].estInondee()){
+                tuilesDiagonales.add(tuiles[coordonnees[0] +1][coordonnees[1] -1]);
+            }
+
+        }
+
+        if (message == Messages.DEPLACER) {
+            if (coordonnees[0] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1] - 1] != null && !tuiles[coordonnees[0] - 1][coordonnees[1] - 1].aSombre()) {
+                tuilesDiagonales.add(tuiles[coordonnees[0] - 1][coordonnees[1] - 1]);
+            }
+
+            if (coordonnees[0] != 5 && tuiles[coordonnees[0] + 1][coordonnees[1] + 1] != null && !tuiles[coordonnees[0] + 1][coordonnees[1] + 1].aSombre()) {
+                tuilesDiagonales.add(tuiles[coordonnees[0] + 1][coordonnees[1] + 1]);
+            }
+
+            if (coordonnees[1] != 5 && tuiles[coordonnees[0] - 1][coordonnees[1] + 1] != null && !tuiles[coordonnees[0] - 1][coordonnees[1] + 1].aSombre()) {
+                tuilesDiagonales.add(tuiles[coordonnees[0] - 1][coordonnees[1] + 1]);
+            }
+
+            if (coordonnees[1] != 0 && tuiles[coordonnees[0] + 1][coordonnees[1] - 1] != null && !tuiles[coordonnees[0] + 1][coordonnees[1] - 1].aSombre()) {
+                tuilesDiagonales.add(tuiles[coordonnees[0] + 1][coordonnees[1] - 1]);
+            }
+
+        }
+
+        return tuilesDiagonales;
+    }
+
+
     
     
     

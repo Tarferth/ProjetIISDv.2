@@ -54,7 +54,13 @@ public abstract class Aventurier {
     /* POUR TOUTES LES SOUS-CLASSES */
 
 
+    public ArrayList<Tuile> getTuilesAccessibles(Grille grille){
+        return grille.getTuilesAdjacentes(getPos(), Messages.DEPLACER);
+    }
 
+    public ArrayList<Tuile> getTuilesAssechables(Grille grille){
+        return grille.getTuilesAdjacentes(getPos(), Messages.ASSECHER);
+    }
 
 
 }

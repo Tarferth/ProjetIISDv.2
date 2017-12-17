@@ -17,11 +17,11 @@ public class Tuile {
     private int col;
     private int lig;
     private int etat;
-    private String nom;
+    private NomTuile nom;
     
-    public Tuile(String nom, int etat){
-       this.nom = nom;
-       this.etat = etat;     
+    public Tuile(NomTuile nom, int etat){
+       setNom(nom);
+       this.etat = etat;
     }
     
     // Etats de la tuile
@@ -84,7 +84,7 @@ public class Tuile {
         return lig;
     }
 
-    public String getNom(){
+    public NomTuile getNom(){
         return nom;
     }
     
@@ -99,7 +99,7 @@ public class Tuile {
         this.lig = lig;
     }
 
-    public void setNom(String nom){
+    public void setNom(NomTuile nom){
         this.nom = nom;
     }
 
