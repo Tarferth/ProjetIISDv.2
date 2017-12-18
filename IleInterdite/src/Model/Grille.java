@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -149,6 +150,26 @@ public class Grille {
 
         return tuilesDiagonales;
     }
+
+    /* RECUPERER TUILES INONDEES ET JOUABLES */
+
+
+    public ArrayList getTuilesNonCoulees(Tuile tu){
+        ArrayList<Tuile> tuilesNonCoulees = new ArrayList<>();
+
+        for(int i = 0; i < tuiles.length; i++){
+            for(int j = 0; i < tuiles.length; j++){
+                if (tuiles[i][j].estInondee() || tuiles[i][j].estSeche()){
+                    tuilesNonCoulees.add(tuiles[i][j]);
+                }
+            }
+        }
+
+        tuilesNonCoulees.remove(tu);
+        return tuilesNonCoulees;
+
+    }
+
 
 
     public Tuile[][] getTuiles() {

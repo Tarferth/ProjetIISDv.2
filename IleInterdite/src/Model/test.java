@@ -11,12 +11,6 @@ public class test {
         ArrayList<Tuile> tu = new ArrayList<>();
 
 
-
-        //for(NomTuile nom : NomTuile.values()){
-          //  Tuile tu = new Tuile(nom, 0);
-          //  System.out.println(nom);
-        //}
-
         Grille grille = new Grille(tu);
 
         for(int i = 0; i < grille.getTuiles().length ; i++) { // Lignes
