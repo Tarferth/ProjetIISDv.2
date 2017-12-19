@@ -75,6 +75,13 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
 public JButton getBtnretour() {
         return btnretour;
     }
+        
+     //============================================================================
+
+ public static void main(String [] args) {
+        // Instanciation de la fenêtre 
+        VueDeplacement vuedep = new VueDeplacement("Manon", "Explorateur",Pion.ROUGE.getCouleur() );
+    }
 }
 
 
