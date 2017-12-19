@@ -31,7 +31,7 @@ public class VueDeplacement {
  private final JFrame windows;
  private final JPanel mainPanels;
  private final JComboBox listedep;
- private final JButton retour;
+ private final JButton btnretour;
  private final JPanel panelBoutons ;
 public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
      
@@ -60,7 +60,7 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
      this.panelBoutons.setOpaque(false);
      mainPanels.add(this.panelBoutons, BorderLayout.SOUTH);
 
-     this.retour = new JButton("Retour") ;
+     this.btnretour = new JButton("Retour") ;
         
      //=======================================================================
      
@@ -69,6 +69,12 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
     
      this.windows.setVisible(true);
  }
+
+
+
+public JButton getBtnretour() {
+        return btnretour;
+    }
 }
 
 
