@@ -5,10 +5,60 @@
  */
 package Vues;
 
+import Model.Aventurier;
+import Model.Grille;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import static javax.swing.SwingConstants.CENTER;
+import javax.swing.border.MatteBorder;
+import Utils.Utils.Pion;
+import javax.swing.JComboBox;
+
 /**
  *
  * @author avognonm
  */
 public class VueDeplacement {
     
+ private final JFrame windows;
+ private final JPanel panelAvent;
+ private final JPanel mainPanels;
+ private final JComboBox listedep;
+ 
+ 
+public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
+     
+        this.windows = new JFrame();
+        windows.setSize(175, 100);
+        //le titre = nom du joueur 
+        windows.setTitle(nomJoueur);
+        mainPanels = new JPanel(new BorderLayout());
+        this.windows.add(mainPanels);
+
+        mainPanels.setBackground(new Color(230, 230, 230));
+        mainPanels.setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
+     
+        
+        
+     /*Liste déroulante des déplacements*/
+     this.listedep = new JComboBox();
+     
+     listedep.addItem(Aventurier.getTuilesAccessibles().get(0));
+     
+     
+        
+        
+    
+        
+ }
 }
+
+
