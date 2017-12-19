@@ -29,11 +29,10 @@ import javax.swing.JComboBox;
 public class VueDeplacement {
     
  private final JFrame windows;
- private final JPanel panelAvent;
  private final JPanel mainPanels;
  private final JComboBox listedep;
- 
- 
+ private final JButton retour;
+ private final JPanel panelBoutons ;
 public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
      
         this.windows = new JFrame();
@@ -46,16 +45,27 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
         mainPanels.setBackground(new Color(230, 230, 230));
         mainPanels.setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
      
-        
+     //=======================================================================
         
      /*Liste déroulante des déplacements*/
-     this.listedep = new JComboBox();
+     String[] items = {"Tuile 1","Tuile 2","Tuile 3","Tuile 4","Tuile 5",};
+     this.listedep = new JComboBox(items);
      
-     listedep.addItem(Aventurier.getTuilesAccessibles().get(0));
+     
+     //=======================================================================
      
      
+     //Bouton retour en bas de la fenêtre//
+     this.panelBoutons = new JPanel(new GridLayout(2,2));
+     this.panelBoutons.setOpaque(false);
+     mainPanels.add(this.panelBoutons, BorderLayout.SOUTH);
+
+     this.retour = new JButton("Retour") ;
         
-        
+     //=======================================================================
+     
+     
+     
     
         
  }
