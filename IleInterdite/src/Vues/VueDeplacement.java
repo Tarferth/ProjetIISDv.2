@@ -67,7 +67,7 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
      
      
     
-        
+     this.windows.setVisible(true);
  }
 }
 
