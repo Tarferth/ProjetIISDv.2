@@ -24,7 +24,6 @@ public class VueAutreaction {
     
  private final JFrame windows;
  private final JPanel mainPanels;
- private final JComboBox listedep;
  private final JButton btnretour;
  private final JButton btnsedeplacer;
  private final JButton btndonnertresor;
@@ -36,7 +35,7 @@ public class VueAutreaction {
 public VueAutreaction (String nomJoueur, String NomAventurier, Color couleur){
      
         this.windows = new JFrame();
-        windows.setSize(350, 200);
+        windows.setSize(500, 300);
         
         //le titre = Déplacement//
         windows.setTitle("Autres Action");
@@ -60,7 +59,7 @@ public VueAutreaction (String nomJoueur, String NomAventurier, Color couleur){
      //=======================================================================
         
      /*Liste déroulante des déplacements*/
-     titre3 = new JLabel ("Autres action du joueur : " + nomJoueur);
+     titre3 = new JLabel ("Les autres actions ne sont pas encore disponibles pour le moment");
      mainPanels.add(titre3);
      
      //=======================================================================
@@ -87,7 +86,8 @@ public VueAutreaction (String nomJoueur, String NomAventurier, Color couleur){
      
      
      this.windows.setVisible(true);
- }
+ 
+}
 
 
 
