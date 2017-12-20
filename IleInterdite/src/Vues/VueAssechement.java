@@ -28,10 +28,11 @@ public class VueAssechement {
         private final JLabel nomj;
         private final JComboBox listeass;
 
-        public VueAssechement (String nomJoueur, String NomAventurier, Color couleur){
+        public VueAssechement (String nomJoueur, String NomAventurier, Color couleur, NomTuile NomTuile){
 
             this.windows = new JFrame();
-            windows.setSize(350, 200);
+            windows.setSize(480, 200);
+            windows.setLocation(1030,280);
             //le titre = nom du joueur
             windows.setTitle("Assèchement");
             mainPanels = new JPanel(new GridLayout(3,1));
@@ -46,7 +47,7 @@ public class VueAssechement {
 
             
             //Nom Joueur//
-        nomj = new JLabel ("Assèchement du joueur : " + nomJoueur);
+        nomj = new JLabel ("| Assèchement du joueur : " + nomJoueur + " | " + "Position: " + NomTuile + " | ");
         
         mainPanels.add(nomj);
         
@@ -75,8 +76,8 @@ public class VueAssechement {
      panelBoutons.add(new JLabel());
      panelBoutons.add(btnRetour);
      panelBoutons.add(btnAssecher);
-            
-            this.windows.setVisible(true);
+     windows.setResizable(false);
+     this.windows.setVisible(true);
 }
     public JButton getBtnRetour() {
         return btnRetour;
@@ -90,7 +91,7 @@ public class VueAssechement {
 
     public static void main(String [] args) {
         // Instanciation de la fenêtre
-        VueAssechement vueass = new VueAssechement ("Manon", "Explorateur", Utils.Pion.ROUGE.getCouleur() );
+        VueAssechement vueass = new VueAssechement ("Manon", "Explorateur", Utils.Pion.BLEU.getCouleur(),LE_PONT_DES_ABIMES );
     }
     //============================================================================
 

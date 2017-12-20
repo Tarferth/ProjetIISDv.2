@@ -36,7 +36,8 @@ public VueAutreaction (String nomJoueur, String NomAventurier, Color couleur){
      
         this.windows = new JFrame();
         windows.setSize(500, 300);
-        
+        windows.setResizable(false);
+        windows.setLocation(150,350);
         //le titre = Déplacement//
         windows.setTitle("Autres Action");
         mainPanels = new JPanel(new GridLayout(3,1,1000,0));
@@ -99,6 +100,6 @@ public JButton getBtnretour() {
 
  public static void main(String [] args) {
         // Instanciation de la fenêtre 
-        VueAutreaction vueaa = new VueAutreaction("Manon", "Explorateur",Utils.Pion.ROUGE.getCouleur() );
+        VueAutreaction vueaa = new VueAutreaction("Manon", "Explorateur",Utils.Pion.BLEU.getCouleur() );
     }
 }

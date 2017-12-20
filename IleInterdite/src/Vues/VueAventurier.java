@@ -39,6 +39,7 @@ public class VueAventurier  {
 
         this.window = new JFrame();
         window.setSize(350, 200);
+        window.setLocationRelativeTo(null);
         //le titre = nom du joueur 
         window.setTitle(nomJoueur);
         mainPanel = new JPanel(new BorderLayout());
@@ -81,7 +82,7 @@ public class VueAventurier  {
         this.panelBoutons.add(btnAssecher);
         this.panelBoutons.add(btnAutreAction);
         this.panelBoutons.add(btnTerminerTour);
-
+        window.setResizable(false);
         this.window.setVisible(true);
     } 
     
@@ -104,7 +105,7 @@ public class VueAventurier  {
  
      public static void main(String [] args) {
         // Instanciation de la fenêtre 
-        VueAventurier vueAventurier = new VueAventurier("Manon", "Explorateur",Pion.ROUGE.getCouleur(), LE_PONT_DES_ABIMES);
+        VueAventurier vueAventurier = new VueAventurier("Manon", "Explorateur",Pion.BLEU.getCouleur(), LE_PONT_DES_ABIMES);
     }
 }
 

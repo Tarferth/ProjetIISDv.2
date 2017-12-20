@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.border.MatteBorder;
 import Utils.Utils.Pion;
+import com.sun.java.swing.plaf.windows.resources.windows;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 
@@ -39,11 +40,12 @@ public class VueDeplacement {
  private final JPanel panelBoutons ;
  private final JLabel titre2;
  
-public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
+public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur, NomTuile NomTuile){
      
         this.windows = new JFrame();
-        windows.setSize(350, 200);
-        
+        windows.setSize(480, 200);
+        windows.setLocation(1030,500);
+        windows.setResizable(false);
         //le titre = Déplacement//
         windows.setTitle("Déplacement");
         mainPanels = new JPanel(new GridLayout(3,1,1000,0));
@@ -59,7 +61,7 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
         
         //Titre fenêtre//
         
-        titre2 = new JLabel ("Déplacement du joueur : " + nomJoueur);
+        titre2 = new JLabel ("| Déplacement du joueur : " + nomJoueur + " | " + "Position : " + NomTuile + " | ");
         
         mainPanels.add(titre2);
         
@@ -110,6 +112,6 @@ public JButton getBtnretour() {
 
  public static void main(String [] args) {
         // Instanciation de la fenêtre 
-        VueDeplacement vuedep = new VueDeplacement("Manon", "Explorateur",Pion.ROUGE.getCouleur() );
+        VueDeplacement vuedep = new VueDeplacement("Manon", "Explorateur",Pion.BLEU.getCouleur(), LA_PORTE_DE_BRONZE);
     }
 }
