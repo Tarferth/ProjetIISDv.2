@@ -31,6 +31,7 @@ public class VueAutreaction {
  private final JButton btnrecuptresor;
  private final JPanel panelBoutons ;
  private final JLabel titre2;
+ private final JLabel titre3;
  
 public VueAutreaction (String nomJoueur, String NomAventurier, Color couleur){
      
@@ -59,9 +60,8 @@ public VueAutreaction (String nomJoueur, String NomAventurier, Color couleur){
      //=======================================================================
         
      /*Liste déroulante des déplacements*/
-     String[] items = {"Tuile 1","Tuile 2","Tuile 3","Tuile 4","Tuile 5",};
-     this.listedep = new JComboBox(items);
-     mainPanels.add(listedep);
+     titre3 = new JLabel ("Autres action du joueur : " + nomJoueur);
+     mainPanels.add(titre3);
      
      //=======================================================================
      
