@@ -15,13 +15,14 @@ public class VueAssechement {
 
         private final JFrame windows;
         private final JPanel mainPanels;
-
-        private final JButton btnretour;
+        private final JButton btnRetour;
+        private final JButton btnAssecher;
         private final JPanel panelBoutons ;
+
         public VueAssechement (String nomJoueur, String NomAventurier, Color couleur){
 
             this.windows = new JFrame();
-            windows.setSize(175, 100);
+            windows.setSize(350, 200);
             //le titre = nom du joueur
             windows.setTitle(nomJoueur);
             mainPanels = new JPanel(new BorderLayout());
@@ -31,27 +32,34 @@ public class VueAssechement {
             mainPanels.setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
 
 
-    //Bouton retour en bas de la fenêtre//
-     this.panelBoutons = new JPanel(new GridLayout(2,2));
-     this.panelBoutons.setOpaque(false);
-     mainPanels.add(this.panelBoutons, BorderLayout.SOUTH);
+            // SUD : les boutons
+            this.panelBoutons = new JPanel(new GridLayout(2,2));
+            this.panelBoutons.setOpaque(false);
+            mainPanels.add(this.panelBoutons, BorderLayout.SOUTH);
 
-     this.btnretour = new JButton("Retour") ;
+            this.btnRetour = new JButton("Retour") ;
+            this.btnAssecher = new JButton( "Assecher");
 
-    //=======================================================================
+
+            this.panelBoutons.add(btnRetour);
+            this.panelBoutons.add(btnAssecher);
 
 
-     this.windows.setVisible(true);
+            this.windows.setVisible(true);
 }
-
-
-
-    public JButton getBtnretour() {
-        return btnretour;
+    public JButton getBtnRetour() {
+        return btnRetour;
     }
+
+    public JButton getBtnAssecher() {
+        return btnAssecher;
+    }
+
+
+
     public static void main(String [] args) {
         // Instanciation de la fenêtre
-        VueDeplacement vuedep = new VueDeplacement("Manon", "Explorateur", Utils.Pion.ROUGE.getCouleur() );
+        VueAssechement vueass = new VueAssechement ("Manon", "Explorateur", Utils.Pion.ROUGE.getCouleur() );
     }
     //============================================================================
 
