@@ -7,6 +7,8 @@ package Vues;
 
 import Model.Aventurier;
 import Model.Grille;
+import Model.NomTuile;
+import static Model.NomTuile.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -20,6 +22,7 @@ import javax.swing.SwingConstants;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.border.MatteBorder;
 import Utils.Utils.Pion;
+import java.util.ArrayList;
 import javax.swing.JComboBox;
 
 /**
@@ -63,9 +66,14 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
      //=======================================================================
         
      /*Liste déroulante des déplacements*/
-     String[] NomTuile = {};
-     this.listedep = new JComboBox(NomTuile);
-     mainPanels.add(listedep);
+    ArrayList<NomTuile> nomTuiles = new ArrayList<>(); //Doit être dans le contrôleur//
+    nomTuiles.add(LE_PONT_DES_ABIMES);                 //On doit pouvoir add avec getTuilesAccessibles//
+    nomTuiles.add(LA_PORTE_DE_BRONZE);
+    nomTuiles.add(LA_CAVERNE_DES_OMBRES);
+    nomTuiles.add(LA_PORTE_DE_FER);
+    nomTuiles.add(LA_PORTE_D_OR);
+    this.listedep = new JComboBox(nomTuiles.toArray());
+    mainPanels.add(listedep);
      
      //=======================================================================
      
