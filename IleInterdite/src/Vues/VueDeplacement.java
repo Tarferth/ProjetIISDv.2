@@ -32,25 +32,40 @@ public class VueDeplacement {
  private final JPanel mainPanels;
  private final JComboBox listedep;
  private final JButton btnretour;
+ private final JButton btnvalider;
  private final JPanel panelBoutons ;
+ private final JLabel titre2;
+ 
 public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
      
         this.windows = new JFrame();
-        windows.setSize(175, 100);
+        windows.setSize(350, 200);
+        
         //le titre = nom du joueur 
-        windows.setTitle(nomJoueur);
-        mainPanels = new JPanel(new BorderLayout());
+        windows.setTitle("Déplacement");
+        mainPanels = new JPanel(new GridLayout(3,1,1000,0));
+        
         this.windows.add(mainPanels);
 
         mainPanels.setBackground(new Color(230, 230, 230));
         mainPanels.setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
-     
+       
+        
+        
+
+        
+        //Titre fenêtre//
+        
+        titre2 = new JLabel ("Déplacement du joueur:" + nomJoueur);
+        
+        mainPanels.add(titre2);
+        
      //=======================================================================
         
      /*Liste déroulante des déplacements*/
      String[] items = {"Tuile 1","Tuile 2","Tuile 3","Tuile 4","Tuile 5",};
      this.listedep = new JComboBox(items);
-     
+     mainPanels.add(listedep);
      
      //=======================================================================
      
@@ -59,9 +74,18 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
      this.panelBoutons = new JPanel(new GridLayout(2,2));
      this.panelBoutons.setOpaque(false);
      mainPanels.add(this.panelBoutons, BorderLayout.SOUTH);
-
+     
      this.btnretour = new JButton("Retour") ;
-        
+     this.btnvalider = new JButton("Valider");
+     
+     
+     
+     panelBoutons.add(new JLabel());
+     panelBoutons.add(new JLabel());
+     panelBoutons.add(btnretour);
+     panelBoutons.add(btnvalider);
+
+     
      //=======================================================================
      
      
@@ -81,5 +105,3 @@ public JButton getBtnretour() {
         VueDeplacement vuedep = new VueDeplacement("Manon", "Explorateur",Pion.ROUGE.getCouleur() );
     }
 }
-
-
