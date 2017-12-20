@@ -52,7 +52,7 @@ public VueAutreaction (String nomJoueur, String NomAventurier, Color couleur){
         
         //Titre fenêtre//
         
-        titre2 = new JLabel ("Autres action du joueur : " + nomJoueur);
+        titre2 = new JLabel ("Autres actions du joueur : " + nomJoueur);
         
         mainPanels.add(titre2);
         

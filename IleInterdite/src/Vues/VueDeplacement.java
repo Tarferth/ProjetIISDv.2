@@ -63,8 +63,8 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
      //=======================================================================
         
      /*Liste déroulante des déplacements*/
-     String[] items = {"Tuile 1","Tuile 2","Tuile 3","Tuile 4","Tuile 5",};
-     this.listedep = new JComboBox(items);
+     String[] NomTuile = {};
+     this.listedep = new JComboBox(NomTuile);
      mainPanels.add(listedep);
      
      //=======================================================================
