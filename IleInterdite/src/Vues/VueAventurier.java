@@ -1,5 +1,9 @@
 package Vues;
 
+
+import Model.NomTuile;
+import static Model.NomTuile.*;
+import Model.Tuile;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -26,12 +30,12 @@ public class VueAventurier  {
     private final JButton btnAssecher;
     private final JButton btnAutreAction;
     private final JButton btnTerminerTour;
-    private JTextField position;
+    
    
    
    
     
-    public VueAventurier(String nomJoueur, String nomAventurier, Color couleur){
+    public VueAventurier(String nomJoueur, String nomAventurier, Color couleur, NomTuile NomTuile){
 
         this.window = new JFrame();
         window.setSize(350, 200);
@@ -44,7 +48,7 @@ public class VueAventurier  {
         mainPanel.setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
 
         // =================================================================================
-        // NORD : le titre = nom de l'aventurier sur la couleurActive du pion
+        // NORD : le titre = nom de l'aventurier sur la couleur Active du pion
 
         this.panelAventurier = new JPanel();
         panelAventurier.setBackground(couleur);
@@ -58,10 +62,8 @@ public class VueAventurier  {
         this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, couleur));
         mainPanel.add(this.panelCentre, BorderLayout.CENTER);
         
-        panelCentre.add(new JLabel ("Position", SwingConstants.CENTER));
-        position = new  JTextField(30); 
-        position.setHorizontalAlignment(CENTER);
-        panelCentre.add(position);
+        panelCentre.add(new JLabel ("Position : " + NomTuile, SwingConstants.CENTER));
+        
 
 
         // =================================================================================
@@ -83,17 +85,10 @@ public class VueAventurier  {
         this.window.setVisible(true);
     } 
     
-    public void setPosition(String pos) {
-        this.position.setText(pos);
-    }
-    
      public JButton getBtnAutreAction() {
         return btnAutreAction;
     }
     
-    public String getPosition() {
-        return position.getText();
-    }
 
     public JButton getBtnBouger() {
         return btnBouger;
@@ -109,7 +104,7 @@ public class VueAventurier  {
  
      public static void main(String [] args) {
         // Instanciation de la fenêtre 
-        VueAventurier vueAventurier = new VueAventurier("Manon", "Explorateur",Pion.ROUGE.getCouleur() );
+        VueAventurier vueAventurier = new VueAventurier("Manon", "Explorateur",Pion.ROUGE.getCouleur(), LE_PONT_DES_ABIMES);
     }
 }
 
