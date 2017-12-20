@@ -32,5 +32,5 @@ public enum NomTuile {
     NomTuile(String nom){
         this.nom = nom;
     }
-
+    
 }
