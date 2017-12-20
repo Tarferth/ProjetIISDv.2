@@ -32,7 +32,7 @@ public class VueDeplacement {
  private final JPanel mainPanels;
  private final JComboBox listedep;
  private final JButton btnretour;
- private final JButton btnvalider;
+ private final JButton btnsedeplacer;
  private final JPanel panelBoutons ;
  private final JLabel titre2;
  
@@ -41,7 +41,7 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
         this.windows = new JFrame();
         windows.setSize(350, 200);
         
-        //le titre = nom du joueur 
+        //le titre = Déplacement//
         windows.setTitle("Déplacement");
         mainPanels = new JPanel(new GridLayout(3,1,1000,0));
         
@@ -56,7 +56,7 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
         
         //Titre fenêtre//
         
-        titre2 = new JLabel ("Déplacement du joueur:" + nomJoueur);
+        titre2 = new JLabel ("Déplacement du joueur : " + nomJoueur);
         
         mainPanels.add(titre2);
         
@@ -76,14 +76,14 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
      mainPanels.add(this.panelBoutons, BorderLayout.SOUTH);
      
      this.btnretour = new JButton("Retour") ;
-     this.btnvalider = new JButton("Valider");
+     this.btnsedeplacer = new JButton("Se déplacer");
      
      
      
      panelBoutons.add(new JLabel());
      panelBoutons.add(new JLabel());
      panelBoutons.add(btnretour);
-     panelBoutons.add(btnvalider);
+     panelBoutons.add(btnsedeplacer);
 
      
      //=======================================================================
