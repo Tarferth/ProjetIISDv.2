@@ -5,6 +5,8 @@
  */
 package Vues;
 
+import Utils.Utils;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -47,7 +49,10 @@ public class VueAssechement {
     public JButton getBtnretour() {
         return btnretour;
     }
-
+    public static void main(String [] args) {
+        // Instanciation de la fenêtre
+        VueDeplacement vuedep = new VueDeplacement("Manon", "Explorateur", Utils.Pion.ROUGE.getCouleur() );
+    }
     //============================================================================
 
 
