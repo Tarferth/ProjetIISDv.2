@@ -5,10 +5,17 @@
  */
 package Vues;
 
+import Model.NomTuile;
+import static Model.NomTuile.LA_CAVERNE_DES_OMBRES;
+import static Model.NomTuile.LA_PORTE_DE_BRONZE;
+import static Model.NomTuile.LA_PORTE_DE_FER;
+import static Model.NomTuile.LA_PORTE_D_OR;
+import static Model.NomTuile.LE_PONT_DES_ABIMES;
 import Utils.Utils;
 import java.awt.GridLayout;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 
 public class VueAssechement {
@@ -44,8 +51,13 @@ public class VueAssechement {
         mainPanels.add(nomj);
         
           /*Liste déroulante des assèchements*/
-     String[] items = {"Tuile 1","Tuile 2","Tuile 3","Tuile 4","Tuile 5",};
-     this.listeass = new JComboBox(items);
+     ArrayList<NomTuile> nomTuiles = new ArrayList<>(); //Doit être dans le contrôleur//
+     nomTuiles.add(LE_PONT_DES_ABIMES);                 //On doit pouvoir add avec getTuilesAccessibles//
+     nomTuiles.add(LA_PORTE_DE_BRONZE);
+     nomTuiles.add(LA_CAVERNE_DES_OMBRES);
+     nomTuiles.add(LA_PORTE_DE_FER);
+     nomTuiles.add(LA_PORTE_D_OR);
+     this.listeass = new JComboBox(nomTuiles.toArray());
      mainPanels.add(listeass);
      
       // SUD : les boutons

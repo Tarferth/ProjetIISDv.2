@@ -69,7 +69,7 @@ public VueDeplacement (String nomJoueur, String NomAventurier, Color couleur){
     ArrayList<NomTuile> nomTuiles = new ArrayList<>(); //Doit être dans le contrôleur//
     nomTuiles.add(LE_PONT_DES_ABIMES);                 //On doit pouvoir add avec getTuilesAccessibles//
     nomTuiles.add(LA_PORTE_DE_BRONZE);
-    nomTuiles.add(LA_CAVERNE_DES_OMBRES);
+    nomTuiles.add(LA_CAVERNE_DES_OMBRES);     
     nomTuiles.add(LA_PORTE_DE_FER);
     nomTuiles.add(LA_PORTE_D_OR);
     this.listedep = new JComboBox(nomTuiles.toArray());
