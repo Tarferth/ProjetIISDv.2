@@ -33,4 +33,7 @@ public enum NomTuile {
         this.nom = nom;
     }
     
+    public String toString(){
+        return nom;
+    }
 }
