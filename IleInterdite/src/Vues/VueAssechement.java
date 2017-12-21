@@ -110,16 +110,22 @@ public class VueAssechement extends Vue {
 
     @Override
     public NomTuile getTuileSelectionnee(){
-        NomTuile tuileTrouvee = null;
-        int i  = 0;
-        while(tuileTrouvee == null && i < NomTuile.values().length){
-            if(NomTuile.values()[i] != null && NomTuile.values()[i].toString().equals(listeAss.getSelectedItem().toString())){
-                tuileTrouvee = NomTuile.values()[i];
+        if(listeAss.getSelectedItem() != null) {
+            NomTuile nomTuileTrouvee = null;
+            int i = 0;
+            while (nomTuileTrouvee == null && i < NomTuile.values().length) {
+                if (NomTuile.values()[i].toString().equals(listeAss.getSelectedItem().toString())) {
+                    nomTuileTrouvee = NomTuile.values()[i];
+                }
+                i++;
             }
-            i++;
+            return nomTuileTrouvee;
+        } else {
+            return null;
         }
-        return tuileTrouvee;
     }
+
+
 
     @Override
     public void setTuilesAss(ArrayList<String> tu){

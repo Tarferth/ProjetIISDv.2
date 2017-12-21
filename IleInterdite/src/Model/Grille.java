@@ -96,7 +96,7 @@ public class Grille {
             if (coordonnees[0] != 5 && tuiles[coordonnees[0] +1][coordonnees[1]] != null && !tuiles[coordonnees[0]+1][coordonnees[1]].aSombre()){ // On vérifie que la tuile en bas n'a pas sombré
                 tuilesAdjacentes.add(tuiles[coordonnees[0] + 1][coordonnees[1]]);               // On l'ajoute à la collection
             }
-            if (coordonnees[1] != 5 && tuiles[coordonnees[0]][coordonnees[1] -1] != null && !tuiles[coordonnees[0]][coordonnees[1]+1].aSombre()){ // On vérifie que la tuile à gauche n'a pas sombré
+            if (coordonnees[1] != 5 && tuiles[coordonnees[0]][coordonnees[1] -1] != null && !tuiles[coordonnees[0]][coordonnees[1]-1].aSombre()){ // On vérifie que la tuile à gauche n'a pas sombré
                 tuilesAdjacentes.add(tuiles[coordonnees[0]][coordonnees[1] - 1]);               // On l'ajoute à la collection
             }
             if (coordonnees[1] != 5 && tuiles[coordonnees[0]][coordonnees[1] +1] != null && !tuiles[coordonnees[0]][coordonnees[1]+1].aSombre()){ // On vérifie que la tuile à droite n'a pas sombré
@@ -113,39 +113,34 @@ public class Grille {
         int[] coordonnees = this.getCoordonneesTuile(tu);
 
         if (message == Message.ASSECHER){
-            if (coordonnees[0] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1]-1] != null && tuiles[coordonnees[0] - 1][coordonnees[1]-1].estInondee()){
-                tuilesDiagonales.add(tuiles[coordonnees[0] - 1][coordonnees[1]-1]);
+            if (message == Message.ASSECHER) {
+                if (coordonnees[0] != 0 && coordonnees[1] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1]-1] != null && tuiles[coordonnees[0] - 1][coordonnees[1] - 1].estInondee()) {
+                    tuilesDiagonales.add(tuiles[coordonnees[0] - 1][coordonnees[1] - 1]);
+                }
+                if (coordonnees[0] != 0 && coordonnees[1] != 5 && tuiles[coordonnees[0] -1][coordonnees[1] +1] != null && tuiles[coordonnees[0] - 1][coordonnees[1] + 1].estInondee()) {
+                    tuilesDiagonales.add(tuiles[coordonnees[0] - 1][coordonnees[1] + 1]);
+                }
+                if (coordonnees[1] != 0 && coordonnees[0] != 5 && tuiles[coordonnees[0] +1][coordonnees[1] -1] != null&& tuiles[coordonnees[0] + 1][coordonnees[1] - 1].estInondee()) {
+                    tuilesDiagonales.add(tuiles[coordonnees[0] + 1][coordonnees[1] - 1]);
+                }
+                if (coordonnees[1] != 5 && coordonnees[0] != 5 && tuiles[coordonnees[0] + 1][coordonnees[1] +1] != null&& tuiles[coordonnees[0] + 1][coordonnees[1] + 1].estInondee()) {
+                    tuilesDiagonales.add(tuiles[coordonnees[0] + 1][coordonnees[1] + 1]);
+                }
             }
-
-            if (coordonnees[0] != 5 && tuiles[coordonnees[0] + 1][coordonnees[1] +1] != null && tuiles[coordonnees[0] +1][coordonnees[1] +1].estInondee()){
-                tuilesDiagonales.add(tuiles[coordonnees[0] +1][coordonnees[1] +1]);
-            }
-
-            if (coordonnees[1] != 5 && tuiles[coordonnees[0] -1][coordonnees[1] +1] != null && tuiles[coordonnees[0] -1][coordonnees[1] +1].estInondee()){
-                tuilesDiagonales.add(tuiles[coordonnees[0] -1][coordonnees[1] +1]);
-            }
-
-            if (coordonnees[1] != 0 && tuiles[coordonnees[0] +1][coordonnees[1] -1] != null && tuiles[coordonnees[0] +1][coordonnees[1] -1].estInondee()){
-                tuilesDiagonales.add(tuiles[coordonnees[0] +1][coordonnees[1] -1]);
-            }
-
         }
 
         if (message == Message.DEPLACER) {
-            if (coordonnees[0] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1] - 1] != null && !tuiles[coordonnees[0] - 1][coordonnees[1] - 1].aSombre()) {
+            if (coordonnees[0] != 0 && coordonnees[1] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1] - 1] != null && !tuiles[coordonnees[0] - 1][coordonnees[1] - 1].aSombre()) {
                 tuilesDiagonales.add(tuiles[coordonnees[0] - 1][coordonnees[1] - 1]);
             }
-
-            if (coordonnees[0] != 5 && tuiles[coordonnees[0] + 1][coordonnees[1] + 1] != null && !tuiles[coordonnees[0] + 1][coordonnees[1] + 1].aSombre()) {
-                tuilesDiagonales.add(tuiles[coordonnees[0] + 1][coordonnees[1] + 1]);
-            }
-
-            if (coordonnees[1] != 5 && tuiles[coordonnees[0] - 1][coordonnees[1] + 1] != null && !tuiles[coordonnees[0] - 1][coordonnees[1] + 1].aSombre()) {
+            if (coordonnees[0] != 0 && coordonnees[1] != 5 && tuiles[coordonnees[0] - 1][coordonnees[1] + 1] != null && !tuiles[coordonnees[0] - 1][coordonnees[1] + 1].aSombre()) {
                 tuilesDiagonales.add(tuiles[coordonnees[0] - 1][coordonnees[1] + 1]);
             }
-
-            if (coordonnees[1] != 0 && tuiles[coordonnees[0] + 1][coordonnees[1] - 1] != null && !tuiles[coordonnees[0] + 1][coordonnees[1] - 1].aSombre()) {
+            if (coordonnees[1] != 0 && coordonnees[0] != 5 && tuiles[coordonnees[0] + 1][coordonnees[1] - 1] != null && !tuiles[coordonnees[0] + 1][coordonnees[1] - 1].aSombre()) {
                 tuilesDiagonales.add(tuiles[coordonnees[0] + 1][coordonnees[1] - 1]);
+            }
+            if (coordonnees[1] != 5 && coordonnees[0] != 5 && tuiles[coordonnees[0] + 1][coordonnees[1] + 1] != null && !tuiles[coordonnees[0] + 1][coordonnees[1] + 1].aSombre()) {
+                tuilesDiagonales.add(tuiles[coordonnees[0] + 1][coordonnees[1] + 1]);
             }
 
         }

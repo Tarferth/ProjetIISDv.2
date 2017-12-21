@@ -7,7 +7,7 @@ import Utils.Utils.Pion;
 
 public abstract class Aventurier {
 
-    private int nbActions = 0;
+    private int nbActionsMax = 3;
     private Tuile pos;
     private Tuile posPrecedente;
     private Tuile tuile;
@@ -23,8 +23,8 @@ public abstract class Aventurier {
 
     /* GETTERS */
 
-    public int getNbActions() {
-        return nbActions;
+    public int getNbActionsMax() {
+        return nbActionsMax;
     }
 
     public Pion getPion() {
@@ -41,8 +41,8 @@ public abstract class Aventurier {
 
     /* SETTERS */
 
-    public void setNbActions(int nbActions) {
-        this.nbActions = nbActions;
+    public void setNbActionsMax(int nbActions) {
+        this.nbActionsMax = nbActions;
     }
 
     public void setPion(Pion pion) {

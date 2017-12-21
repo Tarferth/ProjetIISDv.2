@@ -78,6 +78,11 @@ public class VueAventurier extends Vue {
         this.btnAssecher = new JButton( "Assecher");
         this.btnAutreAction = new JButton("AutreAction") ;
         this.btnTerminerTour = new JButton("Terminer Tour") ;
+
+        btnBouger.setEnabled(false);
+        btnAssecher.setEnabled(false);
+        btnAutreAction.setEnabled(false);
+        btnTerminerTour.setEnabled(false);
         
         this.panelBoutons.add(btnBouger);
         this.panelBoutons.add(btnAssecher);

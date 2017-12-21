@@ -29,6 +29,8 @@ public class Controller implements Observer {
     private int joueurCourant = 0;
     private int nbActions = 0;
     private boolean finTour = false;
+    private int tour;
+    private boolean finTourPlateau = false;
     private boolean inscriptionFini = false;
     private ArrayList<VueAventurier> vuesAventurier = new ArrayList<>();
     private ArrayList<Aventurier>aventuriers = new ArrayList<>();
@@ -63,7 +65,6 @@ public class Controller implements Observer {
 
 
         vueInscription.setVisible(true);
-        getJoueurCourant().setNbActions(0);
 
 
 
@@ -82,8 +83,16 @@ public class Controller implements Observer {
     public void lancerPartie(){
         for (int i =0; i < vuesAventurier.size(); i++){
             vuesAventurier.get(i).setVisible(true);
+            activerBtn(joueurCourant%aventuriers.size());
         }
     }
+
+
+
+
+
+
+
 
 
 
@@ -110,7 +119,7 @@ public class Controller implements Observer {
 
                 switch(typeAventuriers.get(randomAventurier)){
                     case "Messager":
-                        Aventurier messager = new Messager(pseudosJoueurs.get(i),this.getGrille().getTuile(NomTuile.LA_PORTE_DE_CUIVRE));
+                        Aventurier messager = new Messager(pseudosJoueurs.get(i),this.getGrille().getTuile(NomTuile.LA_PORTE_D_ARGENT));
                         aventuriers.add(messager);
 
                         VueAventurier vueAventurier = new VueAventurier(pseudosJoueurs.get(i), "Messager", Pion.VIOLET.getCouleur(), aventuriers.size()-1);
@@ -138,7 +147,7 @@ public class Controller implements Observer {
                         addViewAventurier(vueAventurier4);
                         break;
                     case "Explorateur":
-                        Aventurier explorateur = new Explorateur(pseudosJoueurs.get(i),this.getGrille().getTuile(NomTuile.LA_PORTE_DE_FER));
+                        Aventurier explorateur = new Explorateur(pseudosJoueurs.get(i),this.getGrille().getTuile(NomTuile.LA_PORTE_DE_CUIVRE));
                         aventuriers.add(explorateur);
 
                         VueAventurier vueAventurier5 = new VueAventurier(pseudosJoueurs.get(i), "Explorateur", Pion.VERT.getCouleur(), aventuriers.size()-1);
@@ -176,7 +185,6 @@ public class Controller implements Observer {
                 deplacer(getJoueurCourant());
                 vues.get(1).setVisible(false);
                 nbActions++;
-                getJoueurCourant().setNbActions(nbActions);
             }
         }else if(arg == Message.ANNULER){
             ((Vue) o).setVisible(false);
@@ -192,7 +200,7 @@ public class Controller implements Observer {
         if(arg == Message.VALIDERASSECHEMENT){
             if(((Vue) o).getTuileSelectionnee() == null){
                 JOptionPane erreur = new JOptionPane();
-                erreur.showMessageDialog(null, "Aucune tuile n'a été sélectionnée.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                erreur.showMessageDialog(null, "Aucune tuile n'a été sélectionnée/Ne peut être asséchée", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
 
             else if(((Vue) o).getTuileSelectionnee() != null){
@@ -200,7 +208,6 @@ public class Controller implements Observer {
                 getGrille().getTuile(((Vue) o).getTuileSelectionnee()).setEtat(0);
                 vues.get(2).setVisible(false);
                 nbActions++;
-                getJoueurCourant().setNbActions(nbActions);
             }
         }else if(arg == Message.ANNULER){
             ((Vue) o).setVisible(false);
@@ -217,14 +224,19 @@ public class Controller implements Observer {
 
         /* GESTION DU TOUR DE JEU */
 
+
+
         if(inscriptionFini){
-            while(getJoueurCourant().getNbActions() < 3){
-                finTour = false;
+            if(getJoueurCourant().getNbActionsMax() == nbActions){
+                finTour = true;
             }
 
             if(finTour){
+                desactiverBtn(joueurCourant%aventuriers.size());
                 joueurCourant++;
                 nbActions = 0;
+                finTour = false;
+                activerBtn(joueurCourant%aventuriers.size());
             }
         }
 
@@ -234,6 +246,21 @@ public class Controller implements Observer {
     public void deplacer(Aventurier joueur){
         joueur.setPos(getJoueurCourant().getPos());
     }
+
+    public void desactiverBtn(int vue){
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAssecher().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAutreAction().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnBouger().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnTerminerTour().setEnabled(false);
+    }
+
+    public void activerBtn(int vue){
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAssecher().setEnabled(true);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAutreAction().setEnabled(true);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnBouger().setEnabled(true);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnTerminerTour().setEnabled(true);
+    }
+
 
 
 
@@ -245,12 +272,9 @@ public class Controller implements Observer {
     }
 
     public Aventurier getJoueurCourant(){
-        return aventuriers.get(joueurCourant);
+        return aventuriers.get(joueurCourant%aventuriers.size());
     }
 
-    public void setNbActions(){
-        getJoueurCourant().setNbActions(nbActions);
-    }
 
 
 
