@@ -17,7 +17,7 @@ public abstract class Aventurier {
 
     public Aventurier(String pseudo, Tuile tuile){
         this.pseudo = pseudo;
-        this.tuile = tuile;
+        setPos(tuile);
     }
 
 

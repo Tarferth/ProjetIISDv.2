@@ -181,6 +181,7 @@ public class VueInscription extends Vue {
             public void actionPerformed(ActionEvent e) {
                 setChanged();
                 notifyObservers(Message.TROISJOUEURS);
+                clearChanged();
             }
         });
 

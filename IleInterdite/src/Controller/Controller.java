@@ -28,6 +28,8 @@ public class Controller implements Observer {
 
     private int joueurCourant = 0;
     private int nbActions = 0;
+    private boolean finTour = false;
+    private boolean inscriptionFini = false;
     private ArrayList<VueAventurier> vuesAventurier = new ArrayList<>();
     private ArrayList<Aventurier>aventuriers = new ArrayList<>();
     private ArrayList<Vue>vues = new ArrayList<>();
@@ -61,6 +63,7 @@ public class Controller implements Observer {
 
 
         vueInscription.setVisible(true);
+        getJoueurCourant().setNbActions(0);
 
 
 
@@ -147,6 +150,7 @@ public class Controller implements Observer {
             }
 
             ((VueInscription) o).setVisible(false);
+            inscriptionFini = true;
             lancerPartie();
         }
 
@@ -159,19 +163,76 @@ public class Controller implements Observer {
 
         }
 
+        //Vue déplacement
+
         if(arg == Message.VALIDERDEPLACEMENT){
             if(((Vue) o).getTuileSelectionnee() == null){
                 JOptionPane erreur = new JOptionPane();
                 erreur.showMessageDialog(null, "Aucune tuile n'a été sélectionnée.", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
 
-            else{
+            else if(((Vue) o).getTuileSelectionnee() != null){
                 getJoueurCourant().setPos(getGrille().getTuile(((Vue) o).getTuileSelectionnee()));
-
+                deplacer(getJoueurCourant());
                 vues.get(1).setVisible(false);
                 nbActions++;
+                getJoueurCourant().setNbActions(nbActions);
+            }
+        }else if(arg == Message.ANNULER){
+            ((Vue) o).setVisible(false);
+        }
+
+        // Vue Assèchement
+
+        if(arg == Message.ASSECHER){
+            vues.get(2).setTuilesAss(getJoueurCourant().getTuilesAssechables(this.grille));
+            vues.get(2).setVisible(true);
+        }
+
+        if(arg == Message.VALIDERASSECHEMENT){
+            if(((Vue) o).getTuileSelectionnee() == null){
+                JOptionPane erreur = new JOptionPane();
+                erreur.showMessageDialog(null, "Aucune tuile n'a été sélectionnée.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+
+            else if(((Vue) o).getTuileSelectionnee() != null){
+                getJoueurCourant().setPos(getGrille().getTuile(((Vue) o).getTuileSelectionnee()));
+                getGrille().getTuile(((Vue) o).getTuileSelectionnee()).setEtat(0);
+                vues.get(2).setVisible(false);
+                nbActions++;
+                getJoueurCourant().setNbActions(nbActions);
+            }
+        }else if(arg == Message.ANNULER){
+            ((Vue) o).setVisible(false);
+        }
+
+        if(arg == Message.FINTOUR){
+            finTour = true;
+        }
+
+        if (arg == Message.AUTREACTION) {
+            Utils.afficherInformation("Fonctionnalité non disponible");
+        }
+
+
+        /* GESTION DU TOUR DE JEU */
+
+        if(inscriptionFini){
+            while(getJoueurCourant().getNbActions() < 3){
+                finTour = false;
+            }
+
+            if(finTour){
+                joueurCourant++;
+                nbActions = 0;
             }
         }
+
+
+    }
+
+    public void deplacer(Aventurier joueur){
+        joueur.setPos(getJoueurCourant().getPos());
     }
 
 
@@ -185,6 +246,10 @@ public class Controller implements Observer {
 
     public Aventurier getJoueurCourant(){
         return aventuriers.get(joueurCourant);
+    }
+
+    public void setNbActions(){
+        getJoueurCourant().setNbActions(nbActions);
     }
 
 

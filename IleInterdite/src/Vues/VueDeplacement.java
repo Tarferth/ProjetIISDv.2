@@ -5,6 +5,7 @@
  */
 package Vues;
 
+import Controller.Message;
 import Model.Aventurier;
 import Model.Grille;
 import Model.NomTuile;
@@ -18,6 +19,9 @@ import static javax.swing.SwingConstants.CENTER;
 import javax.swing.border.MatteBorder;
 import Utils.Utils.Pion;
 import com.sun.java.swing.plaf.windows.resources.windows;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -29,8 +33,8 @@ public class VueDeplacement extends Vue {
     private final JFrame windows;
     private final JPanel mainPanels;
     private final JComboBox<Object> listeDep;
-    private final JButton btnretour;
-    private final JButton btnsedeplacer;
+    private final JButton btnRetour;
+    private final JButton btnSeDeplacer;
     private final JPanel panelBoutons ;
 
     public VueDeplacement (){
@@ -66,18 +70,38 @@ public class VueDeplacement extends Vue {
         this.panelBoutons.setOpaque(false);
         mainPanels.add(this.panelBoutons, BorderLayout.SOUTH);
 
-        this.btnretour = new JButton("Retour") ;
-        this.btnsedeplacer = new JButton("Se déplacer");
+        this.btnRetour = new JButton("Retour") ;
+        this.btnSeDeplacer = new JButton("Se déplacer");
 
 
 
         panelBoutons.add(new JLabel());
         panelBoutons.add(new JLabel());
-        panelBoutons.add(btnretour);
-        panelBoutons.add(btnsedeplacer);
+        panelBoutons.add(btnRetour);
+        panelBoutons.add(btnSeDeplacer);
 
 
         //=======================================================================
+        /* Action Listeners
+         */
+
+        btnSeDeplacer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChanged();
+                notifyObservers(Message.VALIDERDEPLACEMENT);
+                clearChanged();
+            }
+        });
+
+        btnRetour.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChanged();
+                notifyObservers(Message.ANNULER);
+                clearChanged();
+            }
+        });
 
 
     }
@@ -85,7 +109,7 @@ public class VueDeplacement extends Vue {
 
 
     public JButton getBtnretour() {
-        return btnretour;
+        return btnRetour;
     }
 
     @Override
@@ -112,6 +136,9 @@ public class VueDeplacement extends Vue {
     public void setVisible(Boolean b) {
         windows.setVisible(b);
     }
+
+
+
 }
 
 

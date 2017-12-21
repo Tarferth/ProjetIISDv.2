@@ -12,5 +12,5 @@ public enum Message {
     VALIDERDEPLACEMENT,
     FINTOUR,
     AUTREACTION,
-    ANNULER
+    ANNULER,
 }

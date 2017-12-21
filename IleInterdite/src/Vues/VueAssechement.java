@@ -5,6 +5,7 @@
  */
 package Vues;
 
+import Controller.Message;
 import Model.NomTuile;
 import static Model.NomTuile.LA_CAVERNE_DES_OMBRES;
 import static Model.NomTuile.LA_PORTE_DE_BRONZE;
@@ -15,6 +16,8 @@ import Utils.Utils;
 import java.awt.GridLayout;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
@@ -25,7 +28,7 @@ public class VueAssechement extends Vue {
     private final JButton btnRetour;
     private final JButton btnAssecher;
     private final JPanel panelBoutons ;
-    private final JComboBox listeass;
+    private final JComboBox<Object> listeAss;
 
     public VueAssechement (){
 
@@ -44,14 +47,8 @@ public class VueAssechement extends Vue {
 
 
         /*Liste déroulante des assèchements*/
-        ArrayList<NomTuile> nomTuiles = new ArrayList<>(); //Doit être dans le contrôleur//
-        nomTuiles.add(LE_PONT_DES_ABIMES);                 //On doit pouvoir add avec getTuilesAccessibles//
-        nomTuiles.add(LA_PORTE_DE_BRONZE);
-        nomTuiles.add(LA_CAVERNE_DES_OMBRES);
-        nomTuiles.add(LA_PORTE_DE_FER);
-        nomTuiles.add(LA_PORTE_D_OR);
-        this.listeass = new JComboBox(nomTuiles.toArray());
-        mainPanels.add(listeass);
+        this.listeAss = new JComboBox<>();
+        mainPanels.add(listeAss);
 
         // SUD : les boutons
         //Bouton retour en bas de la fenêtre//
@@ -69,6 +66,26 @@ public class VueAssechement extends Vue {
         panelBoutons.add(btnRetour);
         panelBoutons.add(btnAssecher);
         windows.setResizable(false);
+
+        /* ACTION LISTENERS */
+        btnAssecher.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChanged();
+                notifyObservers(Message.VALIDERASSECHEMENT);
+                clearChanged();
+            }
+        });
+
+        btnRetour.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChanged();
+                notifyObservers(Message.ANNULER);
+                clearChanged();
+            }
+        });
+
     }
     public JButton getBtnRetour() {
         return btnRetour;
@@ -80,6 +97,7 @@ public class VueAssechement extends Vue {
 
 
 
+
     public static void main(String [] args) {
         // Instanciation de la fenêtre
         VueAssechement vueass = new VueAssechement();
@@ -88,6 +106,24 @@ public class VueAssechement extends Vue {
     @Override
     public void setVisible(Boolean b) {
         windows.setVisible(b);
+    }
+
+    @Override
+    public NomTuile getTuileSelectionnee(){
+        NomTuile tuileTrouvee = null;
+        int i  = 0;
+        while(tuileTrouvee == null && i < NomTuile.values().length){
+            if(NomTuile.values()[i] != null && NomTuile.values()[i].toString().equals(listeAss.getSelectedItem().toString())){
+                tuileTrouvee = NomTuile.values()[i];
+            }
+            i++;
+        }
+        return tuileTrouvee;
+    }
+
+    @Override
+    public void setTuilesAss(ArrayList<String> tu){
+        listeAss.setModel(new DefaultComboBoxModel<>(tu.toArray()));
     }
     //============================================================================
 

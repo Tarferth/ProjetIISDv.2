@@ -13,7 +13,8 @@ public abstract class Vue extends Observable {
     public void abonner(Observer observateur){ this.addObserver(observateur);}
     public abstract void setVisible(Boolean b);
 
-    public void setTuilesDispo(ArrayList<String> tu){}
+    public void setTuilesDispo(ArrayList<String> tu){};
     public NomTuile getTuileSelectionnee(){return null;}
 
+    public void setTuilesAss(ArrayList<String> tu){};
 }
