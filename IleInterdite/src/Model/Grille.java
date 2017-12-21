@@ -5,6 +5,8 @@
  */
 package Model;
 
+import Controller.Message;
+
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -17,7 +19,7 @@ public class Grille {
 
     private Tuile[][] tuiles = new Tuile[6][6];
 
-    public Grille(ArrayList<Tuile> tu){
+    public Grille(){
         /*
                j
           i |0.0|0.1|0.2|0.3|0.4|0.5|    plateau de jeu :         |0.2|0.3|
@@ -54,7 +56,7 @@ public class Grille {
         int[] coordonnees = new int[2];
         for(int i = 0; i < 6 ; i++) { // Ligne
             for (int j = 0; j < 6; j++) { // Colonne
-                if (tuile.toString().equals(tuiles[i][j].toString())){
+                if (tuiles[i][j] != null && tuile.toString().equals(tuiles[i][j].toString())){
                     coordonnees[0] = i;
                     coordonnees[1] = j;
                 }
@@ -65,11 +67,11 @@ public class Grille {
 
 
     
-    public ArrayList<Tuile> getTuilesAdjacentes(Tuile tu, Messages message){
+    public ArrayList<Tuile> getTuilesAdjacentes(Tuile tu, Message message){
         ArrayList<Tuile> tuilesAdjacentes = new ArrayList<>();
         int[] coordonnees = this.getCoordonneesTuile(tu);
 
-        if (message == Messages.ASSECHER){
+        if (message == Message.ASSECHER){
             if (coordonnees[0] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1]] != null && tuiles[coordonnees[0]-1][coordonnees[1]].estInondee()){  // On vérifie que la tuile en haut est inondée
                 tuilesAdjacentes.add(tuiles[coordonnees[0]-1][coordonnees[1]]);                 // Si oui, on l'ajoute à la collection
             }
@@ -87,7 +89,7 @@ public class Grille {
             }
         }
 
-        if (message == Messages.DEPLACER){
+        if (message == Message.DEPLACER){
             if (coordonnees[0] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1]] != null && !tuiles[coordonnees[0]-1][coordonnees[1]].aSombre()){ // On vérifie que la tuile en haut n'a pas sombré
                 tuilesAdjacentes.add(tuiles[coordonnees[0] - 1][coordonnees[1]]);               // On l'ajoute à la collection
             }
@@ -106,11 +108,11 @@ public class Grille {
         return tuilesAdjacentes;
     }
 
-    public ArrayList<Tuile> getTuilesDiagonales(Tuile tu, Messages message){
+    public ArrayList<Tuile> getTuilesDiagonales(Tuile tu, Message message){
         ArrayList<Tuile> tuilesDiagonales = new ArrayList<>();
         int[] coordonnees = this.getCoordonneesTuile(tu);
 
-        if (message == Messages.ASSECHER){
+        if (message == Message.ASSECHER){
             if (coordonnees[0] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1]-1] != null && tuiles[coordonnees[0] - 1][coordonnees[1]-1].estInondee()){
                 tuilesDiagonales.add(tuiles[coordonnees[0] - 1][coordonnees[1]-1]);
             }
@@ -129,7 +131,7 @@ public class Grille {
 
         }
 
-        if (message == Messages.DEPLACER) {
+        if (message == Message.DEPLACER) {
             if (coordonnees[0] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1] - 1] != null && !tuiles[coordonnees[0] - 1][coordonnees[1] - 1].aSombre()) {
                 tuilesDiagonales.add(tuiles[coordonnees[0] - 1][coordonnees[1] - 1]);
             }
@@ -155,18 +157,31 @@ public class Grille {
 
 
     public ArrayList getTuilesNonCoulees(Tuile tu){
-        ArrayList<Tuile> tuilesNonCoulees = new ArrayList<>();
+        /*ArrayList<Tuile> tuilesNonCoulees = new ArrayList<>();
+        ArrayList<Tuile> tu = new ArrayList<>();
 
-        for(int i = 0; i < tuiles.length; i++){
-            for(int j = 0; i < tuiles.length; j++){
-                if (tuiles[i][j].estInondee() || tuiles[i][j].estSeche()){
-                    tuilesNonCoulees.add(tuiles[i][j]);
-                }
+        for(Tuile tuile : tu) {
+            if (tuile != null && !tuile.aSombre()){
+                tuilesNonCoulees.add(tuile);
             }
         }
 
         tuilesNonCoulees.remove(tu);
         return tuilesNonCoulees;
+        */
+
+        ArrayList<Tuile>tuilesNonCoulees = new ArrayList<>();
+
+        for(int i = 0; i < tuiles.length ; i++) {
+            for (int j = 0; j < tuiles.length; j++) {
+                if (tuiles[i][j] != null && !(tuiles[i][j].aSombre())){
+                    tuilesNonCoulees.add(tuiles[i][j]);
+                }
+            }
+        }
+        tuilesNonCoulees.remove(tu);
+        return tuilesNonCoulees;
+
 
     }
 
@@ -175,4 +190,17 @@ public class Grille {
     public Tuile[][] getTuiles() {
         return tuiles;
     }
+
+    public Tuile getTuile(NomTuile nomTuile){
+        Tuile tuile = new Tuile();
+        for(int i = 0; i < tuiles.length ; i++) { // Lignes
+            for (int j = 0; j < tuiles.length; j++) { // Colonnes
+                if (tuiles[i][j] != null && (nomTuile.toString().equals(tuiles[i][j].toString()))){
+                    tuile = tuiles[i][j];
+                }
+            }
+        }
+        return tuile;
+    }
+
 }

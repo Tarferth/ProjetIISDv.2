@@ -1,6 +1,8 @@
 package Model;
 
 import java.util.ArrayList;
+
+import Controller.Message;
 import Utils.Utils.Pion;
 
 public abstract class Aventurier {
@@ -11,6 +13,7 @@ public abstract class Aventurier {
     private Tuile tuile;
     private Pion pion;
     private String pseudo;
+    private RôleAventurier typeA;
 
     public Aventurier(String pseudo, Tuile tuile){
         this.pseudo = pseudo;
@@ -51,15 +54,16 @@ public abstract class Aventurier {
         pos = t;
     }
 
+
     /* POUR TOUTES LES SOUS-CLASSES */
 
 
-    public ArrayList<Tuile> getTuilesAccessibles(Grille grille){
-        return grille.getTuilesAdjacentes(getPos(), Messages.DEPLACER);
+    public ArrayList getTuilesAccessibles(Grille grille){
+        return grille.getTuilesAdjacentes(getPos(), Message.DEPLACER);
     }
 
-    public ArrayList<Tuile> getTuilesAssechables(Grille grille){
-        return grille.getTuilesAdjacentes(getPos(), Messages.ASSECHER);
+    public ArrayList getTuilesAssechables(Grille grille){
+        return grille.getTuilesAdjacentes(getPos(), Message.ASSECHER);
     }
 
 

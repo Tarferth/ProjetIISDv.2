@@ -53,7 +53,7 @@ public class test {
 
             panelCentre=new JPanel(new GridLayout(3,1,0,20));
             panelCentreHaut=new JPanel(new GridLayout(1,3));
-            panelCentreCentre=new JPanel(new GridLayout(1,4));
+            panelCentreCentre=new JPanel(new GridLayout(4,1));
 
             //Création de borders pour structurer l'IHM
             TitledBorder borderNombreJoueurs= BorderFactory.createTitledBorder("Nombre de Joueurs");
@@ -76,7 +76,6 @@ public class test {
             panelCentreHaut.add(deuxJoueurs);
             ensembleDesBtnJoueurs.put(ensembleDesBtnJoueurs.size(), deuxJoueurs);
             groupeJoueurs.add(deuxJoueurs);
-            deuxJoueurs.setSelected(true);
 
             troisJoueurs = new JRadioButton("3");
             panelCentreHaut.add(troisJoueurs);
@@ -102,7 +101,7 @@ public class test {
 
             panelCentreCentre.add(labelpseudoJ1);
             panelCentreCentre.add(pseudoJoueurs[0]);
-            pseudoJoueurs[0].setEnabled(false);
+
 
             panelCentreCentre.add(labelpseudoJ2);
             panelCentreCentre.add(pseudoJoueurs[1]);
@@ -125,12 +124,50 @@ public class test {
 
             /* GESTION DES ACTIONS (Actions listeners et mouses listeners) */
 
+            // Désactiver le champ de texte pour le pseudo des joueurs 3 et 4 quand on veut jouer à 2
             deuxJoueurs.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (deuxJoueurs.isSelected()) {
+                        pseudoJoueurs[2].setEnabled(false);
+                        pseudoJoueurs[3].setEnabled(false);
                     }
+
+                    else{
+                        pseudoJoueurs[2].setEnabled(true);
+                        pseudoJoueurs[3].setEnabled(true);
+                    }
+                }
             });
+
+            // Désactiver le champ de texte pour le pseudo du joueur 4 quand on veut jouer à 3
+            troisJoueurs.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(troisJoueurs.isSelected()){
+                        pseudoJoueurs[3].setEnabled(false);
+                        pseudoJoueurs[2].setEnabled(true); // On réactive le champ du joueur 3
+                    }
+                }
+
+
+            });
+
+            // Rendre tous les champs précedemment désactivés actifs pour gérer l'erreur de saisie
+            quatreJoueurs.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(quatreJoueurs.isSelected()){
+                        pseudoJoueurs[2].setEnabled(true);
+                        pseudoJoueurs[3].setEnabled(true);
+                    }
+                }
+            });
+
+
+
+
+
 
 
 

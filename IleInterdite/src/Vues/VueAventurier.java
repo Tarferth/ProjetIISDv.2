@@ -1,8 +1,12 @@
 package Vues;
 
+import Controller.Message;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,10 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.border.MatteBorder;
-import Utils.Utils.Pion;
 
- 
-public class VueAventurier  {
+
+public class VueAventurier extends Vue {
      
     private final JPanel panelBoutons ;
     private final JPanel panelCentre ;
@@ -31,7 +34,7 @@ public class VueAventurier  {
    
    
     
-    public VueAventurier(String nomJoueur, String nomAventurier, Color couleur){
+    public VueAventurier(String nomJoueur, String nomAventurier, Color couleur, int index){
 
         this.window = new JFrame();
         window.setSize(350, 200);
@@ -39,6 +42,7 @@ public class VueAventurier  {
         window.setTitle(nomJoueur);
         mainPanel = new JPanel(new BorderLayout());
         this.window.add(mainPanel);
+        window.setResizable(false);
 
         mainPanel.setBackground(new Color(230, 230, 230));
         mainPanel.setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
@@ -80,8 +84,45 @@ public class VueAventurier  {
         this.panelBoutons.add(btnAutreAction);
         this.panelBoutons.add(btnTerminerTour);
 
-        this.window.setVisible(true);
-    } 
+
+        btnBouger.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChanged();
+                notifyObservers(Message.DEPLACER);
+                clearChanged();
+            }
+        });
+
+        btnAssecher.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChanged();
+                notifyObservers(Message.ASSECHER);
+                clearChanged();
+            }
+        });
+        btnAutreAction.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChanged();
+                notifyObservers(Message.AUTREACTION);
+                clearChanged();
+            }
+        });
+
+        btnTerminerTour.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChanged();
+                notifyObservers(Message.FINTOUR);
+                clearChanged();
+            }
+        });
+
+    }
+
+
     
     public void setPosition(String pos) {
         this.position.setText(pos);
@@ -106,10 +147,11 @@ public class VueAventurier  {
     public JButton getBtnTerminerTour() {
         return btnTerminerTour;
     }
- 
-     public static void main(String [] args) {
-        // Instanciation de la fenêtre 
-        VueAventurier vueAventurier = new VueAventurier("Manon", "Explorateur",Pion.ROUGE.getCouleur() );
+
+
+    @Override
+    public void setVisible(Boolean b) {
+        window.setVisible(b);
     }
 }
 

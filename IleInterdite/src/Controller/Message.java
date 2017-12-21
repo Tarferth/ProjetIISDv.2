@@ -1,0 +1,16 @@
+package Controller;
+
+public enum Message {
+
+    LANCERPARTIE,
+    DEUXJOUEURS,
+    TROISJOUEURS,
+    QUATREJOUEURS,
+    ASSECHER,
+    VALIDERASSECHEMENT,
+    DEPLACER,
+    VALIDERDEPLACEMENT,
+    FINTOUR,
+    AUTREACTION,
+    ANNULER
+}

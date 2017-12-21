@@ -23,6 +23,10 @@ public class Tuile {
        setNom(nom);
        this.etat = etat;
     }
+
+    public Tuile(){
+
+    };
     
     // Etats de la tuile
     
@@ -44,18 +48,12 @@ public class Tuile {
         if (etat == 0){                                                         // Si la case est Seche
             etat++;                                                             // Alors on passe l'état à "estInnondee"
         }
-        else{                                                                   // Dans les autres cas on affiche un message d'erreur 
-            System.out.println("Impossible d'innonder cette case"); // Pour la mise au point seulement
-        }
         
     }
     
     public void assecher(){
         if (etat == 1){                                                         // Si la case est Innondée
             etat--;                                                             // Alors on passe l'état à "estSeche"
-        }
-        else{                                                                   // Dans les autres cas on affiche un message d'erreur
-            System.out.println("Impossible d'assécher cette case");             // Pour la mise au point seulement
         }
     }
 
@@ -93,6 +91,12 @@ public class Tuile {
         this.nom = nom;
     }
 
+    public void setEtat(int etat){
+        this.etat = etat;
+    }
+
+
+
     // Ajout et suppression des aventuriers sur la tuile
 
 
@@ -110,6 +114,6 @@ public class Tuile {
 
 
 
-    
-    
+
+
 }
