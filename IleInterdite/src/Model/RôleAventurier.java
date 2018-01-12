@@ -10,5 +10,5 @@ package Model;
  * @author avognonm
  */
 public enum RôleAventurier {
-    Explorateur,Ingénieur,Messager,Navigator,Pilote,Plongeur;
+    explorateur,ingénieur,messager,navigator,pilote,plongeur;
 }

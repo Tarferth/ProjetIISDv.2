@@ -102,11 +102,37 @@ public class Grille {
             if (coordonnees[1] != 5 && tuiles[coordonnees[0]][coordonnees[1] +1] != null && !tuiles[coordonnees[0]][coordonnees[1]+1].aSombre()){ // On vérifie que la tuile à droite n'a pas sombré
                 tuilesAdjacentes.add(tuiles[coordonnees[0]][coordonnees[1] + 1]);               // On l'ajoute à la collection
             }
-
+        
         }
 
         return tuilesAdjacentes;
     }
+    
+    public ArrayList<Tuile> getTuilesAdjacentes(Tuile tu){
+        ArrayList<Tuile> tuilesAdjacentes = new ArrayList<>();
+        int[] coordonnees = this.getCoordonneesTuile(tu);
+
+            if (coordonnees[0] != 0 && tuiles[coordonnees[0] - 1][coordonnees[1]] != null ){  
+                tuilesAdjacentes.add(tuiles[coordonnees[0]-1][coordonnees[1]]);                 
+            }
+            if (coordonnees[0] != 5 && tuiles[coordonnees[0] +1][coordonnees[1]] != null ){ 
+                tuilesAdjacentes.add(tuiles[coordonnees[0]+1][coordonnees[1]]);                
+            }
+            if (coordonnees[1] != 0 && tuiles[coordonnees[0]][coordonnees[1] -1] != null){ 
+                tuilesAdjacentes.add(tuiles[coordonnees[0]][coordonnees[1]-1]);               
+            }
+            if (coordonnees[1] != 5 && tuiles[coordonnees[0]][coordonnees[1] +1] != null ){ 
+                tuilesAdjacentes.add(tuiles[coordonnees[0]][coordonnees[1]+1]);                
+            }
+            if (tu.estInondee()) {                                                             
+                tuilesAdjacentes.add(tu);                                                      
+            }
+        
+
+
+        return tuilesAdjacentes;
+    }
+    
 
     public ArrayList<Tuile> getTuilesDiagonales(Tuile tu, Message message){
         ArrayList<Tuile> tuilesDiagonales = new ArrayList<>();

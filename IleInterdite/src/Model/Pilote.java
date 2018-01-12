@@ -10,9 +10,21 @@ public class Pilote extends Aventurier {
         super(pseudo, tuile);
         setPion(Pion.BLEU);
     }
+    
+    
+    public ArrayList getTuilesAdj(Grille grille){
+            return super.getTuilesAccessibles(grille);    
+    }
+    
 
     @Override
     public ArrayList getTuilesAccessibles(Grille grille){
-        return grille.getTuilesNonCoulees(getPos());
+        if(this.getMoveSpé() == false ){
+            return grille.getTuilesNonCoulees(getPos());
+        }else{
+            return super.getTuilesAccessibles(grille);
+        }
+    
     }
+        
 }

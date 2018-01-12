@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ThreadLocalRandom;
+import static Model.RôleAventurier.pilote;
 
 
 /**
@@ -67,7 +68,6 @@ public class Controller implements Observer {
         vueInscription.setVisible(true);
 
 
-
     }
 
     public void addView(Vue vue){
@@ -94,10 +94,6 @@ public class Controller implements Observer {
 
 
 
-
-
-
-
     @Override
     public void update(Observable o, Object arg){
         /* INSCRIPTION JOUEURS */
@@ -109,12 +105,12 @@ public class Controller implements Observer {
             ArrayList<String> pseudosJoueurs = ((VueInscription)o).getPseudosJoueurs();
 
             ArrayList<String> typeAventuriers = new ArrayList<>();
-            typeAventuriers.addAll(Arrays.asList("Messager", "Ingénieur", "Navigateur", "Pilote", "Explorateur")); // Plongeur pas encore géré
+            typeAventuriers.addAll(Arrays.asList("Messager", "Ingénieur", "Navigateur", "Pilote", "Explorateur","Plongeur")); // Plongeur pas encore géré
 
             //Attribution des types d'aventurier au hasard
 
             for(int i = 0; i < pseudosJoueurs.size(); i++){
-                int randomAventurier = ThreadLocalRandom.current().nextInt(0,5-i);
+                int randomAventurier = ThreadLocalRandom.current().nextInt(0,6-i);
 
 
                 switch(typeAventuriers.get(randomAventurier)){
@@ -153,6 +149,14 @@ public class Controller implements Observer {
                         VueAventurier vueAventurier5 = new VueAventurier(pseudosJoueurs.get(i), "Explorateur", Pion.VERT.getCouleur(), aventuriers.size()-1);
                         addViewAventurier(vueAventurier5);
                         break;
+                        
+                    case "Plongeur":
+                        Aventurier plongeur = new Plongeur(pseudosJoueurs.get(i),this.getGrille().getTuile(NomTuile.LA_PORTE_DE_FER));
+                        aventuriers.add(plongeur);
+
+                        VueAventurier vueAventurier6 = new VueAventurier(pseudosJoueurs.get(i), "plongeur", Pion.ORANGE.getCouleur(), aventuriers.size()-1);
+                        addViewAventurier(vueAventurier6);
+                        break;
                 }
 
                 typeAventuriers.remove(typeAventuriers.get(randomAventurier)); //Pour éviter les doublons
@@ -182,7 +186,12 @@ public class Controller implements Observer {
 
             else if(((Vue) o).getTuileSelectionnee() != null){
                 getJoueurCourant().setPos(getGrille().getTuile(((Vue) o).getTuileSelectionnee()));
-                deplacer(getJoueurCourant());
+                if(getJoueurCourant().getClass() == Pilote.class){
+                    getJoueurCourant().setMoveSpé(true);
+                    if(getJoueurCourant().getTuilesAccessibles(grille).contains(getJoueurCourant().getPosPrecedente())){
+                        getJoueurCourant().setMoveSpé(false);
+                    }
+                }
                 vues.get(1).setVisible(false);
                 nbActions++;
             }
@@ -233,6 +242,7 @@ public class Controller implements Observer {
 
             if(finTour){
                 desactiverBtn(joueurCourant%aventuriers.size());
+                getJoueurCourant().setMoveSpé(false);
                 joueurCourant++;
                 nbActions = 0;
                 finTour = false;
