@@ -1,6 +1,9 @@
-package Model;
+package Aventurier;
 
+import Aventurier.Aventurier;
 import Controller.Message;
+import Grille.Grille;
+import Grille.Tuile;
 import Utils.Utils.Pion;
 
 import java.util.ArrayList;

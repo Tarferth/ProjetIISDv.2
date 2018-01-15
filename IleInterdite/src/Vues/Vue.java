@@ -1,6 +1,6 @@
 package Vues;
 
-import Model.NomTuile;
+import Grille.NomTuile;
 
 import java.util.ArrayList;
 import java.util.Observable;

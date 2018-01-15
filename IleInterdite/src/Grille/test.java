@@ -1,4 +1,4 @@
-package Model;
+package Grille;
 
 public class test {
 

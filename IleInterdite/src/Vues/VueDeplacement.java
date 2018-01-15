@@ -6,10 +6,10 @@
 package Vues;
 
 import Controller.Message;
-import Model.Aventurier;
-import Model.Grille;
-import Model.NomTuile;
-import static Model.NomTuile.*;
+import Aventurier.Aventurier;
+import Grille.Grille;
+import Grille.NomTuile;
+import static Grille.NomTuile.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;

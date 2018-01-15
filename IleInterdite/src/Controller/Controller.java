@@ -5,11 +5,19 @@
  */
 package Controller;
 
+import Grille.Grille;
+import Grille.NomTuile;
+import Aventurier.Navigateur;
+import Aventurier.Ingenieur;
+import Aventurier.Plongeur;
+import Aventurier.Explorateur;
+import Aventurier.Pilote;
+import Aventurier.Messager;
+import Aventurier.Aventurier;
 import Utils.Parameters;
 import Utils.Utils;
 import Utils.Utils.*;
 import Vues.*;
-import Model.*;
 import javafx.scene.paint.Color;
 
 import javax.swing.*;
@@ -18,7 +26,8 @@ import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ThreadLocalRandom;
-import static Model.RôleAventurier.pilote;
+import static Aventurier.RôleAventurier.pilote;
+import static Utils.Utils.EtatTuile.*;
 
 
 /**
@@ -42,15 +51,15 @@ public class Controller implements Observer {
     public Controller(){
         if (Parameters.LOGS) System.out.println("Début du jeu");
 
-        getGrille().getTuiles()[2][2].setEtat(2);
-        getGrille().getTuiles()[3][2].setEtat(2);
-        getGrille().getTuiles()[4][2].setEtat(2);
-        getGrille().getTuiles()[3][4].setEtat(2);
-        getGrille().getTuiles()[0][3].setEtat(1);
-        getGrille().getTuiles()[3][1].setEtat(1);
-        getGrille().getTuiles()[3][3].setEtat(1);
-        getGrille().getTuiles()[3][5].setEtat(1);
-        getGrille().getTuiles()[5][3].setEtat(1);
+        getGrille().getTuiles()[2][2].setEtat(COULEE);
+        getGrille().getTuiles()[3][2].setEtat(COULEE);
+        getGrille().getTuiles()[4][2].setEtat(COULEE);
+        getGrille().getTuiles()[3][4].setEtat(COULEE);
+        getGrille().getTuiles()[0][3].setEtat(INONDEE);
+        getGrille().getTuiles()[3][1].setEtat(INONDEE);
+        getGrille().getTuiles()[3][3].setEtat(INONDEE);
+        getGrille().getTuiles()[3][5].setEtat(INONDEE);
+        getGrille().getTuiles()[5][3].setEtat(INONDEE);
 
 
         //Création des vues
@@ -213,9 +222,11 @@ public class Controller implements Observer {
             }
 
             else if(((Vue) o).getTuileSelectionnee() != null){
-                getJoueurCourant().setPos(getGrille().getTuile(((Vue) o).getTuileSelectionnee()));
-                getGrille().getTuile(((Vue) o).getTuileSelectionnee()).setEtat(0);
+                getGrille().getTuile(((Vue) o).getTuileSelectionnee()).setEtat(ASSECHEE);
                 vues.get(2).setVisible(false);
+                if(getJoueurCourant().getClass() == Ingenieur.class){
+                    
+                }
                 nbActions++;
             }
         }else if(arg == Message.ANNULER){

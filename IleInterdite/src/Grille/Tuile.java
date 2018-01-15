@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package Grille;
 
+import Aventurier.Aventurier;
+import Utils.Utils.EtatTuile;
+import static Utils.Utils.EtatTuile.*;
 import java.util.*;
 
 /**
@@ -16,10 +19,10 @@ public class Tuile {
     private ArrayList<Aventurier> aventuriers = new ArrayList();
     private int col;
     private int lig;
-    private int etat;
+    private EtatTuile etat;
     private NomTuile nom;
     
-    public Tuile(NomTuile nom, int etat){
+    public Tuile(NomTuile nom, EtatTuile etat){
        setNom(nom);
        this.etat = etat;
     }
@@ -31,31 +34,20 @@ public class Tuile {
     // Etats de la tuile
     
     public boolean estSeche(){
-        return etat == 0;
+        return etat == ASSECHEE;
     }
     
     public boolean estInondee(){
-        return etat == 1;
+        return etat == INONDEE;
     }
     
     public boolean aSombre(){
-        return etat == 2;
+        return etat == COULEE;
     }
     
     // Gestion des etats
     
-    public void innonder(){
-        if (etat == 0){                                                         // Si la case est Seche
-            etat++;                                                             // Alors on passe l'état à "estInnondee"
-        }
-        
-    }
-    
-    public void assecher(){
-        if (etat == 1){                                                         // Si la case est Innondée
-            etat--;                                                             // Alors on passe l'état à "estSeche"
-        }
-    }
+
 
     @Override
     public String toString(){
@@ -76,6 +68,10 @@ public class Tuile {
         return nom;
     }
     
+    public EtatTuile getEtat() {
+        return etat;
+    }
+    
 
     //Setters
     
@@ -91,7 +87,7 @@ public class Tuile {
         this.nom = nom;
     }
 
-    public void setEtat(int etat){
+    public void setEtat(EtatTuile etat){
         this.etat = etat;
     }
 

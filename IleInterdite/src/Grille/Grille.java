@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package Grille;
 
 import Controller.Message;
+import static Utils.Utils.EtatTuile.ASSECHEE;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -41,7 +42,7 @@ public class Grille {
 
                 }
                 else{
-                    tuiles[i][j] = new Tuile(NomTuile.values()[x], 0);
+                    tuiles[i][j] = new Tuile(NomTuile.values()[x],ASSECHEE);
                     x++;
                 }
 

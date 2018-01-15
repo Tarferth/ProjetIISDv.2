@@ -1,5 +1,7 @@
-package Model;
+package Aventurier;
 
+import Aventurier.Aventurier;
+import Grille.Tuile;
 import Utils.Utils.Pion;
 
 public class Navigateur extends Aventurier {

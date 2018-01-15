@@ -6,12 +6,12 @@
 package Vues;
 
 import Controller.Message;
-import Model.NomTuile;
-import static Model.NomTuile.LA_CAVERNE_DES_OMBRES;
-import static Model.NomTuile.LA_PORTE_DE_BRONZE;
-import static Model.NomTuile.LA_PORTE_DE_FER;
-import static Model.NomTuile.LA_PORTE_D_OR;
-import static Model.NomTuile.LE_PONT_DES_ABIMES;
+import Grille.NomTuile;
+import static Grille.NomTuile.LA_CAVERNE_DES_OMBRES;
+import static Grille.NomTuile.LA_PORTE_DE_BRONZE;
+import static Grille.NomTuile.LA_PORTE_DE_FER;
+import static Grille.NomTuile.LA_PORTE_D_OR;
+import static Grille.NomTuile.LE_PONT_DES_ABIMES;
 import Utils.Utils;
 import java.awt.GridLayout;
 import javax.swing.*;
