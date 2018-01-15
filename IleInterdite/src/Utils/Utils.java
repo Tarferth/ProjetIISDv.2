@@ -5,7 +5,7 @@
  */
 package Utils;
 
-import Model.Aventurier;
+import Aventurier.Aventurier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -100,4 +100,26 @@ public class Utils {
     public static void afficherInformation(String message) {
         JOptionPane.showMessageDialog(null, message, "Information", JOptionPane.OK_OPTION);
     }
+    
+        public static enum Cartes{
+        CRISTAL("Le Cristal ardent"), 
+        STATUE("La Statue du zéphir"),
+        PIERRE("La Pierre sacrée"),
+        CALICE("Le Calice de l'onde"),
+        EAUX("Montée des eaux"),
+        HELICOPTERE("Hélicoptère"),
+        SABLE("Sac de sable");
+
+        String libelle;
+        
+        Cartes(String libelle) {
+            this.libelle = libelle ;
+        }
+
+        @Override
+        public String toString() {
+            return this.libelle;
+        }
+    }
+
 }

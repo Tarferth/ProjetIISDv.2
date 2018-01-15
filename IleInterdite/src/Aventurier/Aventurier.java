@@ -1,8 +1,10 @@
-package Model;
+package Aventurier;
 
 import java.util.ArrayList;
 
 import Controller.Message;
+import Grille.Grille;
+import Grille.Tuile;
 import Utils.Utils.Pion;
 
 public abstract class Aventurier {

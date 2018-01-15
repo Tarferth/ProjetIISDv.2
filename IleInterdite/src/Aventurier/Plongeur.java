@@ -1,6 +1,10 @@
-package Model;
+package Aventurier;
 
+import Aventurier.Aventurier;
+import Grille.Grille;
+import Grille.Tuile;
 import static Controller.Message.DEPLACER;
+import static Utils.Utils.EtatTuile.*;
 import Utils.Utils.Pion;
 import java.util.ArrayList;
 
@@ -26,10 +30,10 @@ public class Plongeur extends Aventurier {
             
             for (Tuile tuile : grille.getTuilesAdjacentes(tuileL)) {
                 
-                if (!tuile.aSombre() && !tuilesPossibles.contains(tuile))
+                if (tuile.getEtat()!= COULEE && !tuilesPossibles.contains(tuile))
                     tuilesPossibles.add(tuile);
                 
-                if (!tuile.estSeche() && !tuilesTrav.contains(tuile))
+                if (tuile.getEtat()!= ASSECHEE && !tuilesTrav.contains(tuile))
                     tuilesTrav.add(tuile);
             }
         }
