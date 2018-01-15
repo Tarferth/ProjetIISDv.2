@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import Controller.Message;
 import Grille.Grille;
 import Grille.Tuile;
+import Pioche.Carte;
 import Utils.Utils.Pion;
 
 public abstract class Aventurier {
 
-    private int nbActionsMax = 3;
+    private final static int nbActionsMax = 3;
     private Tuile pos;
     private Tuile posPrecedente;
     private Tuile tuile;
@@ -17,12 +18,14 @@ public abstract class Aventurier {
     private String pseudo;
     private RôleAventurier typeA;
     private boolean moveSpé;// si le pilote à utilise son pouvoir
+    private ArrayList<Carte> main;
 
     
     public Aventurier(String pseudo, Tuile tuile){
         this.pseudo = pseudo;
         setPos(tuile);
         moveSpé = false;
+        main = new ArrayList();
     }
 
     
@@ -54,11 +57,13 @@ public abstract class Aventurier {
         return moveSpé;
     }
 
+
+    
+    
+
     /* SETTERS */
 
-    public void setNbActionsMax(int nbActions) {
-        this.nbActionsMax = nbActions;
-    }
+
 
     public void setPion(Pion pion) {
         this.pion = pion;

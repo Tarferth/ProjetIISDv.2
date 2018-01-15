@@ -27,6 +27,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ThreadLocalRandom;
 import static Aventurier.RôleAventurier.pilote;
+import static Grille.NomTresor.*;
+import Grille.Tresor;
 import static Utils.Utils.EtatTuile.*;
 
 
@@ -46,6 +48,10 @@ public class Controller implements Observer {
     private ArrayList<Aventurier>aventuriers = new ArrayList<>();
     private ArrayList<Vue>vues = new ArrayList<>();
     Grille grille = new Grille();
+    private Tresor calice = new Tresor(CALICE);
+    private Tresor pierre = new Tresor(PIERRE);
+    private Tresor statue = new Tresor(STATUE);
+    private Tresor cristal = new Tresor(CRISTAL);
 
 
     public Controller(){

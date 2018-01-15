@@ -21,10 +21,12 @@ public class Tuile {
     private int lig;
     private EtatTuile etat;
     private NomTuile nom;
+    private Tresor tresor;
     
     public Tuile(NomTuile nom, EtatTuile etat){
        setNom(nom);
        this.etat = etat;
+       tresor=null;
     }
 
     public Tuile(){
@@ -89,6 +91,10 @@ public class Tuile {
 
     public void setEtat(EtatTuile etat){
         this.etat = etat;
+    }
+    
+    public void setTresor(Tresor tresor){
+        this.tresor= tresor;
     }
 
 
