@@ -55,6 +55,7 @@ public class Carte_Tresor{
     public Carte_Tresor() {
         this.pioche = new ArrayList();
         this.defausse = new ArrayList();
+        this.initPioche();
     }
     
     public void initPioche(){

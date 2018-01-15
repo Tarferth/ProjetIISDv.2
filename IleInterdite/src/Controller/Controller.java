@@ -28,7 +28,13 @@ import java.util.Observer;
 import java.util.concurrent.ThreadLocalRandom;
 import static Aventurier.RôleAventurier.pilote;
 import static Grille.NomTresor.*;
+import static Grille.NomTuile.HELIPORT;
 import Grille.Tresor;
+import Pioche.Carte;
+import Pioche.Carte_Inondations;
+import Pioche.Carte_Tresor;
+import static Utils.Utils.Cartes.EAUX;
+import static Utils.Utils.Cartes.HELICOPTERE;
 import static Utils.Utils.EtatTuile.*;
 
 
@@ -48,10 +54,14 @@ public class Controller implements Observer {
     private ArrayList<Aventurier>aventuriers = new ArrayList<>();
     private ArrayList<Vue>vues = new ArrayList<>();
     Grille grille = new Grille();
+    private Carte_Tresor piocheTresor = new  Carte_Tresor();
+    private Carte_Inondations piocheInondations = new Carte_Inondations();
     private Tresor calice = new Tresor(CALICE,grille);
     private Tresor pierre = new Tresor(PIERRE,grille);
     private Tresor statue = new Tresor(STATUE,grille);
     private Tresor cristal = new Tresor(CRISTAL,grille);
+    private int nivEau = 0;
+    private boolean partiePerdue = false;
 
 
     public Controller(){
@@ -101,13 +111,6 @@ public class Controller implements Observer {
             activerBtn(joueurCourant%aventuriers.size());
         }
     }
-
-
-
-
-
-
-
 
     @Override
     public void update(Observable o, Object arg){
@@ -260,10 +263,17 @@ public class Controller implements Observer {
             if(finTour){
                 desactiverBtn(joueurCourant%aventuriers.size());
                 getJoueurCourant().setMoveSpé(false);
-                joueurCourant++;
-                nbActions = 0;
-                finTour = false;
-                activerBtn(joueurCourant%aventuriers.size());
+                piocheTresor();
+                
+                
+                if(!this.victoire()){  
+                    joueurCourant++;
+                    nbActions = 0;
+                    finTour = false;
+                    activerBtn(joueurCourant%aventuriers.size());
+                }else{
+                    
+                }
             }
         }
 
@@ -288,8 +298,63 @@ public class Controller implements Observer {
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnTerminerTour().setEnabled(true);
     }
 
-
-
+    public boolean tresorsRecup(){//verifie si tout les trésors ont été récupere
+        return calice.isRecuperer() &&  pierre.isRecuperer() && statue.isRecuperer() && cristal.isRecuperer();
+    }
+    
+    public boolean positionHeliport(){//verifier si tout les joueurs sont sur l'héliport
+        boolean position =true;
+        for(Aventurier a : aventuriers){
+            position = position && ( a.getPos().getNom() == HELIPORT  );
+        }
+        
+        return position;
+    }
+    
+    public boolean possedeHelico(){//verifie si les joueur possede au moins un hélioptére dans leur main
+        boolean helico = false;
+        for(Aventurier a : aventuriers){
+            for(Carte c : a.getMain()){
+                if(c.getNom()== HELICOPTERE.toString()){
+                    helico = true;
+                }
+            }
+        }
+        return helico;
+    }
+    
+    public boolean victoire(){// verifie si les condition de victoire sont rempli
+        return this.tresorsRecup() && this.positionHeliport() && possedeHelico(); 
+    }
+        
+    public void piocheTresor(){
+        for(int i=0;i<2;i++){
+            Carte carte = piocheTresor.piocheCarte();
+             if(carte.getNom().toString() == EAUX.toString()){
+                nivEau++;
+                piocheTresor.getDefausse().add(carte);
+            }else{
+                getJoueurCourant().getMain().add(carte);
+            }
+        }
+    }
+    
+    public void piocheInondation(){
+        int nbLoop =2;
+        if(nivEau<2){
+            
+        }else if(nivEau<5){
+            nbLoop =3;
+        }else if(nivEau<7){
+            nbLoop = 4;
+        }else if(nivEau<9){
+            nbLoop = 5;
+        }
+        
+        for(int i=0;i<nbLoop; i++){
+            grille.getTuile(piocheInondations.piocheInondations().);
+        }
+    }
 
     /* GETTERS ET SETTERS */
 

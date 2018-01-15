@@ -79,6 +79,12 @@ public abstract class Aventurier {
         System.out.println("move spé =" + moveSpé);
     }
 
+    public ArrayList<Carte> getMain() {
+        return main;
+    }
+    
+    
+
     /* POUR TOUTES LES SOUS-CLASSES */
 
 
