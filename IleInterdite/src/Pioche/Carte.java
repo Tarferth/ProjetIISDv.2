@@ -5,6 +5,8 @@
  */
 package Pioche;
 
+import Grille.NomTuile;
+
 /**
  *
  * @author Nans
@@ -17,6 +19,10 @@ public class Carte {
     }
 
     public Carte(Utils.Utils.Cartes carte) {
+        this.nom=carte.toString();
+    }
+    
+    public Carte(NomTuile carte) {
         this.nom=carte.toString();
     }
 

@@ -13,10 +13,10 @@ import java.util.Collections;
  *
  * @author Nans
  */
-public class TreasureCard{
+public class Carte_Tresor{
     
-    private ArrayList<Carte> pick ;
-    private ArrayList<Carte> discarding;
+    private ArrayList<Carte> pioche ;
+    private ArrayList<Carte> defausse;
     
     private Carte cristal1= new Carte(CRISTAL);
     private Carte cristal2= new Carte(CRISTAL);
@@ -52,71 +52,74 @@ public class TreasureCard{
     private Carte Helicoptere2= new Carte(HELICOPTERE);
     private Carte Helicoptere3= new Carte(HELICOPTERE);
 
-    public TreasureCard() {
-        this.pick = new ArrayList();
-        this.discarding = new ArrayList();
+    public Carte_Tresor() {
+        this.pioche = new ArrayList();
+        this.defausse = new ArrayList();
     }
     
     public void initPioche(){
-        pick.add(cristal1);
-        pick.add(cristal2);
-        pick.add(cristal3);
-        pick.add(cristal4);
-        pick.add(cristal5);
+        pioche.add(cristal1);
+        pioche.add(cristal2);
+        pioche.add(cristal3);
+        pioche.add(cristal4);
+        pioche.add(cristal5);
 
-        pick.add(statue1);
-        pick.add(statue2);
-        pick.add(statue3);
-        pick.add(statue4);
-        pick.add(statue5);
+        pioche.add(statue1);
+        pioche.add(statue2);
+        pioche.add(statue3);
+        pioche.add(statue4);
+        pioche.add(statue5);
 
-        pick.add(pierre1);
-        pick.add(pierre2);
-        pick.add(pierre3);
-        pick.add(pierre4);
-        pick.add(pierre5);
+        pioche.add(pierre1);
+        pioche.add(pierre2);
+        pioche.add(pierre3);
+        pioche.add(pierre4);
+        pioche.add(pierre5);
 
-        pick.add(calice1);
-        pick.add(calice2);
-        pick.add(calice3);
-        pick.add(calice4);
-        pick.add(calice5);
+        pioche.add(calice1);
+        pioche.add(calice2);
+        pioche.add(calice3);
+        pioche.add(calice4);
+        pioche.add(calice5);
 
-        pick.add(eaux1);
-        pick.add(eaux2);
+        pioche.add(eaux1);
+        pioche.add(eaux2);
 
-        pick.add(Sac1);
-        pick.add(Sac2); 
+        pioche.add(Sac1);
+        pioche.add(Sac2); 
     }
 
-    public ArrayList<Carte> getPick() {
-        return pick;
+    public ArrayList<Carte> getPioche() {
+        return pioche;
     }
 
-    public ArrayList<Carte> getDiscarding() {
-        return discarding;
+    public ArrayList<Carte> getDefausse() {
+        return defausse;
     }
     
     
     
     public Carte piocheCarte(){
         Carte carte;
-        carte = this.getPick().get(0);
-        this.getPick().remove(0);
+        carte = this.getPioche().get(0);
+        this.getPioche().remove(0);
+        if(this.getPioche().size() == 0){
+            this.remiseDefausse();
+        }
         return carte;
     }
     
     public void defausseCarte(Carte carte){
-        this.getDiscarding().add(carte);
+        this.getDefausse().add(carte);
     }
     
     public void remiseDefausse(){
-        Collections.shuffle(this.getDiscarding());
-        for(Carte c : this.getDiscarding()){
-            this.getPick().add(c);
+        Collections.shuffle(this.getDefausse());
+        for(Carte c : this.getDefausse()){
+            this.getPioche().add(c);
         }
         
-        this.discarding = new ArrayList();
+        this.defausse = new ArrayList();
     }
 
     

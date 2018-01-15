@@ -75,8 +75,32 @@ public class Carte_Inondations {
         
         Collections.shuffle(pioche);
     }
+
+    public ArrayList<Carte> getPioche() {
+        return pioche;
+    }
+
+    public ArrayList<Carte> getDefausse() {
+        return defausse;
+    }
+    
+    
     
     public Carte piocheInondations(){
-        
+        Carte carte;
+        carte = this.getPioche().get(0);
+        this.getPioche().remove(0);
+        this.getDefausse().add(carte);
+        return carte;
     }
+    
+    public void remiseDefausse(){
+        ArrayList<Carte> backup = this.getPioche();
+        Collections.shuffle(this.getDefausse());
+        this.pioche = this.getDefausse();
+        for(Carte c : backup){
+            this.getPioche().add(c);
+        }
+    }
+    
 }
