@@ -114,6 +114,14 @@ public class Tuile {
         getAventuriers().remove(av);
     }
 
+    public boolean monterDesEaux(){
+        if(this.estInondee()){
+            this.setEtat(COULEE);
+        }else if (this.estSeche()){
+            this.setEtat(INONDEE);
+        }
+        return this.aSombre();
+    }
 
 
 

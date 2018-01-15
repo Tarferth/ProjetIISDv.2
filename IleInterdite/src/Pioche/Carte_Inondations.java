@@ -5,6 +5,7 @@
  */
 package Pioche;
 
+import Grille.*;
 import Grille.NomTuile;
 import static Grille.NomTuile.*;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.Collections;
  * @author Nans
  */
 public class Carte_Inondations {
+    
+    
     
     private ArrayList<Carte> pioche ;
     private ArrayList<Carte> defausse;    

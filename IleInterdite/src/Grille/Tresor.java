@@ -18,9 +18,15 @@ public class Tresor {
     private NomTresor nom;
     private boolean recuperer;
 
-    public Tresor(NomTresor nom) {
+    public Tresor(NomTresor nom, Grille grille) {
         this.nom = nom;
         this.recuperer = false;
+        this.setSanctuaire(grille);
+        System.out.println(nom);
+        System.out.println("Sanctuaire 1 :" + this.getSanctuaire1().getNom().toString());
+        System.out.println("Sanctuaire 2 :" + this.getSanctuaire2().getNom().toString());
+        System.out.println("");
+        System.out.println("");
     }
 
     public Tuile getSanctuaire1() {
