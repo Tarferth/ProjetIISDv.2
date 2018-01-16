@@ -105,5 +105,9 @@ public class Carte_Inondations {
             this.getPioche().add(c);
         }
     }
+
+    public void remove(Carte carte) {
+        this.getDefausse().remove(this.getDefausse().indexOf(carte));
+    }
     
 }

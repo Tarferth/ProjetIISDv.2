@@ -352,7 +352,18 @@ public class Controller implements Observer {
         }
         
         for(int i=0;i<nbLoop; i++){
-            grille.getTuile(piocheInondations.piocheInondations().);
+            int j =0;
+            Carte carte = piocheInondations.piocheInondations();
+            NomTuile[] nomTs = NomTuile.values();
+            for(NomTuile nomT: nomTs){
+                if(grille.getTuile(nomT).getNom().toString() == carte.getNom()){
+                    grille.getTuile(nomT).monterDesEaux();
+                    if(grille.getTuile(nomT).aSombre()){
+                        piocheInondations.remove(carte);
+                    }
+                }
+            }
+            
         }
     }
 
