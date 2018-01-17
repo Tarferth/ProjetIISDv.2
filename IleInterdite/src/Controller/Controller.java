@@ -367,11 +367,28 @@ public class Controller implements Observer {
         }
     }
     
-    public void recupTresor(){
-        
+    public boolean nbCarteTres(Tresor tresor){//verifie si le joueur à 4 carte qui correspondent au trésor
+        int nb=0;
+        for(Carte c :getJoueurCourant().getMain()){
+                if(c.getNom() == tresor.getNom().toString()){
+                    nb++;
+                }
+        }
+        return nb>4;
     }
     
-    
+    public void recupTresor(){//recupere le tresor si le joueur se situe sur un des sanctuaires lié au trésor et si le joueuer à 4 carte correspondant au trésor
+        if((getJoueurCourant().getPos() == calice.getSanctuaire1() || getJoueurCourant().getPos() == calice.getSanctuaire2()) && nbCarteTres(calice)){
+            calice.setRecuperer(true);
+        }else if((getJoueurCourant().getPos() == pierre.getSanctuaire1() || getJoueurCourant().getPos() == pierre.getSanctuaire2()) && nbCarteTres(pierre)){
+            pierre.setRecuperer(true);
+        }else if((getJoueurCourant().getPos() == statue.getSanctuaire1() || getJoueurCourant().getPos() == statue.getSanctuaire2()) && nbCarteTres(statue)){
+            statue.setRecuperer(true);
+        }else if((getJoueurCourant().getPos() == cristal.getSanctuaire1() || getJoueurCourant().getPos() == cristal.getSanctuaire2()) && nbCarteTres(calice)){
+            cristal.setRecuperer(true);
+        }
+    }
+      
     public boolean verifInnodations(){
         boolean fin = false;
         for(Aventurier a :aventuriers){

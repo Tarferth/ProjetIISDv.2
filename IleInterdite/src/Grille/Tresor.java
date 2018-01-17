@@ -91,6 +91,11 @@ public class Tresor {
     public void setSanctuaire2(Tuile Sanctuaire2) {
         this.Sanctuaire2 = Sanctuaire2;
     }
+
+    public void setRecuperer(boolean recuperer) {
+        this.recuperer = recuperer;
+    }
+    
     
     
     public boolean getRecuperable(){
