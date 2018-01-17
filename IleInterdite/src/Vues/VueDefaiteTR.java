@@ -47,7 +47,7 @@ public class VueDefaiteTR {
         mainPanel.add(panelMid);
         
         
-        panelMid.add(new JLabel("Défaite ! Les Trésors ne sont pas récupérable s!", SwingConstants.CENTER));
+        panelMid.add(new JLabel("Défaite ! Les Trésors ne sont pas récupérables!", SwingConstants.CENTER));
         
         
         
