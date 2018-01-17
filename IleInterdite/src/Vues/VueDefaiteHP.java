@@ -7,7 +7,9 @@ package Vues;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import javax.swing.JButton;
@@ -27,7 +29,7 @@ public class VueDefaiteHP {
     private JPanel panelBas;
     private JPanel panelMid;
     private JButton btnrejouer;
-   
+    private JLabel defai;
     
     
     
@@ -41,14 +43,19 @@ public class VueDefaiteHP {
         mainPanel = new JPanel(new BorderLayout());
         window.add(mainPanel);
         window.setResizable(false);
-        
+        window.setBackground(Color.YELLOW);
         
         panelMid = new JPanel(new GridLayout(1,1));
         mainPanel.add(panelMid);
+        panelMid.setBackground(Color.RED);
         
         
-        panelMid.add(new JLabel("Défaite ! L' Héliport à sombré !", SwingConstants.CENTER));
+        defai = new JLabel("Défaite ! L'héliport à sombré !", SwingConstants.CENTER);
         
+        panelMid.add(defai);
+        defai.setFont( new Font("Serif",Font.BOLD, 28));
+        
+
         
         
         btnrejouer = new JButton("Rejouer !");
