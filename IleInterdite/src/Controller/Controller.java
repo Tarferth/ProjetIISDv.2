@@ -106,6 +106,10 @@ public class Controller implements Observer {
     }
 
     public void lancerPartie(){
+            nivEau = -1;
+            piocheInondation();
+            nivEau = 0;
+            
         for (int i =0; i < vuesAventurier.size(); i++){
             vuesAventurier.get(i).setVisible(true);
             activerBtn(joueurCourant%aventuriers.size());
@@ -332,7 +336,7 @@ public class Controller implements Observer {
             Carte carte = piocheTresor.piocheCarte();
              if(carte.getNom().toString() == EAUX.toString()){
                 nivEau++;
-                piocheTresor.getDefausse().add(carte);
+                piocheTresor.defausseCarte(carte);
             }else{
                 getJoueurCourant().getMain().add(carte);
             }
@@ -341,7 +345,9 @@ public class Controller implements Observer {
     
     public void piocheInondation(){
         int nbLoop =2;
-        if(nivEau<2){
+        if(nivEau<0){
+            nbLoop =6;
+        }else if(nivEau<2){
             
         }else if(nivEau<5){
             nbLoop =3;
@@ -378,6 +384,7 @@ public class Controller implements Observer {
     }
     
     public void recupTresor(){//recupere le tresor si le joueur se situe sur un des sanctuaires lié au trésor et si le joueuer à 4 carte correspondant au trésor
+        
         if((getJoueurCourant().getPos() == calice.getSanctuaire1() || getJoueurCourant().getPos() == calice.getSanctuaire2()) && nbCarteTres(calice)){
             calice.setRecuperer(true);
         }else if((getJoueurCourant().getPos() == pierre.getSanctuaire1() || getJoueurCourant().getPos() == pierre.getSanctuaire2()) && nbCarteTres(pierre)){

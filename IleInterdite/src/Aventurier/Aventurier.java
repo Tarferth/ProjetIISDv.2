@@ -95,8 +95,7 @@ public abstract class Aventurier {
     public ArrayList getTuilesAssechables(Grille grille){
         return grille.getTuilesAdjacentes(getPos(), Message.ASSECHER);
     }
-
-
+    
 }
 
 
