@@ -63,6 +63,7 @@ public class Tresor {
             
         } else if (nom== CALICE.toString()) {
             t1=grille.getTuile(LE_PALAIS_DE_CORAIL);
+            
         }
         this.setSanctuaire1(t1);
     }

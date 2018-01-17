@@ -366,6 +366,30 @@ public class Controller implements Observer {
             
         }
     }
+    
+    public void recupTresor(){
+        
+    }
+    
+    
+    public boolean verifInnodations(){
+        boolean fin = false;
+        for(Aventurier a :aventuriers){
+            if(a.getPos().aSombre() && a.getTuilesAccessibles(grille).isEmpty() ){
+                    fin=true;               
+            }
+        }
+        return fin;
+    }
+    
+    public void moveOblig(){
+        for(Aventurier a :aventuriers){
+            if(a.getPos().aSombre()){
+                vues.get(1).setTuilesDispo(getJoueurCourant().getTuilesAccessibles(this.grille));
+                vues.get(1).setVisible(true);
+            }
+        }
+    }
 
     /* GETTERS ET SETTERS */
 
