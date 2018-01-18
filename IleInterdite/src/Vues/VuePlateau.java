@@ -39,7 +39,7 @@ public class VuePlateau {
 
     public VuePlateau(Grille grille) {
         this.window = new JFrame();
-        window.setSize(900, 000);
+        window.setSize(900, 800);
         this.grilletuile = new JPanel(new GridLayout(6, 6));
         window.add(grilletuile);
         for (int i=0; i<36; i++) {
