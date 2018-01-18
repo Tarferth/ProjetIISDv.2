@@ -42,7 +42,7 @@ public class Grille {
 
                 }
                 else{
-                    tuiles[i][j] = new Tuile(NomTuile.values()[x],ASSECHEE);
+                    tuiles[i][j] = new Tuile(NomTuile.values()[x],ASSECHEE,i,j);
                     x++;
                 }
 
@@ -209,8 +209,14 @@ public class Grille {
 
 
 
-    public Tuile[][] getTuiles() {
-        return tuiles;
+    public ArrayList<Tuile> getTuiles() {
+        ArrayList<Tuile> retourList = new ArrayList();
+        for(int i = 0; i < 6 ; i++) { // Ligne
+            for (int j = 0; j < 6; j++) { 
+                retourList.add(tuiles[i][j]);
+            }
+         }
+        return retourList;
     }
 
     public Tuile getTuile(NomTuile nomTuile){
