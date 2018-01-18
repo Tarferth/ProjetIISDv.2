@@ -458,6 +458,9 @@ public class Controller implements Observer {
         if(aventuriers.get(joueurCourant%aventuriers.size()).getMain().size()>0){
             vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnDefausseCarte().setEnabled(true);
         }
+        if(aventuriers.get(joueurCourant).getMain().size()>0){
+            vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnDefausseCarte().setEnabled(true);
+        }
     }
     
     public void activerBtnOblig(int vue){
