@@ -5,151 +5,116 @@
  */
 package Vues;
 
+import Grille.Grille;
+import static Utils.Utils.EtatTuile.ASSECHEE;
+import static Utils.Utils.EtatTuile.INONDEE;
 import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.JButton;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 
 /**
  *
- * @author moreasim
+ * @author Nans pc
  */
-public class VuePlateau extends JPanel {
+public class VuePlateau {
+    
+    private final JFrame window;
+    private final JPanel grilletuile;
+    
+    private HashMap<Integer,JPanel> cases=new HashMap();
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+    }
 
+    public VuePlateau(Grille grille) {
+        this.window = new JFrame();
+        window.setSize(600, 600);
+        this.grilletuile = new JPanel(new GridLayout(6, 6));
+        window.add(grilletuile);
+        for (int i=0; i<36; i++) {
+             grilletuile.add(createCellule(i, grille));
+        }
+        
+        
+    }
     
-    private static final String FIN_TOUR     = "finTour";
-    private static final String DEPLACEMENT         = "déplacement";
-    private static final String ASSECHEMENT     = "asséchement";
-    private static final String UTILISATION_CAPACITE = "capacite";
-    private static final String NOUVEAU_JEU     = "nouvellePartie";
-    private static final String QUITTER         = "quitter";
-    private static final String DEFFAUSSER      = "défausser";
-    private static final String INVOQUER       = "invoquer";
-    private static final String DONNER         = "donnerCarte";
-    private static final String UTILISER_CARTE     = "utiliserCarte";
-    private static final String PAUSE        = "pause";
+        public void updateCellules(Grille grilleListe) {
+
+        //Actualise l'affichage des pions
+        for (int i=0; i<36; i++) {
+            JPanel panel = cases.get(i);
+            if (!(i==0 || i==1 || i==4 || i==5 || i==6 || i==11 || i==24 || i==29|| i==30 || i==31 | i==34 || i==35)){
+                
+
+                if (grilleListe.getTuile().get(i).getEtat() == ASSECHEE) {
+                        panel.setBackground(Color.DARK_GRAY);
+                    } else if (grilleListe.getTuile().get(i).getEtat()== INONDEE) {
+                        panel.setBackground(Color.ORANGE);
+                    
+                    } else {
+                        panel.setBackground(Color.BLUE);
+                    }
+                
+
+                panel.repaint();
+            }
+        
+        }
+    }
+ 
+        
+    public JPanel createCellule(int i, Grille grilleListe) {        
+        //Création des cellules :
+        
+        //création des cellules vides
+        if(i==0 || i==1 || i==4 || i==5 || i==6 || i==11 || i==24 || i==29|| i==30 || i==31 | i==34 || i==35) {   
+            JPanel panelCellule = new JPanel();
+            panelCellule.setBackground(Color.BLACK);
+            panelCellule.setSize(100,100);
+            return panelCellule ;
+            
+        } else {
+            //création des cellules tuiles
+            
+            //Ajout des pions
+            JLabel nomCase = new JLabel(grilleListe.getTuile().get(i).getNom().toString(), SwingConstants.CENTER);
+            JPanel panelCellule = new JPanel(new BorderLayout());
+            panelCellule.setBorder(BorderFactory.createLineBorder(Color.white, 1));
+            panelCellule.add(nomCase);
+            
+            //Coloration en gris des cellules assechées, en orange des cellules inondées et en bleu des cellules coulées
+            if (null != grilleListe.getTuile().get(i).getEtat()) switch (grilleListe.getTuile().get(i).getEtat()) {
+                case ASSECHEE:
+                    panelCellule.setBackground(Color.DARK_GRAY);
+                    break;
+                case INONDEE:
+                    panelCellule.setBackground(Color.ORANGE);
+                    break;
+                default:
+                    panelCellule.setBackground(Color.BLUE);
+                    break;
+            }
+            panelCellule.setSize(100,100);
+            cases.put(i, panelCellule);
+            return panelCellule ;
+        }
+    }
+
+    public void setVisible(boolean b) {
+        window.setVisible(b);
+    }
     
-//    private BoardPanel gamePane;
-    private JPanel     eastPane;
-    private JPanel     westPane;
-    private JPanel     actionCommands;
     
-    // player info
-    private JPanel                                   paneDroit;
-//    private ArrayList<PlayerInfo>                    pawns;
-//    private HashMap<AdventurerType, PlayerInventory> inventories;
-    
-    // Decks
-//    private DeckComponent treasureDeck;
-//    private DeckComponent floodDeck;
-//    private JPanel        decksPane;
-//
-//    private WaterRise floodCursor;
-    
-    // Inventory
-    private JPanel north;
-    private JPanel south;
-    
-    // actions
-    private JButton BtnFinDeTour;
-    private JButton BtnDeplacer;
-    private JButton BtnAssecher;
-    private JButton BtnCapacite;
-    private JButton DeffausserCartes;
-    private JButton invoque;
-    private JButton DonnerCartes;
-    private JButton UtiliserCarte;
-    private JButton pause;
-    // message
-    private JTextPane msg;
-    private JPanel    msgs;
-    private JLabel    action;
-    
-private ActionListener listObs;
-      private void initComponents() {
-        setLayout(new BorderLayout());
-        eastPane = new JPanel(new BorderLayout());
-        westPane = new JPanel(new BorderLayout());
-        north = new JPanel(new BorderLayout());
-        south = new JPanel(new BorderLayout());
-        actionCommands = new JPanel(new GridLayout(8, 1));
-        
-        paneDroit = new JPanel();
-        GridBagLayout layout = new GridBagLayout();
-        paneDroit.setLayout(layout);
-        layout.rowHeights = new int[2];
-        double[] weight = { 0.1, 0.8 };
-        layout.rowWeights = weight;
-        
-        BtnFinDeTour = new JButton("Fin de tour");
-        BtnDeplacer = new JButton("Se déplacer");
-        BtnAssecher = new JButton("Assécher un endroit");
-        BtnCapacite = new JButton("Utiliser sa capacité");
-        DeffausserCartes = new JButton("Défausser une carte");
-        invoque = new JButton("Invoquer un trésor");
-        DonnerCartes = new JButton("Donner une carte");
-        UtiliserCarte = new JButton("Utiliser une carte");
-        pause = new JButton("Pause");
-        
-        msg = new JTextPane();
-        action = new JLabel("", SwingConstants.CENTER);
-        msgs = new JPanel(new GridLayout(2, 1));
-        msg.setEditable(false);
-        SimpleAttributeSet attribs = new SimpleAttributeSet();
-        StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_CENTER);
-        msg.setParagraphAttributes(attribs, true);
-        
-//        floodCursor = new WaterRise();
-        
-        add(eastPane, BorderLayout.EAST);
-        add(westPane, BorderLayout.WEST);
-        add(north, BorderLayout.NORTH);
-        add(south, BorderLayout.SOUTH);
-        
-        south.add(pause, BorderLayout.CENTER);
-        north.add(msgs, BorderLayout.CENTER);
-        msgs.add(action);
-        msgs.add(msg);
-        
-        BtnFinDeTour.setActionCommand(FIN_TOUR);
-        BtnDeplacer.setActionCommand(DEPLACEMENT);
-        BtnAssecher.setActionCommand(ASSECHEMENT);
-        BtnCapacite.setActionCommand(UTILISATION_CAPACITE);
-        DeffausserCartes.setActionCommand(DEFFAUSSER);
-        invoque.setActionCommand(INVOQUER);
-        DonnerCartes.setActionCommand(DONNER);
-        UtiliserCarte.setActionCommand(UTILISER_CARTE);
-        
-        eastPane.add(paneDroit, BorderLayout.CENTER);
-        GridBagConstraints constraints = new GridBagConstraints();
-        paneDroit.add(actionCommands, constraints);
-        constraints.gridy = 1;
-        constraints.fill = GridBagConstraints.BOTH;
-//        paneDroit.add(floodCursor, constraints);
-        actionCommands.add(BtnFinDeTour);
-        actionCommands.add(BtnDeplacer);
-        actionCommands.add(BtnAssecher);
-        actionCommands.add(BtnCapacite);
-        actionCommands.add(DeffausserCartes);
-        actionCommands.add(DonnerCartes);
-        actionCommands.add(UtiliserCarte);
-        actionCommands.add(invoque);
-        // for (Component c : actionCommands.getComponents()) {
-        // if (c != null) {
-        // c.setFont(new Font(c.getFont().getFontName(), c.getFont().getStyle(),
-        // (int) (c.getFont().getSize() * 0.7)));
-        // }
-        // } 
-      }
     
 }
