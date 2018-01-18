@@ -14,4 +14,7 @@ public enum Message {
     AUTREACTION,
     ANNULER,
     DEPLACEROBLIG,
+    RECUPTRE, 
+    UTILISECARTE, 
+    ECHANGECARTE,
 }
