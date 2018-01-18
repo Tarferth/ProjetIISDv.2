@@ -27,8 +27,10 @@ public class VueAventurier extends Vue {
     private final JPanel mainPanel;
     private final JButton btnBouger  ;
     private final JButton btnAssecher;
-    private final JButton btnAutreAction;
+    private final JButton btnRecupTre;
     private final JButton btnTerminerTour;
+    private final JButton btnUtiliserCarte;
+    private final JButton btnEchangeCarte;
     private JTextField position;
    
    
@@ -70,23 +72,28 @@ public class VueAventurier extends Vue {
 
         // =================================================================================
         // SUD : les boutons
-        this.panelBoutons = new JPanel(new GridLayout(2,2));
+        this.panelBoutons = new JPanel(new GridLayout(2,3));
         this.panelBoutons.setOpaque(false);
         mainPanel.add(this.panelBoutons, BorderLayout.SOUTH);
 
         this.btnBouger = new JButton("Bouger") ;
         this.btnAssecher = new JButton( "Assecher");
-        this.btnAutreAction = new JButton("AutreAction") ;
+        this.btnRecupTre = new JButton("Reuperer Trésor") ;
         this.btnTerminerTour = new JButton("Terminer Tour") ;
+        this.btnUtiliserCarte = new JButton("Utliser Carte");
+        this.btnEchangeCarte = new JButton("Echange Carte");
 
         btnBouger.setEnabled(false);
         btnAssecher.setEnabled(false);
-        btnAutreAction.setEnabled(false);
+        btnRecupTre.setEnabled(false);
         btnTerminerTour.setEnabled(false);
+        btnUtiliserCarte.setEnabled(false);
         
         this.panelBoutons.add(btnBouger);
         this.panelBoutons.add(btnAssecher);
-        this.panelBoutons.add(btnAutreAction);
+        this.panelBoutons.add(btnRecupTre);
+        this.panelBoutons.add(btnUtiliserCarte);
+        this.panelBoutons.add(btnEchangeCarte);
         this.panelBoutons.add(btnTerminerTour);
 
 
@@ -107,14 +114,34 @@ public class VueAventurier extends Vue {
                 clearChanged();
             }
         });
-        btnAutreAction.addActionListener(new ActionListener() {
+        
+        btnRecupTre.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setChanged();
-                notifyObservers(Message.AUTREACTION);
+                notifyObservers(Message.RECUPTRE);
                 clearChanged();
             }
         });
+        
+        btnUtiliserCarte.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChanged();
+                notifyObservers(Message.UTILISECARTE);
+                clearChanged();
+            }
+        });
+        
+        btnEchangeCarte.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChanged();
+                notifyObservers(Message.ECHANGECARTE);
+                clearChanged();
+            }
+        });
+
 
         btnTerminerTour.addActionListener(new ActionListener() {
             @Override
@@ -133,9 +160,7 @@ public class VueAventurier extends Vue {
         this.position.setText(pos);
     }
     
-     public JButton getBtnAutreAction() {
-        return btnAutreAction;
-    }
+    
     
     public String getPosition() {
         return position.getText();
@@ -152,6 +177,20 @@ public class VueAventurier extends Vue {
     public JButton getBtnTerminerTour() {
         return btnTerminerTour;
     }
+
+    public JButton getBtnRecupTre() {
+        return btnRecupTre;
+    }
+
+    public JButton getBtnUtiliserCarte() {
+        return btnUtiliserCarte;
+    }
+
+    public JButton getBtnEchangeCarte() {
+        return btnEchangeCarte;
+    }
+    
+    
 
 
     @Override
