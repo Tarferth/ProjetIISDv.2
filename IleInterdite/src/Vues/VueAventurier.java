@@ -39,7 +39,7 @@ public class VueAventurier extends Vue {
     public VueAventurier(String nomJoueur, String nomAventurier, Color couleur, int index){
 
         this.window = new JFrame();
-        window.setSize(350, 200);
+        window.setSize(2000, 1200);
         //le titre = nom du joueur 
         window.setTitle(nomJoueur);
         mainPanel = new JPanel(new BorderLayout());
@@ -63,18 +63,26 @@ public class VueAventurier extends Vue {
         this.panelCentre.setOpaque(false);
         this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, couleur));
         mainPanel.add(this.panelCentre, BorderLayout.CENTER);
+
+
         
         panelCentre.add(new JLabel ("Position", SwingConstants.CENTER));
         position = new  JTextField(30); 
         position.setHorizontalAlignment(CENTER);
         panelCentre.add(position);
 
+        /* =================================================================================
+        // OUEST : Niveau d'autre et autre
+        this.panelBoutons = new JPanel(new GridLayout(8,1));
+        this.panelBoutons.setOpaque(false);
+        mainPanel.add(this.panelBoutons, BorderLayout.WEST);
+*/
 
         // =================================================================================
         // SUD : les boutons
         this.panelBoutons = new JPanel(new GridLayout(2,3));
         this.panelBoutons.setOpaque(false);
-        mainPanel.add(this.panelBoutons, BorderLayout.SOUTH);
+        mainPanel.add(this.panelBoutons, BorderLayout.EAST);
 
         this.btnBouger = new JButton("Bouger") ;
         this.btnAssecher = new JButton( "Assecher");
@@ -151,6 +159,8 @@ public class VueAventurier extends Vue {
                 clearChanged();
             }
         });
+
+
 
     }
 
