@@ -122,6 +122,8 @@ public class Controller implements Observer {
             activerBtn(joueurCourant%aventuriers.size());
             
         }
+        
+
         vueAvTest.setVisible(true);
 
     }
@@ -264,11 +266,12 @@ public class Controller implements Observer {
       
         if(arg == Message.ECHANGECARTE){
             int i =1;
-            for(Aventurier a : getJoueurCourant().getPos().getAventuriers()){
-                    System.out.println(i+" : "+a.getTypeA().toString());
-                    a.afficheMain();
-                    System.out.println();
-                    i++;
+            for(int j = 0; j<aventuriers.size();j++){
+                    if(aventuriers.get(j)!= getJoueurCourant()){
+                        System.out.println(i+" : "+aventuriers.get(j).getTypeA().toString());
+                        System.out.println();
+                        i++;
+                    }
             }
             
             System.out.println("0 : Retour");
@@ -281,7 +284,7 @@ public class Controller implements Observer {
                 System.out.println("0 : Retour");
                 Scanner sc2 = new Scanner(System.in);
                 int nb2 = sc2.nextInt();
-                getJoueurCourant().echangeCarte(getJoueurCourant().getPos().getAventuriers().get(i),getJoueurCourant().getMain().get(nb2));
+                getJoueurCourant().echangeCarte(getJoueurCourant().getPos().getAventuriers().get(nb-1),getJoueurCourant().getMain().get(nb2-1));
             }
             nbActions++; 
         }
@@ -331,8 +334,8 @@ public class Controller implements Observer {
             if(nb == 0){
                 arg= ANNULER;
             }else{
-                piocheTresor.defausseCarte(getJoueurCourant().getMain().get(nb));
-                getJoueurCourant().getMain().remove(nb);                
+                piocheTresor.defausseCarte(getJoueurCourant().getMain().get(nb-1));
+                getJoueurCourant().getMain().remove(nb-1);                
             }
         }
         
@@ -355,8 +358,8 @@ public class Controller implements Observer {
             Scanner sc = new Scanner(System.in);
             int nb = sc.nextInt();
             
-                piocheTresor.defausseCarte(getJoueurCourant().getMain().get(nb));
-                getJoueurCourant().getMain().remove(nb);                
+                piocheTresor.defausseCarte(getJoueurCourant().getMain().get(nb-1));
+                getJoueurCourant().getMain().remove(nb-1);                
             
         }        
                 
@@ -388,8 +391,7 @@ public class Controller implements Observer {
                     }
                
                     if(!this.victoire() && !defaite()){  
-                        piocheTresor();
-                        piocheInondation();
+                        
                         joueurCourant++;
                         nbActions = 0;
                         finTour = false;

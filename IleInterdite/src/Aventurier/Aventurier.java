@@ -26,6 +26,7 @@ public abstract class Aventurier {
         setPos(tuile);
         moveSpé = false;
         main = new ArrayList();
+        posPrecedente= null;
     }
 
     
@@ -70,8 +71,11 @@ public abstract class Aventurier {
     }
 
     public void setPos(Tuile t) {
+        
         posPrecedente = getPos();
         pos = t;
+        pos.addAventurier(this);
+        if(posPrecedente != null)posPrecedente.removeAventurier(this);
     }
 
     public void setMoveSpé(boolean moveSpé) {
@@ -106,7 +110,7 @@ public abstract class Aventurier {
     public void afficheMain(){
         System.out.println("Vous avez "+this.getMain().size() + "en main");
         for(Carte c: main){
-            System.out.print(main.indexOf(c)+" :");
+            System.out.print(main.indexOf(c)+1+" :");
             c.afficheCarte();
         }
     }
