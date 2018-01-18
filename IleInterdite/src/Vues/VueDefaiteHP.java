@@ -37,7 +37,7 @@ public class VueDefaiteHP  extends Vue {
         window = new JFrame();
         window.setTitle("Ile Interdite - Défaite");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(500, 400);
+        window.setSize(900, 400);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         window.setLocationRelativeTo(null);
         mainPanel = new JPanel(new BorderLayout());
