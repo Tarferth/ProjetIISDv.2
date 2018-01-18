@@ -465,7 +465,7 @@ public class Controller implements Observer {
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnEchangeCarte().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnRecupTre().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnUtiliserCarte().setEnabled(false);
-        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnDefausse().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnDefausseCarte().setEnabled(false);
         
     }
 
@@ -484,6 +484,9 @@ public class Controller implements Observer {
         }
         if(mainContient()){
             vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnUtiliserCarte().setEnabled(true);
+        }
+        if(aventuriers.get(joueurCourant).getMain().size()>0){
+            vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnDefausseCarte().setEnabled(true);
         }
     }
     
