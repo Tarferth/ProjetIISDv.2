@@ -209,7 +209,13 @@ public class Controller implements Observer {
 
             ((VueInscription) o).setVisible(false);
             
-            
+            aventuriers.get(0).setPos(this.getGrille().getTuile(NomTuile.LA_CAVERNE_DU_BRASIER));
+            aventuriers.get(0).add(new Carte(CRISTAL));
+            aventuriers.get(0).add(new Carte(CRISTAL));
+            aventuriers.get(0).add(new Carte(CRISTAL));
+            aventuriers.get(0).add(new Carte(CRISTAL));
+            aventuriers.get(0).add(new Carte(HELICOPTERE));
+            aventuriers.get(1).setPos(this.getGrille().getTuile(NomTuile.HELIPORT));
 
             inscriptionFini = true;
             lancerPartie();
