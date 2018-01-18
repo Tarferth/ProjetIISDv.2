@@ -99,7 +99,7 @@ public class Tresor {
     
     
     public boolean getRecuperable(){
-        return !this.getSanctuaire1().aSombre() &&  !this.getSanctuaire2().aSombre() ;
+        return !(this.getSanctuaire1().aSombre() &&  this.getSanctuaire2().aSombre()) ;
     }
 
     public boolean isRecuperer() {

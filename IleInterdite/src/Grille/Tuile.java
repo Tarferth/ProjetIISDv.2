@@ -23,10 +23,11 @@ public class Tuile {
     private NomTuile nom;
     private Tresor tresor;
     
-    public Tuile(NomTuile nom, EtatTuile etat){
+    public Tuile(NomTuile nom, EtatTuile etat,int col, int lig){
        setNom(nom);
        this.etat = etat;
        tresor=null;
+       this.setPos(lig,col);
     }
 
     public Tuile(){
@@ -121,6 +122,17 @@ public class Tuile {
             this.setEtat(INONDEE);
         }
         return this.aSombre();
+    }
+
+    public void setPos(int i, int j) {
+          this.setLig(i);
+          this.setCol(j);
+    }
+    
+    public void afficheTuile(){
+        System.out.println(this.getNom());
+        System.out.println(this.getEtat());
+        System.out.println();
     }
 
 

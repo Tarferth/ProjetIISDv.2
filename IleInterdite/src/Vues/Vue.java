@@ -1,5 +1,6 @@
 package Vues;
 
+import Aventurier.Aventurier;
 import Grille.NomTuile;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public abstract class Vue extends Observable {
 
     public void setTuilesDispo(ArrayList<String> tu){};
     public NomTuile getTuileSelectionnee(){return null;}
+    public NomTuile getTuileSelectionneeIng(){return null;}
 
-    public void setTuilesAss(ArrayList<String> tu){};
+    public void setTuilesAss(ArrayList<String> tu,Aventurier a){};
 }

@@ -12,6 +12,11 @@ public enum Message {
     VALIDERDEPLACEMENT,
     FINTOUR,
     AUTREACTION,
-    ANNULER,
-    
+    ANNULER, 
+    RECUPTRE, 
+    UTILISECARTE, 
+    ECHANGECARTE, 
+    DEPLACEROBLIG,
+    DEFAUSSE,
+   
 }

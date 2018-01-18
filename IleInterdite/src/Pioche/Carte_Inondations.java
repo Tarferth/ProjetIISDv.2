@@ -94,6 +94,9 @@ public class Carte_Inondations {
         carte = this.getPioche().get(0);
         this.getPioche().remove(0);
         this.getDefausse().add(carte);
+        if(this.getPioche().size()==0){
+            this.remiseDefausse();
+        }
         return carte;
     }
     
@@ -101,8 +104,9 @@ public class Carte_Inondations {
         ArrayList<Carte> backup = this.getPioche();
         Collections.shuffle(this.getDefausse());
         this.pioche = this.getDefausse();
-        for(Carte c : backup){
-            this.getPioche().add(c);
+        int j = backup.size();
+        for(int i =0;i<j;i++){
+            this.getPioche().add(backup.get(i));
         }
     }
 

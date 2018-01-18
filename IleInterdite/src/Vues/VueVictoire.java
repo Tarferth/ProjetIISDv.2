@@ -24,7 +24,7 @@ import javax.swing.SwingConstants;
  *
  * @author avognonm
  */
-public class VueVictoire {
+public class VueVictoire  extends Vue  {
     
     private JFrame window;
     private JPanel mainPanel;
@@ -66,7 +66,6 @@ public class VueVictoire {
         panelBas.add(btnrejouer);
         panelBas.add(new JPanel());
         
-        window.setVisible(true);
     
     
     }
@@ -78,6 +77,11 @@ public class VueVictoire {
     public static void main(String [] args) {
         // Instanciation de la fenêtre
         VueVictoire vuevic = new VueVictoire();
+    }
+
+    @Override
+    public void setVisible(Boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 

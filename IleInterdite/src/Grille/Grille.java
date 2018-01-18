@@ -10,6 +10,7 @@ import static Utils.Utils.EtatTuile.ASSECHEE;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import static java.util.Collections.shuffle;
 
 
 /**
@@ -30,6 +31,13 @@ public class Grille {
             |4.0|4.1|4.2|4.3|4.4|4.5|                         |4.1|4.2|4.3|4.4|
             |5.0|5.1|5.2|5.3|5.4|5.5|                             |5.2|5.3|
          */
+        NomTuile[] nomTuiles = NomTuile.values();
+        ArrayList<NomTuile> listTuile = new ArrayList();
+        for(NomTuile t : nomTuiles){
+            listTuile.add(t);
+        }
+        
+        Collections.shuffle(listTuile);
         int x = 0;
         for (int i = 0; i < 6; i++){       //Lignes
             for (int j = 0; j < 6; j++){   //Colonnes
@@ -42,7 +50,7 @@ public class Grille {
 
                 }
                 else{
-                    tuiles[i][j] = new Tuile(NomTuile.values()[x],ASSECHEE);
+                    tuiles[i][j] = new Tuile(listTuile.get(x),ASSECHEE,i,j);
                     x++;
                 }
 
@@ -207,10 +215,19 @@ public class Grille {
 
     }
 
-
-
+   
     public Tuile[][] getTuiles() {
         return tuiles;
+    }        
+     
+    public ArrayList<Tuile> getTuile() {
+        ArrayList<Tuile> retourList = new ArrayList();
+        for(int i = 0; i < 6 ; i++) { // Ligne
+            for (int j = 0; j < 6; j++) { 
+                retourList.add(tuiles[i][j]);
+            }
+         }
+        return retourList;
     }
 
     public Tuile getTuile(NomTuile nomTuile){

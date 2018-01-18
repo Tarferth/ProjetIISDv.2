@@ -34,6 +34,8 @@ public class Carte {
         this.nom = nom;
     }   
     
-    
+    public void afficheCarte(){
+        System.out.println(this.getNom());
+    }
     
 }

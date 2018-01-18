@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
  *
  * @author avognonm
  */
-public class VueDefaiteTS {
+public class VueDefaiteTS  extends Vue  {
     
     private JFrame window;
     private JPanel mainPanel;
@@ -60,7 +60,6 @@ public class VueDefaiteTS {
         panelBas.add(btnrejouer);
         panelBas.add(new JPanel());
         
-        window.setVisible(true);
     
     
     }
@@ -72,5 +71,10 @@ public class VueDefaiteTS {
     public static void main(String [] args) {
         // Instanciation de la fenêtre
         VueDefaiteTS vueTs = new VueDefaiteTS();
+    }
+
+    @Override
+    public void setVisible(Boolean b) {
+        window.setVisible(b);
     }
 }

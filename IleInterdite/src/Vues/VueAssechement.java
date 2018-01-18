@@ -5,6 +5,8 @@
  */
 package Vues;
 
+import Aventurier.Aventurier;
+import Aventurier.Ingenieur;
 import Controller.Message;
 import Grille.NomTuile;
 import static Grille.NomTuile.LA_CAVERNE_DES_OMBRES;
@@ -29,6 +31,7 @@ public class VueAssechement extends Vue {
     private final JButton btnAssecher;
     private final JPanel panelBoutons ;
     private final JComboBox<Object> listeAss;
+    private final JComboBox<Object> listeAssIng;
 
     public VueAssechement (){
 
@@ -49,6 +52,8 @@ public class VueAssechement extends Vue {
         /*Liste déroulante des assèchements*/
         this.listeAss = new JComboBox<>();
         mainPanels.add(listeAss);
+        this.listeAssIng = new JComboBox<>();
+        mainPanels.add(listeAssIng);
 
         // SUD : les boutons
         //Bouton retour en bas de la fenêtre//
@@ -124,12 +129,32 @@ public class VueAssechement extends Vue {
             return null;
         }
     }
+    
+    public NomTuile getTuileSelectionneeIng(){
+  
+            NomTuile nomTuileTrouvee = null;
+            int i = 0;
+            while (nomTuileTrouvee == null && i < NomTuile.values().length) {
+                if (NomTuile.values()[i].toString().equals(listeAssIng.getSelectedItem().toString())) {
+                    nomTuileTrouvee = NomTuile.values()[i];
+                }
+                i++;
+            }
+            return nomTuileTrouvee;
+        
+    }
 
 
 
     @Override
-    public void setTuilesAss(ArrayList<String> tu){
+    public void setTuilesAss(ArrayList<String> tu,Aventurier a){
         listeAss.setModel(new DefaultComboBoxModel<>(tu.toArray()));
+        if(a.getClass() == Ingenieur.class){
+            listeAssIng.setModel(new DefaultComboBoxModel<>(tu.toArray()));
+            listeAssIng.setVisible(true);
+        }else{
+            listeAssIng.setVisible(false);
+        }
     }
     //============================================================================
 
