@@ -226,6 +226,12 @@ public class VueAventurier extends Vue {
         return this.position;
     }
 
+    public JButton getBtnDefausseCarte() {
+        return btnDefausseCarte;
+    }
+    
+    
+
 
     @Override
     public void setVisible(Boolean b) {
