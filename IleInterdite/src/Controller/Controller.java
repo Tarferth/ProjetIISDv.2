@@ -347,6 +347,10 @@ public class Controller implements Observer {
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAutreAction().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnBouger().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnTerminerTour().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getbtnDeffausserCartes().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getbtnDonnerCartes().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getbtninvoque().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getbtnUtiliserCarte().setEnabled(false);
     }
 
     public void activerBtn(int vue){
@@ -354,6 +358,10 @@ public class Controller implements Observer {
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAutreAction().setEnabled(true);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnBouger().setEnabled(true);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnTerminerTour().setEnabled(true);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getbtnDeffausserCartes().setEnabled(true);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getbtnDonnerCartes().setEnabled(true);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getbtninvoque().setEnabled(true);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getbtnUtiliserCarte().setEnabled(true);
     }
     
     public void activerBtnOblig(int vue){
