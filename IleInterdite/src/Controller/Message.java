@@ -13,5 +13,10 @@ public enum Message {
     FINTOUR,
     AUTREACTION,
     ANNULER,
-    DEPLACEROBLIG,
+    UTILISATION_CAPACITE,
+    DEFFAUSSER,
+    INVOQUER,
+    DONNER,
+    UTILISER_CARTE,
+
 }
