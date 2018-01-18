@@ -96,6 +96,7 @@ public abstract class Aventurier {
         return grille.getTuilesAdjacentes(getPos(), Message.ASSECHER);
     }
     
+    //realise l'échange de carte
     public void echangeCarte(Aventurier a,Carte c){
         this.getMain().remove(c);
         a.getMain().add(c);
