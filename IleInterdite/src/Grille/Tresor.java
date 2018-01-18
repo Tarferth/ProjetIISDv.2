@@ -45,7 +45,10 @@ public class Tresor {
     
     public void setSanctuaire(Grille grille){
         this.setSanctuaire1(grille);
+        this.getSanctuaire1().setTresor(this);
         this.setSanctuaire2(grille);
+        this.getSanctuaire2().setTresor(this);
+
     }
 
     //Place les différentes statues sur la grille

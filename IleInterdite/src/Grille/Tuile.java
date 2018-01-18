@@ -135,6 +135,10 @@ public class Tuile {
         System.out.println();
     }
 
+    public Tresor getTresor() {
+        return this.tresor;
+    }
+
 
 
 

@@ -5,8 +5,11 @@
  */
 package Vues;
 
+import Controller.Message;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,7 +20,7 @@ import javax.swing.SwingConstants;
  *
  * @author avognonm
  */
-public class VueEcranTitre {
+public class VueEcranTitre  extends Vue {
     
     private JFrame window;
     private JPanel mainPanel;
@@ -74,15 +77,37 @@ public class VueEcranTitre {
         panelQuitte.add(new JLabel());       
         panelQuitte.add(new JLabel());
         
+        jouer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChanged();
+                notifyObservers(Message.LANCERINSCRIPTION);
+                clearChanged();
+            }
+        });
+
+        quitter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChanged();
+                notifyObservers(Message.ANNULER);
+                clearChanged();
+            }
+        });
         
-        window.setVisible(true);
     
+        
 }
     
     
       public static void main(String [] args) {
         // Instanciation de la fenêtre
         VueEcranTitre vuetitre = new VueEcranTitre();
+    }
+
+    @Override
+    public void setVisible(Boolean b) {
+        window.setVisible(b);
     }
 
     

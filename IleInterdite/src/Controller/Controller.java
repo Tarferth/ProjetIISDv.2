@@ -28,16 +28,19 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ThreadLocalRandom;
 import static Controller.Message.ANNULER;
+import Grille.NomTresor;
 import static Grille.NomTresor.*;
 import static Grille.NomTuile.HELIPORT;
 import Grille.Tresor;
 import Pioche.Carte;
 import Pioche.Carte_Inondations;
 import Pioche.Carte_Tresor;
+import static Utils.Utils.Cartes.CRISTAL;
 import static Utils.Utils.Cartes.EAUX;
 import static Utils.Utils.Cartes.HELICOPTERE;
 import static Utils.Utils.Cartes.SABLE;
 import static Utils.Utils.EtatTuile.*;
+import java.util.Collections;
 import java.util.Scanner;
 
 
@@ -62,7 +65,7 @@ public class Controller implements Observer {
     private Tresor calice = new Tresor(CALICE,grille);
     private Tresor pierre = new Tresor(PIERRE,grille);
     private Tresor statue = new Tresor(STATUE,grille);
-    private Tresor cristal = new Tresor(CRISTAL,grille);
+    private Tresor cristal = new Tresor(NomTresor.CRISTAL,grille);
     private int nivEau = 0;
     private boolean partiePerdue = false;
     
@@ -73,6 +76,7 @@ public class Controller implements Observer {
         if (Parameters.LOGS) System.out.println("Début du jeu");
 
         //Création des vues
+        VueEcranTitre vueEcranTitre = new VueEcranTitre();
         VueInscription vueInscription = new VueInscription();
         VueDeplacement vueDeplacement = new VueDeplacement();
         VueAssechement vueAssechement = new VueAssechement();
@@ -91,7 +95,8 @@ public class Controller implements Observer {
         addView(vueDefaiteTm);
         addView(vueDefaiteTr);
         addView(vueDefaiteTs);
-        vueInscription.setVisible(true);
+        addView(vueEcranTitre);
+        vueEcranTitre.setVisible(true);
 
 
     }
@@ -113,7 +118,7 @@ public class Controller implements Observer {
             int jCourantBU = joueurCourant;//sauvegarde le joueur courant avant de donner 2 carte à chaque joueur
             for(int i =0; i<aventuriers.size();i++){
                 joueurCourant = i;
-                 piocheTresor();
+                 piocheTresorInit();
             }
             joueurCourant = jCourantBU;
             
@@ -123,7 +128,9 @@ public class Controller implements Observer {
             
         }
         
-
+        pierre.setRecuperer(true);
+        calice.setRecuperer(true);
+        statue.setRecuperer(true);
         vueAvTest.setVisible(true);
 
     }
@@ -131,6 +138,11 @@ public class Controller implements Observer {
     @Override
     public void update(Observable o, Object arg){
         /* INSCRIPTION JOUEURS */
+        if(arg == Message.LANCERINSCRIPTION){
+            vues.get(8).setVisible(false);
+            vues.get(0).setVisible(true);
+        }
+        
         if (arg == Message.LANCERPARTIE){
 
             //On crée les aventuriers
@@ -196,6 +208,9 @@ public class Controller implements Observer {
             }
 
             ((VueInscription) o).setVisible(false);
+            
+            
+
             inscriptionFini = true;
             lancerPartie();
         }
@@ -323,6 +338,9 @@ public class Controller implements Observer {
         
         if(arg == Message.RECUPTRE){
             recupTresor();
+            System.out.println(getJoueurCourant().getPos().getTresor().toString()+" recuper");
+            desactiverBtn(joueurCourant%aventuriers.size());
+            activerBtn(joueurCourant%aventuriers.size());
             nbActions++;
         }
         
@@ -519,6 +537,17 @@ public class Controller implements Observer {
             }
         }
     }
+    public void piocheTresorInit(){
+        for(int i=0;i<2;i++){
+            Carte carte = piocheTresor.piocheCarte();
+             if(carte.getNom().toString() == EAUX.toString()){
+                piocheTresor.getPioche().add(carte);
+                Collections.shuffle(piocheTresor.getPioche());
+            }else{
+                getJoueurCourant().getMain().add(carte);
+            }
+        }
+    }
     
     public void piocheInondation(){
         int nbLoop =2;
@@ -555,11 +584,11 @@ public class Controller implements Observer {
     public boolean nbCarteTres(Tresor tresor){//verifie si le joueur à 4 carte qui correspondent au trésor
         int nb=0;
         for(Carte c :getJoueurCourant().getMain()){
-                if(c.getNom() == tresor.getNom().toString()){
+                if(c.getNom().toString() == tresor.getNom().toString()){
                     nb++;
                 }
         }
-        return nb>4;
+        return nb>=4;
     }
     
     public void recupTresor(){//recupere le tresor si le joueur se situe sur un des sanctuaires lié au trésor et si le joueuer à 4 carte correspondant au trésor
@@ -570,7 +599,7 @@ public class Controller implements Observer {
             pierre.setRecuperer(true);
         }else if((getJoueurCourant().getPos() == statue.getSanctuaire1() || getJoueurCourant().getPos() == statue.getSanctuaire2()) && nbCarteTres(statue)){
             statue.setRecuperer(true);
-        }else if((getJoueurCourant().getPos() == cristal.getSanctuaire1() || getJoueurCourant().getPos() == cristal.getSanctuaire2()) && nbCarteTres(calice)){
+        }else if((getJoueurCourant().getPos() == cristal.getSanctuaire1() || getJoueurCourant().getPos() == cristal.getSanctuaire2()) && nbCarteTres(cristal)){
             cristal.setRecuperer(true);
         }
     }
@@ -583,7 +612,7 @@ public class Controller implements Observer {
             return true;
         }else if((getJoueurCourant().getPos() == statue.getSanctuaire1() || getJoueurCourant().getPos() == statue.getSanctuaire2()) && nbCarteTres(statue)){
             return true;
-        }else if((getJoueurCourant().getPos() == cristal.getSanctuaire1() || getJoueurCourant().getPos() == cristal.getSanctuaire2()) && nbCarteTres(calice)){
+        }else if((getJoueurCourant().getPos() == cristal.getSanctuaire1() || getJoueurCourant().getPos() == cristal.getSanctuaire2()) && nbCarteTres(cristal)){
             return true;
         }else{
             return false;

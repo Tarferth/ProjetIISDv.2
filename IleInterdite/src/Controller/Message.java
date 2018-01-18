@@ -18,6 +18,7 @@ public enum Message {
     ECHANGECARTE, 
     DEPLACEROBLIG,
     DEFAUSSE,
-    DEFAUSSEOBLIG;
+    DEFAUSSEOBLIG, 
+    LANCERINSCRIPTION;
    
 }

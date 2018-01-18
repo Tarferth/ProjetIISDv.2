@@ -118,7 +118,11 @@ public abstract class Aventurier {
     public void remove(Carte c) {
         this.getMain().remove(c);
     }
-
+    
+    public void add(Carte c){
+        this.getMain().add(c);
+    }
+        
 }
 
 
