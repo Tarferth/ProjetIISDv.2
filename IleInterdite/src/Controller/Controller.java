@@ -368,6 +368,9 @@ public class Controller implements Observer {
         if(inscriptionFini){
             if(getJoueurCourant().getNbActionsMax() == nbActions){
                 finTour = true;
+                for(Aventurier a : aventuriers){
+                    desactiverBtn(aventuriers.indexOf(a));
+                }
             }
 
             if(finTour){
@@ -429,10 +432,12 @@ public class Controller implements Observer {
 
     public void desactiverBtn(int vue){
         vuesAventurier.get(joueurCourant%aventuriers.size()).setLabel(getJoueurCourant().getPos().toString());
+        
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAssecher().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnBouger().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnTerminerTour().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnEchangeCarte().setEnabled(false);
+        
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnRecupTre().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnUtiliserCarte().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnDefausseCarte().setEnabled(false);
@@ -458,7 +463,7 @@ public class Controller implements Observer {
         if(aventuriers.get(joueurCourant%aventuriers.size()).getMain().size()>0){
             vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnDefausseCarte().setEnabled(true);
         }
-        if(aventuriers.get(joueurCourant).getMain().size()>0){
+        if(aventuriers.get(joueurCourant%aventuriers.size()).getMain().size()>0){
             vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnDefausseCarte().setEnabled(true);
         }
     }
@@ -504,6 +509,9 @@ public class Controller implements Observer {
                 nivEau++;
                 piocheTresor.defausseCarte(carte);
                 piocheInondations.remiseDefausse();
+                System.out.println("");
+                System.out.println("Monté de eaux");
+                System.out.println("");
             }else{
                 getJoueurCourant().getMain().add(carte);
             }

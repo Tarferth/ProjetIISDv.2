@@ -88,6 +88,12 @@ public class Carte_Tresor{
 
         pioche.add(Sac1);
         pioche.add(Sac2); 
+        
+        pioche.add(Helicoptere1);
+        pioche.add(Helicoptere2);
+        pioche.add(Helicoptere3);
+
+        Collections.shuffle(pioche);
     }
 
     public ArrayList<Carte> getPioche() {

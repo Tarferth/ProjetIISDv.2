@@ -106,6 +106,7 @@ public abstract class Aventurier {
     public void afficheMain(){
         System.out.println("Vous avez "+this.getMain().size() + "en main");
         for(Carte c: main){
+            System.out.print(main.indexOf(c)+" :");
             c.afficheCarte();
         }
     }
