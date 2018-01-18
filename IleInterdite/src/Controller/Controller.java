@@ -14,11 +14,12 @@ import Aventurier.Explorateur;
 import Aventurier.Pilote;
 import Aventurier.Messager;
 import Aventurier.Aventurier;
+import static Aventurier.RôleAventurier.pilote;
 import Utils.Parameters;
 import Utils.Utils;
 import Utils.Utils.*;
 import Vues.*;
-import javafx.scene.paint.Color;
+
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ThreadLocalRandom;
-import static Aventurier.RôleAventurier.pilote;
+import static Controller.Message.ANNULER;
 import static Grille.NomTresor.*;
 import static Grille.NomTuile.HELIPORT;
 import Grille.Tresor;
@@ -35,7 +36,9 @@ import Pioche.Carte_Inondations;
 import Pioche.Carte_Tresor;
 import static Utils.Utils.Cartes.EAUX;
 import static Utils.Utils.Cartes.HELICOPTERE;
+import static Utils.Utils.Cartes.SABLE;
 import static Utils.Utils.EtatTuile.*;
+import java.util.Scanner;
 
 
 /**
@@ -62,34 +65,32 @@ public class Controller implements Observer {
     private Tresor cristal = new Tresor(CRISTAL,grille);
     private int nivEau = 0;
     private boolean partiePerdue = false;
+    
+    private VuePlateau vueAvTest = new VuePlateau(grille);
 
-
+    
     public Controller(){
         if (Parameters.LOGS) System.out.println("Début du jeu");
-
-        getGrille().getTuiles()[2][2].setEtat(COULEE);
-        getGrille().getTuiles()[3][2].setEtat(COULEE);
-        getGrille().getTuiles()[4][2].setEtat(COULEE);
-        getGrille().getTuiles()[3][4].setEtat(COULEE);
-        getGrille().getTuiles()[0][3].setEtat(INONDEE);
-        getGrille().getTuiles()[3][1].setEtat(INONDEE);
-        getGrille().getTuiles()[3][3].setEtat(INONDEE);
-        getGrille().getTuiles()[3][5].setEtat(INONDEE);
-        getGrille().getTuiles()[5][3].setEtat(INONDEE);
-
 
         //Création des vues
         VueInscription vueInscription = new VueInscription();
         VueDeplacement vueDeplacement = new VueDeplacement();
         VueAssechement vueAssechement = new VueAssechement();
-
+        VueVictoire vueVictoire = new VueVictoire();
+        VueDefaiteHP vueDefaiteHp = new VueDefaiteHP();
+        VueDefaiteTM vueDefaiteTm = new VueDefaiteTM();
+        VueDefaiteTR vueDefaiteTr = new VueDefaiteTR();
+        VueDefaiteTS vueDefaiteTs = new VueDefaiteTS();
         //Abonnement
 
         addView(vueInscription);
         addView(vueDeplacement);
         addView(vueAssechement);
-
-
+        addView(vueVictoire);
+        addView(vueDefaiteHp);
+        addView(vueDefaiteTm);
+        addView(vueDefaiteTr);
+        addView(vueDefaiteTs);
         vueInscription.setVisible(true);
 
 
@@ -109,17 +110,25 @@ public class Controller implements Observer {
             nivEau = -1;
             piocheInondation();
             nivEau = 0;
+            int jCourantBU = joueurCourant;//sauvegarde le joueur courant avant de donner 2 carte à chaque joueur
+            for(int i =0; i<aventuriers.size();i++){
+                joueurCourant = i;
+                 piocheTresor();
+            }
+            joueurCourant = jCourantBU;
             
         for (int i =0; i < vuesAventurier.size(); i++){
             vuesAventurier.get(i).setVisible(true);
             activerBtn(joueurCourant%aventuriers.size());
+            
         }
+        vueAvTest.setVisible(true);
+
     }
 
     @Override
     public void update(Observable o, Object arg){
         /* INSCRIPTION JOUEURS */
-
         if (arg == Message.LANCERPARTIE){
 
             //On crée les aventuriers
@@ -216,6 +225,8 @@ public class Controller implements Observer {
                 }
                 vues.get(1).setVisible(false);
                 nbActions++;
+                vuesAventurier.get(joueurCourant%aventuriers.size()).setLabel(getJoueurCourant().getPos().toString());
+                activerBtn(joueurCourant%aventuriers.size());
             }
         }else if(arg == Message.ANNULER){
             ((Vue) o).setVisible(false);
@@ -224,7 +235,7 @@ public class Controller implements Observer {
         // Vue Assèchement
 
         if(arg == Message.ASSECHER){
-            vues.get(2).setTuilesAss(getJoueurCourant().getTuilesAssechables(this.grille));
+            vues.get(2).setTuilesAss(getJoueurCourant().getTuilesAssechables(this.grille),getJoueurCourant());
             vues.get(2).setVisible(true);
         }
 
@@ -236,10 +247,11 @@ public class Controller implements Observer {
 
             else if(((Vue) o).getTuileSelectionnee() != null){
                 getGrille().getTuile(((Vue) o).getTuileSelectionnee()).setEtat(ASSECHEE);
-                vues.get(2).setVisible(false);
-                if(getJoueurCourant().getClass() == Ingenieur.class){
-                    
+                if(getJoueurCourant().getClass() == Ingenieur.class && getGrille().getTuile(((Vue) o).getTuileSelectionneeIng())!=null){
+                    getGrille().getTuile(((Vue) o).getTuileSelectionneeIng()).setEtat(ASSECHEE);
                 }
+                vues.get(2).setVisible(false);
+                vueAvTest.updateCellules(grille);
                 nbActions++;
             }
         }else if(arg == Message.ANNULER){
@@ -249,9 +261,111 @@ public class Controller implements Observer {
         if(arg == Message.FINTOUR){
             finTour = true;
         }
+      
+        if(arg == Message.ECHANGECARTE){
+            int i =1;
+            for(Aventurier a : getJoueurCourant().getPos().getAventuriers()){
+                    System.out.println(i+" : "+a.getTypeA().toString());
+                    a.afficheMain();
+                    System.out.println();
+                    i++;
+            }
+            
+            System.out.println("0 : Retour");
+            Scanner sc = new Scanner(System.in);
+            int nb = sc.nextInt();
+            if(nb ==0){
+                arg = ANNULER;
+            }else{
+                getJoueurCourant().afficheMain();
+                System.out.println("0 : Retour");
+                Scanner sc2 = new Scanner(System.in);
+                int nb2 = sc2.nextInt();
+                getJoueurCourant().echangeCarte(getJoueurCourant().getPos().getAventuriers().get(i),getJoueurCourant().getMain().get(nb2));
+            }
+            nbActions++; 
+        }
+        
+        if(arg == Message.UTILISECARTE){
+            System.out.println("Utiliser une carte");
+            int i =1;
+            ArrayList<Carte> carte = new ArrayList();
+            for(Carte c: getJoueurCourant().getMain()){
+                if(c.getNom() == HELICOPTERE.toString() || c.getNom() == SABLE.toString()){
+                    System.out.println(i+" : "+c.getNom());
+                    i++;
+                    carte.add(c);
+                }
+            }
+            
+            System.out.println("0 : Retour");
+            Scanner sc = new Scanner(System.in);
+            int nb = sc.nextInt();
+            
+            if(nb ==0){
+                arg = ANNULER;
+            }else{
+                nbActions++;
+                getJoueurCourant().remove(carte.get(nb));
+                piocheTresor.defausseCarte(carte.get(nb));
+                if(carte.get(nb).getNom() == HELICOPTERE.toString()){
+                    vues.get(1).setTuilesDispo(((Pilote) getJoueurCourant()).getTuilesAccessibles(this.grille));
+                    vues.get(1).setVisible(true);
+                }else if(carte.get(nb).getNom() == SABLE.toString()){
+                    vues.get(2).setTuilesAss(getJoueurCourant().getTuilesAssechables(this.grille),getJoueurCourant());
+                    vues.get(2).setVisible(true);
+                }
+            }
+        }
+        
+        if(arg == Message.RECUPTRE){
+            recupTresor();
+            nbActions++;
+        }
+        
+        if(arg == Message.DEFAUSSE){
+            getJoueurCourant().afficheMain();
+            System.out.println("0 : Retour");
+            Scanner sc = new Scanner(System.in);
+            int nb = sc.nextInt();
+            if(nb == 0){
+                arg= ANNULER;
+            }else{
+                piocheTresor.defausseCarte(getJoueurCourant().getMain().get(nb));
+                getJoueurCourant().getMain().remove(nb);                
+            }
+        }
+        
+        /*Depalcement obligatoires*/
+        if ( arg == Message.DEPLACEROBLIG){
+            int joueurC = joueurCourant;
+            for(Aventurier a :aventuriers){
+                joueurCourant++;
+                if(a.getPos().aSombre()){
+                    
+                    nbActions = aventuriers.get(joueurCourant).getNbActionsMax()-1;
+                    finTour = false;
+                    activerBtnOblig(joueurCourant%aventuriers.size()); 
+                    if(((Vue) o).getTuileSelectionnee() == null){
+                        JOptionPane erreur = new JOptionPane();
+                        erreur.showMessageDialog(null, "Aucune tuile n'a été sélectionnée.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
 
-        if (arg == Message.AUTREACTION) {
-            Utils.afficherInformation("Fonctionnalité non disponible");
+                    else if(((Vue) o).getTuileSelectionnee() != null){
+                        getJoueurCourant().setPos(getGrille().getTuile(((Vue) o).getTuileSelectionnee()));
+                        if(getJoueurCourant().getClass() == Pilote.class){
+                            getJoueurCourant().setMoveSpé(true);
+                            if(getJoueurCourant().getTuilesAccessibles(grille).contains(getJoueurCourant().getPosPrecedente())){
+                                getJoueurCourant().setMoveSpé(false);
+                            }
+                        }
+                        vues.get(1).setVisible(false);
+                        nbActions++;
+                    }
+                }
+                desactiverBtn(joueurCourant%aventuriers.size());
+            }
+            joueurCourant =joueurC;
         }
 
 
@@ -267,21 +381,45 @@ public class Controller implements Observer {
             if(finTour){
                 desactiverBtn(joueurCourant%aventuriers.size());
                 getJoueurCourant().setMoveSpé(false);
+                if(!JoueurInnonder()){
                 piocheTresor();
-                
-                
-                if(!this.victoire()){  
-                    joueurCourant++;
-                    nbActions = 0;
-                    finTour = false;
-                    activerBtn(joueurCourant%aventuriers.size());
+                piocheInondation();
+                }
+                if(JoueurInnonder()){
+                    arg = Message.DEPLACEROBLIG;
                 }else{
-                    
+                    piocheTresor();
+                    piocheInondation();
+                    if(!this.victoire() && !defaite()){  
+                        joueurCourant++;
+                        nbActions = 0;
+                        finTour = false;
+                        activerBtn(joueurCourant%aventuriers.size());
+                        getJoueurCourant().afficheMain();
+                    }else {
+                        for (int i =0; i < vuesAventurier.size(); i++){
+                            vuesAventurier.get(i).setVisible(false);
+                            desactiverBtn(joueurCourant%aventuriers.size());
+                        }
+                        if (defaite()){
+
+
+                            if(verifInnodations()){
+                                 vues.get(7).setVisible(true);
+                            }else if(tresNonRecuperable()){
+                                 vues.get(6).setVisible(true);
+                            }else if(heliporSombre()){
+                                 vues.get(4).setVisible(true);
+                            }else{
+                                 vues.get(5).setVisible(true);
+                            }
+                        }else if(victoire()){
+                            vues.get(3).setVisible(true);
+                        }
+                    }
                 }
             }
         }
-
-
     }
 
     public void deplacer(Aventurier joueur){
@@ -289,17 +427,38 @@ public class Controller implements Observer {
     }
 
     public void desactiverBtn(int vue){
+        vuesAventurier.get(joueurCourant%aventuriers.size()).setLabel(getJoueurCourant().getPos().toString());
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAssecher().setEnabled(false);
-        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAutreAction().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnBouger().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnTerminerTour().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnEchangeCarte().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnRecupTre().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnUtiliserCarte().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnDefausse().setEnabled(false);
+        
     }
 
     public void activerBtn(int vue){
+        vuesAventurier.get(joueurCourant%aventuriers.size()).setLabel(getJoueurCourant().getPos().toString());
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAssecher().setEnabled(true);
-        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAutreAction().setEnabled(true);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnBouger().setEnabled(true);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnTerminerTour().setEnabled(true);
+        
+        if(aventuriers.get(joueurCourant%aventuriers.size()).getPos().getAventuriers().size()>=2){
+            
+            vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnEchangeCarte().setEnabled(true);
+        }
+        if(recupTresorPossible()){
+            vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnRecupTre().setEnabled(true);
+        }
+        if(mainContient()){
+            vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnUtiliserCarte().setEnabled(true);
+        }
+    }
+    
+    public void activerBtnOblig(int vue){
+        desactiverBtn(vue);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnBouger().setEnabled(true);
     }
 
     public boolean tresorsRecup(){//verifie si tout les trésors ont été récupere
@@ -337,6 +496,7 @@ public class Controller implements Observer {
              if(carte.getNom().toString() == EAUX.toString()){
                 nivEau++;
                 piocheTresor.defausseCarte(carte);
+                piocheInondations.remiseDefausse();
             }else{
                 getJoueurCourant().getMain().add(carte);
             }
@@ -371,6 +531,8 @@ public class Controller implements Observer {
             }
             
         }
+        
+        vueAvTest.updateCellules(grille);
     }
     
     public boolean nbCarteTres(Tresor tresor){//verifie si le joueur à 4 carte qui correspondent au trésor
@@ -395,6 +557,21 @@ public class Controller implements Observer {
             cristal.setRecuperer(true);
         }
     }
+    
+    public boolean recupTresorPossible(){//retourne vrai si le joueur se situe sur un des sanctuaires lié au trésor et si le joueuer à 4 carte correspondant au trésor
+        
+        if((getJoueurCourant().getPos() == calice.getSanctuaire1() || getJoueurCourant().getPos() == calice.getSanctuaire2()) && nbCarteTres(calice)){
+            return true;
+        }else if((getJoueurCourant().getPos() == pierre.getSanctuaire1() || getJoueurCourant().getPos() == pierre.getSanctuaire2()) && nbCarteTres(pierre)){
+            return true;
+        }else if((getJoueurCourant().getPos() == statue.getSanctuaire1() || getJoueurCourant().getPos() == statue.getSanctuaire2()) && nbCarteTres(statue)){
+            return true;
+        }else if((getJoueurCourant().getPos() == cristal.getSanctuaire1() || getJoueurCourant().getPos() == cristal.getSanctuaire2()) && nbCarteTres(calice)){
+            return true;
+        }else{
+            return false;
+        }
+    }
       
     public boolean verifInnodations(){
         boolean fin = false;
@@ -406,15 +583,41 @@ public class Controller implements Observer {
         return fin;
     }
     
-    public void moveOblig(){
+    public boolean JoueurInnonder(){
+        boolean fin = false;
         for(Aventurier a :aventuriers){
             if(a.getPos().aSombre()){
-                vues.get(1).setTuilesDispo(getJoueurCourant().getTuilesAccessibles(this.grille));
-                vues.get(1).setVisible(true);
+                    fin=true;               
             }
         }
+        return fin;
+    }
+    
+    public boolean tresNonRecuperable(){
+        return !calice.getRecuperable() || !statue.getRecuperable() || !pierre.getRecuperable() || !cristal.getRecuperable();
+    }
+    
+    public boolean heliporSombre(){
+        return grille.getTuile(HELIPORT).aSombre();
+    }
+    
+    public boolean mortNivEau(){
+        return nivEau>=9;
+    }
+    
+    public boolean defaite(){
+        return verifInnodations() || tresNonRecuperable() || heliporSombre() || mortNivEau();
     }
 
+    public boolean mainContient(){
+        boolean boolRet = false;
+        for(Carte c :aventuriers.get(joueurCourant%aventuriers.size()).getMain()){
+            if(c.getNom()== HELICOPTERE.toString() || c.getNom() == SABLE.toString()){
+                boolRet = true;
+            }
+        }
+        return boolRet;
+    }
     /* GETTERS ET SETTERS */
 
 
