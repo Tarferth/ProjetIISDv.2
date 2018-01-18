@@ -7,7 +7,9 @@ package Vues;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import javax.swing.JButton;
@@ -20,14 +22,14 @@ import javax.swing.SwingConstants;
  *
  * @author avognonm
  */
-public class VueDefaiteTM  extends Vue  {
+public class VueDefaiteTM extends Vue  {
     
     private JFrame window;
     private JPanel mainPanel;
     private JPanel panelBas;
     private JPanel panelMid;
     private JButton btnrejouer;
-   
+    private JLabel deftm;
     
     
     
@@ -35,7 +37,7 @@ public class VueDefaiteTM  extends Vue  {
         window = new JFrame();
         window.setTitle("Ile Interdite - Défaite");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(500, 400);
+        window.setSize(900, 400);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         window.setLocationRelativeTo(null);
         mainPanel = new JPanel(new BorderLayout());
@@ -46,10 +48,10 @@ public class VueDefaiteTM  extends Vue  {
         panelMid = new JPanel(new GridLayout(1,1));
         mainPanel.add(panelMid);
         
-        
-        panelMid.add(new JLabel("Défaite ! Le marqueur de niveau à atteint la tête de mort !", SwingConstants.CENTER));
-        
-        
+        deftm = new JLabel("Défaite ! Le marqueur de niveau à atteint la tête de mort !", SwingConstants.CENTER);
+        panelMid.add(deftm);
+        deftm.setFont(new Font("Serif", Font.BOLD, 28));
+        panelMid.setBackground(Color.yellow);
         
         btnrejouer = new JButton("Rejouer !");
         
@@ -60,7 +62,7 @@ public class VueDefaiteTM  extends Vue  {
         panelBas.add(btnrejouer);
         panelBas.add(new JPanel());
         
-    
+        
     
     }
     
@@ -77,4 +79,5 @@ public class VueDefaiteTM  extends Vue  {
     public void setVisible(Boolean b) {
         window.setVisible(b);
     }
+    
 }

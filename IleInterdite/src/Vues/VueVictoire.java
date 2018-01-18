@@ -1,6 +1,3 @@
-
-    
-    
     /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,7 +6,9 @@
 package Vues;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import static java.awt.SystemColor.window;
 import java.awt.Toolkit;
@@ -31,7 +30,7 @@ public class VueVictoire  extends Vue  {
     private JPanel panelBas;
     private JPanel panelMid;
     private JButton btnrejouer;
-   
+    private JLabel vict;
     
     
     
@@ -39,7 +38,7 @@ public class VueVictoire  extends Vue  {
         window = new JFrame();
         window.setTitle("Ile Interdite - Victoire");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(500, 400);
+        window.setSize(900, 400);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         window.setLocationRelativeTo(null);
         mainPanel = new JPanel(new BorderLayout());
@@ -52,9 +51,10 @@ public class VueVictoire  extends Vue  {
         panelMid = new JPanel(new GridLayout(1,1));
         mainPanel.add(panelMid);
         
-        
-        panelMid.add(new JLabel("Victoire ! You know da wae !", SwingConstants.CENTER));
-        
+        vict = new JLabel("Victoire ! You know da wae !", SwingConstants.CENTER);
+        panelMid.add(vict);
+        vict.setFont(new Font ("Serif", Font.BOLD, 28));
+        panelMid.setBackground(Color.ORANGE);
         
         
         btnrejouer = new JButton("Rejouer !");
@@ -84,6 +84,3 @@ public class VueVictoire  extends Vue  {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
-
-    
-

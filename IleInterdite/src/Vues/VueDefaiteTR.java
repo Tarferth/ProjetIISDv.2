@@ -7,7 +7,9 @@ package Vues;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import javax.swing.JButton;
@@ -20,22 +22,22 @@ import javax.swing.SwingConstants;
  *
  * @author avognonm
  */
-public class VueDefaiteTR  extends Vue {
+public class VueDefaiteTR extends Vue  {
     
     private JFrame window;
     private JPanel mainPanel;
     private JPanel panelBas;
     private JPanel panelMid;
     private JButton btnrejouer;
-   
+    private JLabel deftr;
     
     
     
-    public VueDefaiteTR(){
+    public VueDefaiteTR()  {
         window = new JFrame();
         window.setTitle("Ile Interdite - Défaite");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(500, 400);
+        window.setSize(900, 400);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         window.setLocationRelativeTo(null);
         mainPanel = new JPanel(new BorderLayout());
@@ -46,9 +48,10 @@ public class VueDefaiteTR  extends Vue {
         panelMid = new JPanel(new GridLayout(1,1));
         mainPanel.add(panelMid);
         
-        
-        panelMid.add(new JLabel("Défaite ! Les Trésors ne sont pas récupérables!", SwingConstants.CENTER));
-        
+        deftr = new JLabel("Défaite ! Les Trésors ne sont pas récupérables!", SwingConstants.CENTER);
+        panelMid.add(deftr);
+        deftr.setFont(new Font("Serif", Font.BOLD, 28));
+        panelMid.setBackground(Color.GRAY);
         
         
         btnrejouer = new JButton("Rejouer !");
@@ -60,7 +63,7 @@ public class VueDefaiteTR  extends Vue {
         panelBas.add(btnrejouer);
         panelBas.add(new JPanel());
         
-    
+       
     
     }
     
