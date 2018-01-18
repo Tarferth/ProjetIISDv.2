@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -37,6 +38,7 @@ public class VueInscription2 {
     private final JPanel paneleast;
     private final JRadioButton deuxJoueurs,troisJoueurs,quatreJoueurs;
     private final HashMap ensembleDesBtnJoueurs;
+    private ArrayList difficulte;
     
    public VueInscription2 (){
     
@@ -120,7 +122,13 @@ public class VueInscription2 {
         slider.setMinorTickSpacing(1);  
         slider.setPaintTicks(true); 
         slider.setPaintLabels(true); 
-        slider.setLabelTable(slider.createStandardLabels(1));
+        ArrayList<String> difficulte = new ArrayList<>();
+        difficulte.add(0, "Novice");
+        difficulte.add(1, "Normal");
+        difficulte.add(2, "Elite");
+        difficulte.add(3, "Legendaire");
+        
+        slider.setLabelTable(slider.createStandardLabels(difficulte.size(), 1));
         
         
         panelbass = new JPanel(new GridLayout(2,3,10,10));
