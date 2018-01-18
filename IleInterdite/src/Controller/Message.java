@@ -13,4 +13,5 @@ public enum Message {
     FINTOUR,
     AUTREACTION,
     ANNULER,
+    DEPLACEROBLIG,
 }

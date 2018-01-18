@@ -96,6 +96,11 @@ public abstract class Aventurier {
         return grille.getTuilesAdjacentes(getPos(), Message.ASSECHER);
     }
     
+    public void echangeCarte(Aventurier a,Carte c){
+        this.getMain().remove(c);
+        a.getMain().add(c);
+        
+    }
 }
 
 
