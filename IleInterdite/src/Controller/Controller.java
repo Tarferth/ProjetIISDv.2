@@ -35,6 +35,7 @@ import Pioche.Carte_Inondations;
 import Pioche.Carte_Tresor;
 import static Utils.Utils.Cartes.EAUX;
 import static Utils.Utils.Cartes.HELICOPTERE;
+import static Utils.Utils.Cartes.SABLE;
 import static Utils.Utils.EtatTuile.*;
 
 
@@ -116,10 +117,17 @@ public class Controller implements Observer {
             nivEau = -1;
             piocheInondation();
             nivEau = 0;
+            int jCourantBU = joueurCourant;//sauvegarde le joueur courant avant de donner 2 carte à chaque joueur
+            for(int i =0; i<aventuriers.size();i++){
+                joueurCourant = i;
+                 piocheTresor();
+            }
+            joueurCourant = jCourantBU;
             
         for (int i =0; i < vuesAventurier.size(); i++){
             vuesAventurier.get(i).setVisible(true);
             activerBtn(joueurCourant%aventuriers.size());
+            
         }
     }
 
@@ -344,16 +352,27 @@ public class Controller implements Observer {
 
     public void desactiverBtn(int vue){
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAssecher().setEnabled(false);
-        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAutreAction().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnBouger().setEnabled(false);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnTerminerTour().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnEchangeCarte().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnRecupTre().setEnabled(false);
+        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnUtiliserCarte().setEnabled(false);
     }
 
     public void activerBtn(int vue){
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAssecher().setEnabled(true);
-        vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnAutreAction().setEnabled(true);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnBouger().setEnabled(true);
         vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnTerminerTour().setEnabled(true);
+        
+        if(aventuriers.get(joueurCourant).getPos().getAventuriers().size()>1){
+            vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnEchangeCarte().setEnabled(true);
+        }
+        if(recupTresorPossible()){
+            vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnRecupTre().setEnabled(true);
+        }
+        if(mainContient()){
+            vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnUtiliserCarte().setEnabled(true);
+        }
     }
     
     public void activerBtnOblig(int vue){
@@ -453,6 +472,21 @@ public class Controller implements Observer {
             cristal.setRecuperer(true);
         }
     }
+    
+    public boolean recupTresorPossible(){//retourne vrai si le joueur se situe sur un des sanctuaires lié au trésor et si le joueuer à 4 carte correspondant au trésor
+        
+        if((getJoueurCourant().getPos() == calice.getSanctuaire1() || getJoueurCourant().getPos() == calice.getSanctuaire2()) && nbCarteTres(calice)){
+            return true;
+        }else if((getJoueurCourant().getPos() == pierre.getSanctuaire1() || getJoueurCourant().getPos() == pierre.getSanctuaire2()) && nbCarteTres(pierre)){
+            return true;
+        }else if((getJoueurCourant().getPos() == statue.getSanctuaire1() || getJoueurCourant().getPos() == statue.getSanctuaire2()) && nbCarteTres(statue)){
+            return true;
+        }else if((getJoueurCourant().getPos() == cristal.getSanctuaire1() || getJoueurCourant().getPos() == cristal.getSanctuaire2()) && nbCarteTres(calice)){
+            return true;
+        }else{
+            return false;
+        }
+    }
       
     public boolean verifInnodations(){
         boolean fin = false;
@@ -480,6 +514,15 @@ public class Controller implements Observer {
         return verifInnodations() || tresNonRecuperable() || heliporSombre() || mortNivEau();
     }
 
+    public boolean mainContient(){
+        boolean boolRet = false;
+        for(Carte c :aventuriers.get(joueurCourant).getMain()){
+            if(c.getNom()== HELICOPTERE.toString() || c.getNom() == SABLE.toString()){
+                boolRet = true;
+            }
+        }
+        return boolRet;
+    }
     /* GETTERS ET SETTERS */
 
 
