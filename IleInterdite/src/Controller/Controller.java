@@ -367,6 +367,37 @@ public class Controller implements Observer {
             }
             joueurCourant =joueurC;
         }
+        
+        /*Depalcement obligatoires*/
+        if ( arg == Message.DEPLACEROBLIG){
+            int joueurC = joueurCourant;
+            for(Aventurier a :aventuriers){
+                if(a.getPos().aSombre()){
+                    joueurCourant++;
+                    nbActions = aventuriers.get(joueurCourant).getNbActionsMax()-1;
+                    finTour = false;
+                    activerBtn(joueurCourant%aventuriers.size()); 
+                    if(((Vue) o).getTuileSelectionnee() == null){
+                        JOptionPane erreur = new JOptionPane();
+                        erreur.showMessageDialog(null, "Aucune tuile n'a été sélectionnée.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    else if(((Vue) o).getTuileSelectionnee() != null){
+                        getJoueurCourant().setPos(getGrille().getTuile(((Vue) o).getTuileSelectionnee()));
+                        if(getJoueurCourant().getClass() == Pilote.class){
+                            getJoueurCourant().setMoveSpé(true);
+                            if(getJoueurCourant().getTuilesAccessibles(grille).contains(getJoueurCourant().getPosPrecedente())){
+                                getJoueurCourant().setMoveSpé(false);
+                            }
+                        }
+                        vues.get(1).setVisible(false);
+                        nbActions++;
+                    }
+                }
+                desactiverBtn(joueurCourant%aventuriers.size());
+            }
+            joueurCourant =joueurC;
+        }
 
 
         /* GESTION DU TOUR DE JEU */
