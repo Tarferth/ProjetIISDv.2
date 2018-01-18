@@ -336,69 +336,30 @@ public class Controller implements Observer {
             }
         }
         
-        /*Depalcement obligatoires*/
-        if ( arg == Message.DEPLACEROBLIG){
-            int joueurC = joueurCourant;
-            for(Aventurier a :aventuriers){
-                joueurCourant++;
-                if(a.getPos().aSombre()){
-                    
-                    nbActions = aventuriers.get(joueurCourant).getNbActionsMax()-1;
-                    finTour = false;
-                    activerBtnOblig(joueurCourant%aventuriers.size()); 
-                    if(((Vue) o).getTuileSelectionnee() == null){
-                        JOptionPane erreur = new JOptionPane();
-                        erreur.showMessageDialog(null, "Aucune tuile n'a été sélectionnée.", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    }
-
-                    else if(((Vue) o).getTuileSelectionnee() != null){
-                        getJoueurCourant().setPos(getGrille().getTuile(((Vue) o).getTuileSelectionnee()));
-                        if(getJoueurCourant().getClass() == Pilote.class){
-                            getJoueurCourant().setMoveSpé(true);
-                            if(getJoueurCourant().getTuilesAccessibles(grille).contains(getJoueurCourant().getPosPrecedente())){
-                                getJoueurCourant().setMoveSpé(false);
-                            }
-                        }
-                        vues.get(1).setVisible(false);
-                        nbActions++;
-                    }
-                }
-                desactiverBtn(joueurCourant%aventuriers.size());
-            }
-            joueurCourant =joueurC;
-        }
+       
         
         /*Depalcement obligatoires*/
         if ( arg == Message.DEPLACEROBLIG){
-            int joueurC = joueurCourant;
-            for(Aventurier a :aventuriers){
-                if(a.getPos().aSombre()){
-                    joueurCourant++;
-                    nbActions = aventuriers.get(joueurCourant).getNbActionsMax()-1;
-                    finTour = false;
-                    activerBtn(joueurCourant%aventuriers.size()); 
-                    if(((Vue) o).getTuileSelectionnee() == null){
-                        JOptionPane erreur = new JOptionPane();
-                        erreur.showMessageDialog(null, "Aucune tuile n'a été sélectionnée.", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    }
-
-                    else if(((Vue) o).getTuileSelectionnee() != null){
-                        getJoueurCourant().setPos(getGrille().getTuile(((Vue) o).getTuileSelectionnee()));
-                        if(getJoueurCourant().getClass() == Pilote.class){
-                            getJoueurCourant().setMoveSpé(true);
-                            if(getJoueurCourant().getTuilesAccessibles(grille).contains(getJoueurCourant().getPosPrecedente())){
-                                getJoueurCourant().setMoveSpé(false);
-                            }
-                        }
-                        vues.get(1).setVisible(false);
-                        nbActions++;
-                    }
-                }
-                desactiverBtn(joueurCourant%aventuriers.size());
+            for(Aventurier a :sontSombre()){
+                    vues.get(1).setTuilesDispo(a.getTuilesAccessibles(this.grille));
+                    vues.get(1).setVisible(true);
+                    
             }
-            joueurCourant =joueurC;
         }
-
+        
+        /*Defausse obligatoir*/
+        
+        if ( arg == Message.DEFAUSSEOBLIG){
+            getJoueurCourant().afficheMain();
+            System.out.println("Vous aver plus de 5 carte en main defauser vous :");
+            Scanner sc = new Scanner(System.in);
+            int nb = sc.nextInt();
+            
+                piocheTresor.defausseCarte(getJoueurCourant().getMain().get(nb));
+                getJoueurCourant().getMain().remove(nb);                
+            
+        }        
+                
 
         /* GESTION DU TOUR DE JEU */
 
@@ -416,17 +377,26 @@ public class Controller implements Observer {
                 piocheTresor();
                 piocheInondation();
                 }
-                if(JoueurInnonder()){
-                    arg = Message.DEPLACEROBLIG;
-                }else{
-                    piocheTresor();
-                    piocheInondation();
+//                if(JoueurInnonder()){
+//                    arg = Message.DEPLACEROBLIG;
+//                }else{
+                    if(getJoueurCourant().getMain().size()>5){
+                        arg = Message.DEFAUSSEOBLIG;
+                    }
+               
                     if(!this.victoire() && !defaite()){  
+                        piocheTresor();
+                        piocheInondation();
                         joueurCourant++;
                         nbActions = 0;
                         finTour = false;
                         activerBtn(joueurCourant%aventuriers.size());
+                        System.out.println("");
+                        System.out.println(getJoueurCourant().getClass().toString());;
+                        System.out.println("");
                         getJoueurCourant().afficheMain();
+                        System.out.println("");
+                        System.out.println("");
                     }else {
                         for (int i =0; i < vuesAventurier.size(); i++){
                             vuesAventurier.get(i).setVisible(false);
@@ -446,7 +416,7 @@ public class Controller implements Observer {
                             }
                         }else if(victoire()){
                             vues.get(3).setVisible(true);
-                        }
+//                        }
                     }
                 }
             }
@@ -485,7 +455,7 @@ public class Controller implements Observer {
         if(mainContient()){
             vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnUtiliserCarte().setEnabled(true);
         }
-        if(aventuriers.get(joueurCourant).getMain().size()>0){
+        if(aventuriers.get(joueurCourant%aventuriers.size()).getMain().size()>0){
             vuesAventurier.get(joueurCourant%aventuriers.size()).getBtnDefausseCarte().setEnabled(true);
         }
     }
@@ -661,6 +631,17 @@ public class Controller implements Observer {
 
     public Aventurier getJoueurCourant(){
         return aventuriers.get(joueurCourant%aventuriers.size());
+    }
+    
+    public ArrayList<Aventurier> sontSombre(){
+        ArrayList<Aventurier> listret = new ArrayList();
+        for(int i=0;i<aventuriers.size();i++){
+            if(aventuriers.get(i).getPos().aSombre()){
+                listret.add(aventuriers.get(i));
+            }
+        }
+        
+        return listret;
     }
 
 

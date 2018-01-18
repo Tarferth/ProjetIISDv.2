@@ -88,9 +88,10 @@ public class VuePlateau {
             //création des cellules tuiles
             
             //Ajout des pions
-            JLabel nomCase = new JLabel(Color.WHITE +grilleListe.getTuile().get(i).getNom().toString(), SwingConstants.CENTER);
+            JLabel nomCase = new JLabel(grilleListe.getTuile().get(i).getNom().toString(), SwingConstants.CENTER);
             JPanel panelCellule = new JPanel(new BorderLayout());
             panelCellule.setBorder(BorderFactory.createLineBorder(Color.white, 1));
+            nomCase.setForeground(new Color(255,255,255));
             panelCellule.add(nomCase);
             
             //Coloration en gris des cellules assechées, en orange des cellules inondées et en bleu des cellules coulées

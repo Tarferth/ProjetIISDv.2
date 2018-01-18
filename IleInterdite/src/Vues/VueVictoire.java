@@ -79,9 +79,9 @@ public class VueVictoire  extends Vue  {
         VueVictoire vuevic = new VueVictoire();
     }
 
-    @Override
+   @Override
     public void setVisible(Boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        window.setVisible(b);
     }
 }
 
