@@ -18,5 +18,6 @@ public enum Message {
     INVOQUER,
     DONNER,
     UTILISER_CARTE,
+    DEPLACEROBLIG,
 
 }
