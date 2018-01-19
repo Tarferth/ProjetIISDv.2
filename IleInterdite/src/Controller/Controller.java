@@ -128,9 +128,9 @@ public class Controller implements Observer {
             
         }
         
-        pierre.setRecuperer(true);
-        calice.setRecuperer(true);
-        statue.setRecuperer(true);
+//        pierre.setRecuperer(true);
+//        calice.setRecuperer(true);
+//        statue.setRecuperer(true);
         vueAvTest.setVisible(true);
 
     }
@@ -410,9 +410,9 @@ public class Controller implements Observer {
 //                if(JoueurInnonder()){
 //                    arg = Message.DEPLACEROBLIG;
 //                }else{
-                    if(getJoueurCourant().getMain().size()>5){
-                        arg = Message.DEFAUSSEOBLIG;
-                    }
+//                    if(getJoueurCourant().getMain().size()>5){
+//                        arg = Message.DEFAUSSEOBLIG;
+//                    }
                
                     if(!this.victoire() && !defaite()){  
                         
